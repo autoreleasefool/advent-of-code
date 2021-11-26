@@ -24,6 +24,10 @@ class Challenge:
         return path.join(self.working_directory, "input.txt")
 
     @property
+    def output_file(self):
+        return path.join(self.working_directory, "output.txt")
+
+    @property
     def day_with_padding(self):
         return str(self.day) if self.day >= 10 else f"0{self.day}"
 

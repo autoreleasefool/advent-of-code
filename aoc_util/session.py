@@ -1,3 +1,4 @@
+from genericpath import exists
 from os import path
 from typing import Optional
 import json
@@ -12,6 +13,7 @@ class Session:
     token: str
     language: Language
     challenge: Challenge
+    save: bool
 
     def __init__(
         self,
@@ -19,10 +21,12 @@ class Session:
         language: Optional[Language],
         year: Optional[int],
         day: Optional[int],
+        save: bool,
     ):
         self.token = token
         self.language = language
         self.challenge = Challenge(year, day)
+        self.save = save
 
         if path.exists(_cache_file):
             with open(_cache_file) as f:
@@ -36,9 +40,41 @@ class Session:
         self.validate(require_token=False)
         self._cache()
 
+    def session_with_day(self, day: int):
+        return Session(
+            token=self.token,
+            language=self.language,
+            year=self.challenge.year,
+            day=day,
+            save=self.save,
+        )
+
     @property
     def working_directory(self):
         return path.join(self.challenge.working_directory, self.language.value)
+
+    @property
+    def root_file(self):
+        return path.join(
+            self.working_directory,
+            self.language.src_prefix if self.language.src_prefix else "",
+            f"day{self.challenge.day_with_padding}{self.language.file_extension}",
+        )
+
+    @property
+    def compiled_file(self):
+        extension = self.language.compiled_extension
+        if not extension:
+            return None
+
+        return path.join(
+            path.dirname(path.realpath(__file__)),
+            "..",
+            str(self.challenge.year),
+            f"day_{self.challenge.day_with_padding}",
+            self.language.value,
+            f"day{self.challenge.day_with_padding}{self.language.compiled_extension}",
+        )
 
     def validate(self, require_token: bool = False):
         if require_token and not self.token:
