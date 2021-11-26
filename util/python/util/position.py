@@ -1,11 +1,12 @@
 from copy import copy
 
+
 class Position:
-    _xlim=None
-    _ylim=None
-    _zlim=None
-    _wlim=None
-    hexagonal=False
+    _xlim = None
+    _ylim = None
+    _zlim = None
+    _wlim = None
+    hexagonal = False
 
     def __init__(self, x, y, z=None, w=None):
         self.x = x
@@ -47,10 +48,12 @@ class Position:
 
     @classmethod
     def is_within_limits(cls, pos):
-        return (Position._xlim is None or pos.x in Position._xlim) and \
-            (Position._ylim is None or pos.y in Position._ylim) and \
-            (Position._zlim is None or pos.z in Position._zlim) and \
-            (Position._wlim is None or pos.w in Position._wlim)
+        return (
+            (Position._xlim is None or pos.x in Position._xlim)
+            and (Position._ylim is None or pos.y in Position._ylim)
+            and (Position._zlim is None or pos.z in Position._zlim)
+            and (Position._wlim is None or pos.w in Position._wlim)
+        )
 
     def adjacent(self):
         if Position.hexagonal:
@@ -59,17 +62,22 @@ class Position:
         for xd in range(-1, 2):
             for yd in range(-1, 2):
                 if self.z is None:
-                    if xd == yd == 0: continue
+                    if xd == yd == 0:
+                        continue
                     adj.append(Position(self.x + xd, self.y + yd))
                     continue
                 for zd in range(-1, 2):
                     if self.w is None:
-                        if xd == yd == zd == 0: continue
+                        if xd == yd == zd == 0:
+                            continue
                         adj.append(Position(self.x + xd, self.y + yd, self.z + zd))
                         continue
                     for wd in range(-1, 2):
-                        if xd == yd == zd == wd == 0: continue
-                        adj.append(Position(self.x + xd, self.y + yd, self.z + zd, self.w + wd))
+                        if xd == yd == zd == wd == 0:
+                            continue
+                        adj.append(
+                            Position(self.x + xd, self.y + yd, self.z + zd, self.w + wd)
+                        )
         return [a for a in adj if Position.is_within_limits(adj)]
 
     def hexagonal_adjacent(self):
@@ -110,7 +118,8 @@ class Position:
         return north
 
     def move_north(self):
-        if Position.hexagonal: return
+        if Position.hexagonal:
+            return
         self.y -= 1
 
     def south(self):
@@ -119,7 +128,8 @@ class Position:
         return south
 
     def move_south(self):
-        if Position.hexagonal: return
+        if Position.hexagonal:
+            return
         self.y += 1
 
     def northwest(self):
@@ -128,7 +138,8 @@ class Position:
         return northwest
 
     def move_northwest(self):
-        if not Position.hexagonal: return
+        if not Position.hexagonal:
+            return
         self.x, self.z = self.x + 1, self.z - 1
 
     def northeast(self):
@@ -137,7 +148,8 @@ class Position:
         return northeast
 
     def move_northeast(self):
-        if not Position.hexagonal: return
+        if not Position.hexagonal:
+            return
         self.y, self.z = self.y + 1, self.z - 1
 
     def southwest(self):
@@ -146,7 +158,8 @@ class Position:
         return southwest
 
     def move_southwest(self):
-        if not Position.hexagonal: return
+        if not Position.hexagonal:
+            return
         self.y, self.z = self.y - 1, self.z + 1
 
     def southeast(self):
@@ -155,5 +168,6 @@ class Position:
         return southeast
 
     def move_southeast(self):
-        if not Position.hexagonal: return
+        if not Position.hexagonal:
+            return
         self.x, self.z = self.x - 1, self.z + 1

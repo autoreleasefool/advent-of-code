@@ -1,8 +1,8 @@
 import math
 import re
 
-class _Data:
 
+class _Data:
     def __init__(self, contents):
         self._contents = contents
 
@@ -16,7 +16,7 @@ class _Data:
 
     # List of numbers in the file, when they are separated 1 number per line
     def numbers(self):
-        return [int(re.search(r'-?\d+', line).group(0)) for line in self.lines()]
+        return [int(re.search(r"-?\d+", line).group(0)) for line in self.lines()]
 
     # List of numbers in the file, with multiple numbers per line
     def numbers_by_line(self):
@@ -25,11 +25,14 @@ class _Data:
     # Parse as a table. `data` should be a list of 'w' or 'd'
     # 'd' columns are parsed as integers, 'w' columns are strings
     # `sep` can be provided to split the columns on a different value
-    def table(self, data, sep=','):
-        return [[
-            int(col[1]) if col[0] == 'd' else col[1]
+    def table(self, data, sep=","):
+        return [
+            [
+                int(col[1]) if col[0] == "d" else col[1]
                 for col in zip(data, line.split(sep))
-        ] for line in self.lines()]
+            ]
+            for line in self.lines()
+        ]
 
     # List of lines in the file, parsed by a regex.
     # The groups from the regex match are passed to `container`, which returns a list by default
@@ -56,25 +59,27 @@ class _Data:
         for chunk in chunks:
             chunk_count = 0
             chunk_output = []
-            chunk_max = chunk['count'] if 'count' in chunk else math.inf
+            chunk_max = chunk["count"] if "count" in chunk else math.inf
             while lines and chunk_count < chunk_max:
                 l = lines[0]
-                if chunk['type'] == 'regex':
-                    parsed = self._parse_regex(chunk['value'], l)
-                    if not parsed: break
+                if chunk["type"] == "regex":
+                    parsed = self._parse_regex(chunk["value"], l)
+                    if not parsed:
+                        break
                     chunk_output.append(parsed)
-                elif chunk['type'] == 'numbers':
+                elif chunk["type"] == "numbers":
                     numbers = self._parse_number_line(l)
-                    if not numbers: break
+                    if not numbers:
+                        break
                     chunk_output.append(numbers if len(numbers) > 1 else numbers[0])
-                elif chunk['type'] == 'string':
+                elif chunk["type"] == "string":
                     chunk_output.append(l)
-                elif chunk['type'] == 'drop':
+                elif chunk["type"] == "drop":
                     pass
                 lines.pop(0)
                 chunk_count += 1
 
-            if chunk['type'] != 'drop':
+            if chunk["type"] != "drop":
                 output.append(chunk_output)
         return output
 
@@ -87,4 +92,4 @@ class _Data:
         return parsed
 
     def _parse_number_line(self, line):
-        return [int(match) for match in re.findall(r'-?\d+', line)]
+        return [int(match) for match in re.findall(r"-?\d+", line)]

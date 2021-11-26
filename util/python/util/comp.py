@@ -7,7 +7,7 @@ class Computer:
     def replace(self, position, ins=None, value=None):
         self._instructions[position] = (
             ins if ins else self._instructions[position][0],
-            value if value else self._instructions[position][1]
+            value if value else self._instructions[position][1],
         )
 
     def is_finished(self):
@@ -18,11 +18,9 @@ class Computer:
 
     def step(self):
         ins, value = self._instructions[self.position]
-        {
-            'nop': self._nop,
-            'acc': self._acc,
-            'jmp': self._jmp,
-        }[ins](value)
+        {"nop": self._nop, "acc": self._acc, "jmp": self._jmp,}[
+            ins
+        ](value)
 
     def _nop(self, value):
         self.position += 1
