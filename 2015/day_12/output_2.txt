@@ -1,1 +1,0 @@
-The sum of all the non-red numbers in the document is 65402

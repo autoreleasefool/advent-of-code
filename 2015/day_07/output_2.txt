@@ -1,1 +1,0 @@
-The new signal of 'a' is: 2797

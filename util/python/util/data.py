@@ -1,3 +1,4 @@
+import json
 import math
 import re
 
@@ -21,6 +22,10 @@ class _Data:
     # List of numbers in the file, with multiple numbers per line
     def numbers_by_line(self):
         return [self._parse_number_line(line) for line in self.lines()]
+
+    # JSON contents
+    def json(self):
+        return json.loads(self._contents)
 
     # Parse as a table. `data` should be a list of 'w' or 'd'
     # 'd' columns are parsed as integers, 'w' columns are strings

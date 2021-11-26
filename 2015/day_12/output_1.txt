@@ -1,1 +1,0 @@
-The sum of all the numbers in the document is 111754
