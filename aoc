@@ -18,29 +18,7 @@ def parse_args(args=None):
 
     parser = ArgumentParser(description="Advent of Code")
 
-    parser.add_argument(
-        "-f", "--fetch", action="store_true", help="Fetch the input for the year/day"
-    )
-
-    parser.add_argument(
-        "-r",
-        "--run",
-        action="store_true",
-        help="Run the program for the language/year/day/part",
-    )
-
     parser.add_argument("-s", "--save", action="store_true", help="Save the output")
-
-    parser.add_argument(
-        "-o", "--open", action="store_true", help="Open the challenge in the browser"
-    )
-
-    parser.add_argument(
-        "-t",
-        "--test",
-        action="store_true",
-        help="Run full test suite for a single language/year",
-    )
 
     parser.add_argument("--session", help="Set your session. Cached for future runs")
 
