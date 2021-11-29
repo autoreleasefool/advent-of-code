@@ -3,7 +3,7 @@ import math
 import re
 
 
-class _Data:
+class Data:
     def __init__(self, contents):
         self._contents = contents
 

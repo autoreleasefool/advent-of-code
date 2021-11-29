@@ -62,19 +62,6 @@ class Language(Enum):
             return None
 
     @property
-    def compile_from_directory(self):
-        if self == Language.HASKELL:
-            return False
-        elif self == Language.PYTHON:
-            return False
-        elif self == Language.RUBY:
-            return False
-        elif self == Language.RUST:
-            return True
-        elif self == Language.SWIFT:
-            return True
-
-    @property
     def starter_file(self):
         return path.join(".", "util", self.value, f"starter{self.file_extension}")
 

@@ -1,6 +1,5 @@
 from argparse import ArgumentParser
 import os
-import requests
 import sys
 
 
@@ -15,7 +14,6 @@ parsed = parser.parse_args()
 day = int(parsed.day)
 day_str = str(day) if day >= 10 else "0{day}".format(day=day)
 
-
 # Append challenge scripts to path for import
 sys.path.append(
     os.path.join(
@@ -29,15 +27,14 @@ sys.path.append(
     )
 )
 
-
 # Append data module to path so scripts can import
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "util"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "aoc"))
 
-import aoc
+from aoc import AOC
 
-aoc._session = parsed.session
+AOC._session = parsed.session
 
 # Get solution
 import importlib
 
-importlib.import_module("day{day}".format(day=day_str))
+importlib.import_module(f"day{day_str}")

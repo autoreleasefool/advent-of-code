@@ -54,6 +54,19 @@ class Session:
         return path.join(self.challenge.working_directory, self.language.value)
 
     @property
+    def compilation_directory(self):
+        if self.language == Language.PYTHON:
+            return path.join(".", "util", "python")
+        elif self.language == Language.RUST:
+            return self.working_directory
+        elif self.language == Language.SWIFT:
+            return self.working_directory
+        elif self.language == Language.RUBY:
+            return None
+        elif self.language == Language.HASKELL:
+            return None
+
+    @property
     def root_file(self):
         return path.join(
             self.working_directory,
