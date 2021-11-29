@@ -1,4 +1,5 @@
 from os import path
+from shutil import which
 from typing import List
 import subprocess
 import time
@@ -14,90 +15,90 @@ class Run(BaseCommand):
         session.validate(require_token=True)
         print(f"=====\nRunning {session.challenge}:")
 
-        start_time = time.perf_counter()
-        process: subprocess.CompletedProcess[str] = None
+        command = self._get_command(session)
 
-        # Execute the command to run the given language and challenge's solution
-        if session.language.compile_from_directory:
-            # Some languages require commands to be run from the source directory, so cd in
-            with cd(session.working_directory):
-                process = self._run(session)
-        else:
-            process = self._run(session)
+        start_time = time.perf_counter()
+        return_code, output = self._run(session, command)
         end_time = time.perf_counter()
 
-        if process is None:
-            print(f"failed to run {session.challenge}")
+        if return_code != 0:
+            print(f"error: {output}")
             return
 
-        # Capture the output for comparison
-        response = process.stdout.decode("utf-8").strip()
-        error = process.stderr.decode("utf-8").strip()
-
-        if error:
-            print(error)
-
-        if process.returncode != 0:
-            print(response)
-            return
-
-        print(f"---\n{response}\n---")
         print(f"runtime: {(end_time - start_time)}")
 
         # If saving, overwrite the current solution
-        if response and session.save:
-            print(f"saving output {response}")
+        if output and session.save:
+            print(f"saving output {output}")
             with open(session.challenge.output_file, "w") as f:
-                f.write(response)
+                f.write(output)
         else:
             # When not saving, compare the solution to the current solution and report
             if path.exists(session.challenge.output_file):
                 with open(session.challenge.output_file) as f:
                     solution = f.read()
-                    if solution == response:
+                    if solution == output:
                         print("your solution appears correct!")
                     else:
                         print(
                             f"solution does not match one foud in {session.challenge.output_file}"
                         )
                         print(f"\texpected: {solution}")
-                        print(f"\treceived: {response}")
+                        print(f"\treceived: {output}")
             else:
                 print("solution does not exist for validation. skipping...")
 
-    def _run(self, session: Session):
+    def _run(self, session: Session, command: List[str], nested=False):
+        if session.compilation_directory and not nested:
+            # Some languages require commands to be run from the source directory, so cd in
+            with cd(session.compilation_directory):
+                return self._run(session, command, nested=True)
+
+        print("---")
+        p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, text=True)
+        output = []
+
+        while True:
+            stream = p.stdout.readline()
+
+            if stream == '' and p.poll() is not None:
+                break
+
+            if stream:
+                output.append(stream.strip())
+                print(stream.strip())
+
+        print("---")
+        return p.returncode, "\n".join(output)
+
+
+    def _get_command(self, session: Session):
         if session.language == Language.PYTHON:
             # Python uses a custom runner to inject helper logic
-            with cd(path.join(".", "util", "python")):
-                return self._execute(
-                    [
-                        "python",
-                        "-m",
-                        "runner",
-                        "--year",
-                        str(session.challenge.year),
-                        "--day",
-                        str(session.challenge.day),
-                        "--session",
-                        session.token,
-                    ]
-                )
+            return [
+                which('python3'),
+                "-m",
+                "runner",
+                "--year",
+                str(session.challenge.year),
+                "--day",
+                str(session.challenge.day),
+                "--session",
+                session.token,
+            ]
         elif session.language == Language.SWIFT or session.language == Language.HASKELL:
             # Swift and haskell compile to an executable, the run the executable
             compile_result = self._compile(session)
             if compile_result.returncode != 0:
                 print("compilation failed")
                 return None
-            return self._execute([session.compiled_file])
+            return [session.compiled_file]
         elif session.language == Language.RUBY:
             # Ruby runs a given source file
-            return self._execute([session.language.value, session.root_file])
+            return [session.language.value, session.root_file]
         elif session.language == Language.RUST:
             # Rust compiles and executes within a directory
-            return self._execute(["cargo", "run"])
-
-    def _execute(self, command: List[str]):
-        return subprocess.run(command, capture_output=True)
+            return ["cargo", "run"]
 
     def _compile(self, session: Session):
         return subprocess.run(
