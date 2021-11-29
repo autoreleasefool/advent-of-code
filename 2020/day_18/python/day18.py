@@ -1,14 +1,17 @@
-import aoc
+from aoc import AOC
 
-data = aoc.load(year=2020, day=18)
+aoc = AOC(year=2020, day=18)
+data = aoc.load()
 
 # Part 1
 
+
 def perform(first, operator, second):
-    if operator == '*':
+    if operator == "*":
         return first * second
-    elif operator == '+':
+    elif operator == "+":
         return first + second
+
 
 def resolve(it):
     result = None
@@ -16,13 +19,13 @@ def resolve(it):
 
     while val := next(it, None):
         inter = None
-        if val == ' ':
+        if val == " ":
             continue
-        elif val in ['*', '+']:
+        elif val in ["*", "+"]:
             operators.append(val)
-        elif val == '(':
+        elif val == "(":
             inter = resolve(it)
-        elif val == ')':
+        elif val == ")":
             break
         else:
             inter = int(val)
@@ -31,10 +34,11 @@ def resolve(it):
             result = inter if not operators else perform(result, operators.pop(), inter)
     return result
 
-p1_solution = sum([resolve(iter(x)) for x in data.lines()])
-print(p1_solution)
+
+aoc.p1(sum([resolve(iter(x)) for x in data.lines()]))
 
 # Part 2
+
 
 def find_bracket_placement(it, inc, dec):
     depth = 0
@@ -51,14 +55,25 @@ def find_bracket_placement(it, inc, dec):
                 break
     return index
 
+
 def add_addition_precedence(equation):
     start = 0
-    while (index := equation.find('+', start)) >= 0:
-        first_bracket = index - find_bracket_placement(iter(reversed(equation[:index])), ')', '(')
-        second_bracket = index + find_bracket_placement(iter(equation[index + 1:]), '(', ')')
-        equation = equation[:first_bracket] + '(' + equation[first_bracket:second_bracket + 1] + ')' + equation[second_bracket + 1:]
+    while (index := equation.find("+", start)) >= 0:
+        first_bracket = index - find_bracket_placement(
+            iter(reversed(equation[:index])), ")", "("
+        )
+        second_bracket = index + find_bracket_placement(
+            iter(equation[index + 1 :]), "(", ")"
+        )
+        equation = (
+            equation[:first_bracket]
+            + "("
+            + equation[first_bracket : second_bracket + 1]
+            + ")"
+            + equation[second_bracket + 1 :]
+        )
         start = index + 2
     return equation
 
-p2_solution = sum([resolve(iter(add_addition_precedence(x))) for x in data.lines()])
-print(p2_solution)
+
+aoc.p2(sum([resolve(iter(add_addition_precedence(x))) for x in data.lines()]))

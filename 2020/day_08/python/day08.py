@@ -1,11 +1,12 @@
-import aoc
-from aoc import Computer
+from aoc import AOC, Computer
 
-data = aoc.load(year=2020, day=8)
+aoc = AOC(year=2020, day=8)
+data = aoc.load()
 
 # Part 1
 
 comp = Computer(data)
+
 
 def run_until_finished(comp):
     seen = set()
@@ -14,21 +15,20 @@ def run_until_finished(comp):
         comp.step()
     return comp.is_finished()
 
+
 run_until_finished(comp)
-p1_solution = comp.accumulator
-print(p1_solution)
+aoc.p1(comp.accumulator)
 
 # Part 2
 
 for idx, ins in enumerate(comp.instructions()):
     modified_comp = Computer(data)
-    if ins[0] == 'jmp':
-        modified_comp.replace(idx, 'nop')
-    elif ins[0] == 'nop':
-        modified_comp.replace(idx, 'jmp')
+    if ins[0] == "jmp":
+        modified_comp.replace(idx, "nop")
+    elif ins[0] == "nop":
+        modified_comp.replace(idx, "jmp")
 
     if run_until_finished(modified_comp):
-        p2_solution = modified_comp.accumulator
         break
 
-print(p2_solution)
+aoc.p2(modified_comp.accumulator)

@@ -14,6 +14,8 @@ class AOC:
     def __init__(self, year: int, day: int):
         self.year = year
         self.day = day
+        self.p1_solution = None
+        self.p2_solution = None
 
     def load(self):
         if not path.exists(self._input_file):
@@ -33,9 +35,11 @@ class AOC:
         sys.stdout.flush()
 
     def p1(self, solution):
+        self.p1_solution = solution
         self.d(solution)
 
     def p2(self, solution):
+        self.p2_solution = solution
         self.d(solution)
 
     def _fetch(self, input_file):

@@ -1,7 +1,7 @@
-import aoc
+from aoc import AOC
 
-data = aoc.load(year=2020, day=15)
-series = data.numbers_by_line()[0]
+aoc = AOC(year=2020, day=15)
+series = aoc.load().numbers_by_line()[0]
 
 seen = {}
 n = 0
@@ -22,5 +22,6 @@ while n < 30_000_000:
     n += 1
 
     if n == 2020:
-        print(last)
-print(last)
+        aoc.p1(last)
+
+aoc.p2(last)

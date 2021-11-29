@@ -1,21 +1,27 @@
-import aoc
+from aoc import AOC
 
-data = aoc.load(year=2020, day=22)
+aoc = AOC(year=2020, day=22)
+data = aoc.load()
 
-hands = data.parse_by_chunks([
-  {'type': 'drop', 'count': 1},
-  {'type': 'numbers'},
-  {'type': 'drop', 'count': 2},
-  {'type': 'numbers'},
-])
+hands = data.parse_by_chunks(
+    [
+        {"type": "drop", "count": 1},
+        {"type": "numbers"},
+        {"type": "drop", "count": 2},
+        {"type": "numbers"},
+    ]
+)
 
 first_hand = hands[0][:]
 second_hand = hands[1][:]
 
+
 def calculate_score(hand):
     return sum([(i + 1) * h for i, h in enumerate(reversed(hand))])
 
+
 # Part 1
+
 
 def play_round():
     p1 = first_hand.pop(0)
@@ -28,16 +34,17 @@ def play_round():
         second_hand.append(p2)
         second_hand.append(p1)
 
+
 while first_hand and second_hand:
     play_round()
 
-p1_solution = calculate_score(first_hand if first_hand else second_hand)
-print(p1_solution)
+aoc.p1(calculate_score(first_hand if first_hand else second_hand))
 
 # Part 2
 
 first_hand = hands[0][:]
 second_hand = hands[1][:]
+
 
 def play_game(first_hand, second_hand):
     previous_deck_orders = set()
@@ -65,8 +72,8 @@ def play_game(first_hand, second_hand):
 
     return 1 if first_hand else 2
 
+
 while first_hand and second_hand:
     play_game(first_hand, second_hand)
 
-p2_solution = calculate_score(first_hand if first_hand else second_hand)
-print(p2_solution)
+aoc.p2(calculate_score(first_hand if first_hand else second_hand))

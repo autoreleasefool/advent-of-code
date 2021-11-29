@@ -1,37 +1,36 @@
-import aoc
+from aoc import AOC, Position, flatten
 import re
-from aoc import Position, flatten
-from copy import copy
 
 Position.hexagonal = True
 
-data = aoc.load(year=2020, day=24)
+aoc = AOC(year=2020, day=24)
+data = aoc.load()
 
 # Part 1
 
 black = set()
 for tile in data.lines():
     to_flip = Position(0, 0, 0)
-    for c in re.findall(r'e|w|se|sw|ne|nw', tile):
-        if c == 'e':
+    for c in re.findall(r"e|w|se|sw|ne|nw", tile):
+        if c == "e":
             to_flip.move_east()
-        elif c == 'w':
+        elif c == "w":
             to_flip.move_west()
-        elif c == 'ne':
+        elif c == "ne":
             to_flip.move_northeast()
-        elif c == 'nw':
+        elif c == "nw":
             to_flip.move_northwest()
-        elif c == 'se':
+        elif c == "se":
             to_flip.move_southeast()
-        elif c == 'sw':
+        elif c == "sw":
             to_flip.move_southwest()
 
     black.add(to_flip) if to_flip not in black else black.remove(to_flip)
 
-p1_solution = len(black)
-print(p1_solution)
+aoc.p1(len(black))
 
 # Part 2
+
 
 def cycle(black, seen):
     next_black = set()
@@ -45,9 +44,9 @@ def cycle(black, seen):
             next_black.add(tile)
     return (next_black, set(flatten([c.adjacent() for c in next_black])))
 
+
 seen = black | set(flatten([c.adjacent() for c in black]))
 for _ in range(100):
     black, seen = cycle(black, seen)
 
-p2_solution = len(black)
-print(p2_solution)
+aoc.p2(len(black))

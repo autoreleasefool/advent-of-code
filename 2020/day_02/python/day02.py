@@ -1,6 +1,8 @@
-import aoc
+from aoc import AOC
 
-data = aoc.load(year=2020, day=2)
+aoc = AOC(year=2020, day=2)
+data = aoc.load()
+
 
 class Password:
     def __init__(self, groups):
@@ -12,12 +14,11 @@ class Password:
         return self.value.count(self.letter) in self.range
 
     def is_valid(self):
-        return (self.value[min(self.range) - 1] == self.letter) ^ (self.value[max(self.range) - 1] == self.letter)
+        return (self.value[min(self.range) - 1] == self.letter) ^ (
+            self.value[max(self.range) - 1] == self.letter
+        )
 
 
-pass_regex = r'(\d+)-(\d+) (\w): (.+)'
-p1_solution = len([p for p in data.parse_lines(pass_regex, Password) if p.is_valid_legacy()])
-print(p1_solution)
-
-p2_solution = len([p for p in data.parse_lines(pass_regex, Password) if p.is_valid()])
-print(p2_solution)
+pass_regex = r"(\d+)-(\d+) (\w): (.+)"
+aoc.p1(len([p for p in data.parse_lines(pass_regex, Password) if p.is_valid_legacy()]))
+aoc.p2(len([p for p in data.parse_lines(pass_regex, Password) if p.is_valid()]))
