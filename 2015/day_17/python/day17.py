@@ -1,3 +1,9 @@
+from aoc import AOC
+
+
+aoc = AOC(year=2015, day=17)
+
+
 ## Part 1
 
 # Initialize and sort the puzzle input
@@ -29,12 +35,11 @@ container_sizes.sort(reverse=True)
 # Total amount of eggnog to store
 target_eggnog = 150
 
-# Gets the number of arrangements of containers to store the eggnog
-# containers_total is the total amount of the containers used so far
-# remaining_containers is the unused containers
-
 
 def get_arrangements(containers_total, remaining_containers):
+    # Gets the number of arrangements of containers to store the eggnog
+    # containers_total is the total amount of the containers used so far
+    # remaining_containers is the unused containers
     arrangements = 0
 
     # If there are no more containers, then the target amount won't be met
@@ -62,8 +67,7 @@ def get_arrangements(containers_total, remaining_containers):
 # Gets the number of total container arrangements
 total_arrangements = get_arrangements(0, PUZZLE_INPUT)
 
-p1_solution = total_arrangements
-print(p1_solution)
+aoc.p1(total_arrangements)
 
 ## Part 2
 
@@ -98,12 +102,11 @@ target_eggnog = 150
 minimum_containers = -1
 minimum_arrangements = -1
 
-# Gets the number of arrangements of containers to store the eggnog
-# containers_total is the total amount of the containers used so far
-# remaining_containers is the unused containers
-
 
 def get_arrangements(containers_used, remaining_containers):
+    # Gets the number of arrangements of containers to store the eggnog
+    # containers_total is the total amount of the containers used so far
+    # remaining_containers is the unused containers
     global minimum_containers
     global minimum_arrangements
 
@@ -139,5 +142,4 @@ def get_arrangements(containers_used, remaining_containers):
 # Gets the number of total container arrangements
 get_arrangements([], PUZZLE_INPUT)
 
-p2_solution = minimum_arrangements
-print(p2_solution)
+aoc.p2(minimum_arrangements)

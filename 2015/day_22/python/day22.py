@@ -1,3 +1,7 @@
+from aoc import AOC
+
+aoc = AOC(year=2015, day=22)
+
 ## Part 1
 
 # Initial stats of the player and the boss
@@ -148,8 +152,7 @@ while battles:
         next_battle.boss_turn()
         battles.append(next_battle)
 
-p1_solution = minimum_mana
-print(p1_solution)
+aoc.p1(minimum_mana)
 
 ## Part 2
 
@@ -301,5 +304,4 @@ while battles:
         next_battle.boss_turn()
         battles.append(next_battle)
 
-p2_solution = minimum_mana
-print(p2_solution)
+aoc.p2(minimum_mana)

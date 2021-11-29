@@ -1,9 +1,10 @@
-import aoc
+from aoc import AOC
 import re
 
 ## Part 1
 
-data = aoc.load(year=2015, day=13)
+aoc = AOC(year=2015, day=13)
+data = aoc.load()
 
 # Regular expression to get the names and happiness changes of each pair
 regex_happiness = re.compile(
@@ -27,11 +28,10 @@ for line in data.lines():
     else:
         happiness[info.group(1)] = {info.group(4): mult * int(info.group(3))}
 
-# Finds all the possibilities from a person to neighbors which have not been tried so far
-# and adds the total change in happiness together
-
 
 def calc_possibilities(first_person, person, visited, total_so_far):
+    # Finds all the possibilities from a person to neighbors which have not been tried so far
+    # and adds the total change in happiness together
     global happiness
     global possibilities
 
@@ -66,8 +66,7 @@ for p in happiness:
     for n in happiness[p]:
         calc_possibilities(p, n, [p], happiness[p][n] + happiness[n][p])
 
-p1_solution = max(possibilities)
-print(p1_solution)
+aoc.p1(max(possibilities))
 
 ## Part 2
 
@@ -100,11 +99,10 @@ for p in happiness:
         happiness[p]["Joseph"] = 0
         happiness["Joseph"][p] = 0
 
-# Finds all the possibilities from a person to neighbors which have not been tried so far
-# and adds the total change in happiness together
-
 
 def calc_possibilities(first_person, person, visited, total_so_far):
+    # Finds all the possibilities from a person to neighbors which have not been tried so far
+    # and adds the total change in happiness together
     global happiness
     global possibilities
 
@@ -139,5 +137,4 @@ for p in happiness:
     for n in happiness[p]:
         calc_possibilities(p, n, [p], happiness[p][n] + happiness[n][p])
 
-p2_solution = max(possibilities)
-print(p2_solution)
+aoc.p2(max(possibilities))

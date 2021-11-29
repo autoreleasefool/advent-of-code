@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=14)
+aoc = AOC(year=2015, day=14)
+data = aoc.load()
 
 ## Part 1
 
@@ -65,8 +66,7 @@ for reindeer in reindeers:
     if distances[reindeer] > longest_distance:
         longest_distance = distances[reindeer]
 
-p1_solution = longest_distance
-print(p1_solution)
+aoc.p1(longest_distance)
 
 ## Part 2
 
@@ -149,5 +149,4 @@ for reindeer in points:
     if points[reindeer] > most_points:
         most_points = points[reindeer]
 
-p2_solution = most_points
-print(p2_solution)
+aoc.p2(most_points)

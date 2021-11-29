@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=6)
+aoc = AOC(year=2015, day=6)
+data = aoc.load()
 
 ## Part 2
 
@@ -45,8 +46,7 @@ for x in range(1000):
         if light_matrix[x][y] == 1:
             lights_on += 1
 
-p1_solution = lights_on
-print(p1_solution)
+aoc.p1(lights_on)
 
 ## Part 2
 
@@ -83,5 +83,4 @@ for x in range(1000):
     for y in range(1000):
         total_brightness += light_matrix[x][y]
 
-p2_solution = total_brightness
-print(p2_solution)
+aoc.p2(total_brightness)

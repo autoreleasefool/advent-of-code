@@ -1,8 +1,9 @@
-import aoc
+from aoc import AOC
 from operator import mul
 from functools import reduce
 
-data = aoc.load(year=2015, day=24)
+aoc = AOC(year=2015, day=24)
+data = aoc.load()
 
 ## Part 1
 
@@ -62,8 +63,7 @@ for first_bag in potential_first_bags:
         minimum_presents = len(first_bag)
         quantum_entanglement = bag_entanglement
 
-p1_solution = quantum_entanglement
-print(p1_solution)
+aoc.p1(quantum_entanglement)
 
 ## Part 2
 
@@ -131,5 +131,4 @@ for first_bag in potential_first_bags:
             minimum_presents = len(first_bag)
             quantum_entanglement = bag_entanglement
 
-p2_solution = quantum_entanglement
-print(p2_solution)
+aoc.p2(quantum_entanglement)

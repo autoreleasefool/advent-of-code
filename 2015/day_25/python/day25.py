@@ -1,3 +1,7 @@
+from aoc import AOC
+
+aoc = AOC(year=2015, day=25)
+
 # Challenge input
 target_row = 3010
 target_col = 3019
@@ -19,5 +23,4 @@ while target_code > 0:
     code = code % 33554393
     target_code -= 1
 
-p1_solution = code
-print(p1_solution)
+aoc.p1(code)

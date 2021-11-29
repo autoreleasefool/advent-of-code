@@ -1,6 +1,9 @@
+from aoc import AOC
 import re
 
 ## Part 1
+
+aoc = AOC(year=2015, day=10)
 
 # Input from the site
 puzzle_input = "1113122113"
@@ -20,8 +23,7 @@ for i in range(40):
     # Update input to iterate
     puzzle_input = puzzle_output
 
-p1_solution = len(puzzle_input)
-print(p1_solution)
+aoc.p1(len(puzzle_input))
 
 ## Part 2
 
@@ -43,5 +45,4 @@ for i in range(50):
     # Update input to iterate
     puzzle_input = puzzle_output
 
-p2_solution = len(puzzle_input)
-print(p2_solution)
+aoc.p1(len(puzzle_input))

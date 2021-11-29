@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=15)
+aoc = AOC(year=2015, day=15)
+data = aoc.load()
 
 ## Part 1
 
@@ -28,10 +29,9 @@ for line in data.lines():
         int(stats.group(5)),
     ]
 
-# Recursively gets the best possible score from combining ingredients
-
 
 def get_best_score(amounts, total_used):
+    # Recursively gets the best possible score from combining ingredients
     global ingredients
 
     # If all the ingredients have been used (except one)
@@ -90,8 +90,7 @@ for item in ingredients:
             best_score = score
     break
 
-p1_solution = best_score
-print(p1_solution)
+aoc.p1(best_score)
 
 ## Part 2
 
@@ -186,5 +185,4 @@ for item in ingredients:
             best_score = score
     break
 
-p2_solution = best_score
-print(p2_solution)
+aoc.p2(best_score)

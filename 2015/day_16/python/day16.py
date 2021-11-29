@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=16)
+aoc = AOC(year=2015, day=16)
+data = aoc.load()
 
 ## Part 1
 
@@ -50,8 +51,7 @@ for aunt, _ in enumerate(aunts):
     if the_real_aunt:
         break
 
-p1_solution = aunt + 1
-print(p1_solution)
+aoc.p1(aunt + 1)
 
 ## Part 2
 
@@ -122,5 +122,4 @@ for aunt, _ in enumerate(aunts):
     if the_real_aunt:
         break
 
-p2_solution = aunt + 1
-print(p2_solution)
+aoc.p2(aunt + 1)

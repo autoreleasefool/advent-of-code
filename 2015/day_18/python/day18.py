@@ -1,6 +1,7 @@
-import aoc
+from aoc import AOC
 
-data = aoc.load(year=2015, day=18)
+aoc = AOC(year=2015, day=18)
+data = aoc.load()
 
 ## Part 1
 
@@ -76,8 +77,7 @@ def total_lights():
     return total_lights_on
 
 
-p1_solution = total_lights()
-print(p1_solution)
+aoc.p1(total_lights())
 
 ## Part 2
 
@@ -176,5 +176,4 @@ def total_lights():
     return total_lights_on
 
 
-p2_solution = total_lights()
-print(p2_solution)
+aoc.p2(total_lights())

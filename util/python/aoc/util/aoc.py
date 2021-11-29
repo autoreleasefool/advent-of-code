@@ -55,6 +55,7 @@ class AOC:
             "..",
             "..",
             "..",
+            "..",
             str(self.year),
             f"day_{self.day}" if self.day >= 10 else f"day_0{self.day}",
             "input.txt",

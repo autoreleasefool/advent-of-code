@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=8)
+aoc = AOC(year=2015, day=8)
+data = aoc.load()
 
 ## Part 1
 
@@ -27,8 +28,7 @@ for line in data.lines():
         # Subtract one less than length to account for character the sequence actually represents
         total_characters_memory -= len(result) - 1
 
-p1_solution = total_characters_code - total_characters_memory
-print(p1_solution)
+aoc.p1(total_characters_code - total_characters_memory)
 
 ## Part 2
 
@@ -54,5 +54,4 @@ for line in data.lines():
         # Subtract one less than length to account for character the sequence actually represents
         total_characters_memory += 1
 
-p2_solution = total_characters_memory - total_characters_code
-print(p2_solution)
+aoc.p2(total_characters_memory - total_characters_code)

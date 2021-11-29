@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=7)
+aoc = AOC(year=2015, day=7)
+data = aoc.load()
 
 ## Part 1
 
@@ -93,11 +94,9 @@ def parse_signal(signal):
     return wire_signal
 
 
-# Gets the signal of a wire from the dictionary, or computes it if necessary
-# Computed values are then stored in the dictionary for easy retrieval later
-
-
 def get_signal(wire):
+    # Gets the signal of a wire from the dictionary, or computes it if necessary
+    # Computed values are then stored in the dictionary for easy retrieval later
     try:
         # First, check if the 'wire' is simply a literal
         return int(wire)
@@ -139,8 +138,7 @@ for line in data.lines():
     except ValueError:
         circuit[w] = sig
 
-p1_solution = get_signal("a")
-print(p1_solution)
+aoc.p1(get_signal("a"))
 
 ## Part 2
 
@@ -237,11 +235,9 @@ def parse_signal(signal):
     return wire_signal
 
 
-# Gets the signal of a wire from the dictionary, or computes it if necessary
-# Computed values are then stored in the dictionary for easy retrieval later
-
-
 def get_signal(wire):
+    # Gets the signal of a wire from the dictionary, or computes it if necessary
+    # Computed values are then stored in the dictionary for easy retrieval later
     try:
         # First, check if the 'wire' is simply a literal
         return int(wire)
@@ -264,10 +260,8 @@ def get_signal(wire):
         return signal
 
 
-# Gets the wire and its signal definition from a string
-
-
 def extract_wire_and_signal(string):
+    # Gets the wire and its signal definition from a string
     arrow = string.find("->")
     wire = string[arrow + 3 :].strip()
     signal = string[: arrow - 1].strip()
@@ -298,5 +292,4 @@ for line in data.lines():
         except ValueError:
             circuit[w] = s
 
-p2_solution = get_signal("a")
-print(p2_solution)
+aoc.p2(get_signal("a"))

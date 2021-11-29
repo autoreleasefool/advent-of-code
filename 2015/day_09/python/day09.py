@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=9)
+aoc = AOC(year=2015, day=9)
+data = aoc.load()
 
 ## Part 1
 
@@ -58,8 +59,7 @@ for starting_point in city_distances:
     if shortest_path == -1 or shortest_from_starting < shortest_path:
         shortest_path = shortest_from_starting
 
-p1_solution = shortest_path
-print(p1_solution)
+aoc.p1(shortest_path)
 
 ## Part 2
 
@@ -115,5 +115,4 @@ for starting_point in city_distances:
     if longest_from_starting > longest_path:
         longest_path = longest_from_starting
 
-p2_solution = longest_path
-print(p2_solution)
+aoc.p2(longest_path)

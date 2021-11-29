@@ -1,3 +1,7 @@
+from aoc import AOC
+
+aoc = AOC(year=2015, day=20)
+
 ## Part 1
 
 # Get a list of all the factors of x
@@ -36,8 +40,7 @@ def find_minimum_house(target):
 
 
 # Get the house which receives at least the minimum
-p1_solution = find_minimum_house(34000000)
-print(p1_solution)
+aoc.p1(find_minimum_house(34000000))
 
 ## Part 2
 
@@ -89,5 +92,4 @@ def find_minimum_house(target):
 
 
 # Get the house which receives at least the minimum
-p2_solution = find_minimum_house(34000000)
-print(p2_solution)
+aoc.p2(find_minimum_house(34000000))

@@ -1,7 +1,9 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=23)
+
+aoc = AOC(year=2015, day=23)
+data = aoc.load()
 
 ## Part 1
 
@@ -66,8 +68,7 @@ while current_command < len(commands):
         else:
             current_command += 1
 
-p1_solution = register_b
-print(p1_solution)
+aoc.p1(register_b)
 
 ## Part 2
 
@@ -132,5 +133,4 @@ while current_command < len(commands):
         else:
             current_command += 1
 
-p2_solution = register_b
-print(p2_solution)
+aoc.p2(register_b)

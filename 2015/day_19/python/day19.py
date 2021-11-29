@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=19)
+aoc = AOC(year=2015, day=19)
+data = aoc.load()
 
 ## Part 1
 
@@ -46,8 +47,7 @@ for i, _ in enumerate(input_molecule):
             )
             combinations[new_combination] = 1
 
-p1_solution = len(combinations)
-print(p1_solution)
+aoc.p1(len(combinations))
 
 ## Part 2
 
@@ -99,5 +99,4 @@ while potential:
                 else:
                     potential.append((replaced, steps + 1))
 
-p2_solution = min_steps
-print(p2_solution)
+aoc.p2(min_steps)

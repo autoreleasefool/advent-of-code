@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=5)
+aoc = AOC(year=2015, day=5)
+data = aoc.load()
 
 ## Part 1
 
@@ -14,8 +15,7 @@ nicestring_regex = re.compile(
 total_nicestrings = len(re.findall(nicestring_regex, data.contents()))
 
 # Print the total number of nice strings
-p1_solution = total_nicestrings
-print(p1_solution)
+aoc.p1(total_nicestrings)
 
 ## Part 2
 
@@ -29,5 +29,4 @@ nicestring_regex = re.compile(
 total_nicestrings = len(re.findall(nicestring_regex, data.contents()))
 
 # Print the total number of nice strings
-p2_solution = total_nicestrings
-print(p2_solution)
+aoc.p2(total_nicestrings)

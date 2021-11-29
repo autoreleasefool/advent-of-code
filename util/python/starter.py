@@ -1,3 +1,4 @@
-import aoc
+from aoc import AOC
 
-data = aoc.load(year=__year__, day=__day__)
+aoc = AOC(year=__year__, day=__day__)
+data = aoc.load()

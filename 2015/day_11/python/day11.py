@@ -1,3 +1,8 @@
+from aoc import AOC
+
+
+aoc = AOC(year=2015, day=11)
+
 ## Part 1
 
 # The original password
@@ -58,8 +63,7 @@ password = increment_all_until_valid(password)
 while not has_double_doubles(password) or not three_straight_letters(password):
     password = increment_by_one(7, password)
 
-p1_solution = "".join(password)
-print(p1_solution)
+aoc.p1("".join(password))
 
 ## Part 2
 
@@ -128,5 +132,4 @@ password = increment_all_until_valid(password)
 while not has_double_doubles(password) or not three_straight_letters(password):
     password = increment_by_one(7, password)
 
-p2_solution = "".join(password)
-print(p2_solution)
+aoc.p1("".join(password))

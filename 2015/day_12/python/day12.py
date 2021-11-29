@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=12)
+aoc = AOC(year=2015, day=12)
+data = aoc.load()
 
 ## Part 1
 
@@ -13,8 +14,7 @@ total = 0
 for value in results:
     total += int(value)
 
-p1_solution = total
-print(p1_solution)
+aoc.p1(total)
 
 ## Part 2
 
@@ -57,5 +57,4 @@ puzzle_input = data.json()
 for item in puzzle_input:
     total += get_sum(puzzle_input[item])
 
-p2_solution = total
-print(p2_solution)
+aoc.p2(total)

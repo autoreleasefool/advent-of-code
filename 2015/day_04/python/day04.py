@@ -1,4 +1,8 @@
+from aoc import AOC
 from hashlib import md5
+
+
+aoc = AOC(year=2015, day=4)
 
 ## Part 1
 
@@ -19,8 +23,7 @@ while digest[:5] != "00000":
     digest = hashed.hexdigest()
 
 # Print the lowest valid positive integer
-p1_solution = lowest_positive_int
-print(p1_solution)
+aoc.p1(lowest_positive_int)
 
 ## Part 2
 
@@ -38,5 +41,4 @@ while digest[:6] != "000000":
     digest = hashed.hexdigest()
 
 # Print the lowest valid positive integer
-p2_solution = lowest_positive_int
-print(p2_solution)
+aoc.p2(lowest_positive_int)

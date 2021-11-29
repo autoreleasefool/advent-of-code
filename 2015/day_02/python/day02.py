@@ -1,7 +1,8 @@
-import aoc
+from aoc import AOC
 import re
 
-data = aoc.load(year=2015, day=2)
+aoc = AOC(year=2015, day=2)
+data = aoc.load()
 
 ## Part 1
 
@@ -33,8 +34,7 @@ for line in data.lines():
         else:
             total_square_feet += second_side
 
-p1_solution = total_square_feet
-print(p1_solution)
+aoc.p1(total_square_feet)
 
 ## Part 2
 
@@ -63,5 +63,4 @@ for line in data.lines():
         else:
             total_length += 2 * (sides[0] + sides[1])
 
-p2_solution = total_length
-print(p2_solution)
+aoc.p2(total_length)

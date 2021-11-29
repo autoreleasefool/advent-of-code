@@ -1,6 +1,8 @@
-import aoc
+from aoc import AOC
 
-data = aoc.load(year=2015, day=1)
+
+aoc = AOC(year=2015, day=1)
+data = aoc.load()
 
 ## Part 1
 
@@ -17,8 +19,7 @@ for c in data.contents():
         current_floor -= 1
 
 
-p1_solution = current_floor
-print(p1_solution)
+aoc.p1(current_floor)
 
 ## Part 2
 
@@ -39,5 +40,4 @@ for c in data.contents():
         break
     position += 1
 
-p2_solution = position
-print(p2_solution)
+aoc.p2(position)

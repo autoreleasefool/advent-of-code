@@ -1,3 +1,7 @@
+from aoc import AOC
+
+aoc = AOC(year=2015, day=21)
+
 ## Part 1
 
 # Initial stats of the player and the boss
@@ -96,8 +100,7 @@ while current_weapon < len(weapons):
     current_ring_two += 1
 
 # Print out the minimum gold
-p1_solution = minimum_gold
-print(p1_solution)
+aoc.p1(minimum_gold)
 
 ## Part 2
 
@@ -196,5 +199,4 @@ while current_weapon < len(weapons):
     # Next battle
     current_ring_two += 1
 
-p2_solution = maximum_gold
-print(p2_solution)
+aoc.p2(maximum_gold)

@@ -1,7 +1,9 @@
-import aoc
+from aoc import AOC
 from collections import namedtuple
 
-data = aoc.load(year=2015, day=3)
+
+aoc = AOC(year=2015, day=3)
+data = aoc.load()
 
 ## Part 1
 
@@ -36,8 +38,7 @@ for c in data.contents():
         presents_delivered[loc] = 1
 
 # Total number of houses visited is total number of entries in the dictionary
-p1_solution = len(presents_delivered)
-print(p1_solution)
+aoc.p1(len(presents_delivered))
 
 ## Part 2
 
@@ -75,5 +76,4 @@ for c in data.contents():
     else:
         presents_delivered[loc] = 1
 
-p2_solution = len(presents_delivered)
-print(p2_solution)
+aoc.p2(len(presents_delivered))
