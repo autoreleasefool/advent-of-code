@@ -8,7 +8,7 @@ from aoc_util.language import Language
 from aoc_util.session import Session
 
 
-_valid_years = range(2015, 2021)
+_valid_years = range(2015, 2022)
 _valid_days = range(1, 26)
 
 
