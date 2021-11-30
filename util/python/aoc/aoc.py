@@ -28,6 +28,11 @@ import util.direction as direction
 
 Direction = direction.Direction
 
+# Deck
+import util.deck as deck
+
+Deck = deck.Deck
+
 # Util functions
 
 import re
