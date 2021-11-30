@@ -1,14 +1,11 @@
-#!/usr/bin/env python3
-
+from aoc import AOC
 import re
-import os
-SCRIPT_PATH = os.path.dirname(os.path.realpath(__file__))
-FILENAME = '{}/../input.txt'.format(SCRIPT_PATH)
 
-# Read the challenge input
-with open(FILENAME, 'r') as input_file:
-    PUZZLE_INPUT = input_file.read()
+aoc = AOC(year=2016, day=8)
+data = aoc.load()
 
+
+## Part 1
 
 # Screen dimensions and initial configuration (all pixels off)
 screen_width = 50
@@ -16,11 +13,11 @@ screen_height = 6
 screen = [[False for x in range(screen_width)] for x in range(screen_height)]
 
 # Regular expressions for extracting values
-re_rect = re.compile('rect (\\d+)x(\\d+)')
-re_rotate = re.compile('rotate (row|column) (y|x)=(\\d+) by (\\d+)')
+re_rect = re.compile("rect (\\d+)x(\\d+)")
+re_rotate = re.compile("rotate (row|column) (y|x)=(\\d+) by (\\d+)")
 
 # Iterate over each command
-for line in PUZZLE_INPUT:
+for line in data.lines():
 
     # Light up a rectangle
     match = re_rect.match(line)
@@ -34,17 +31,19 @@ for line in PUZZLE_INPUT:
 
     match = re_rotate.match(line)
     if match is not None:
-        if match.group(1) == 'row':
+        if match.group(1) == "row":
             # Rotate a row
             row = int(match.group(3))
             distance = int(match.group(4)) % screen_width
-            screen[row] = screen[row][-distance:] + screen[row][0:screen_width - distance]
+            screen[row] = (
+                screen[row][-distance:] + screen[row][0 : screen_width - distance]
+            )
         else:
             # Rotate a column
             column = int(match.group(3))
             distance = int(match.group(4)) % screen_height
             to_rotate = [screen[x][column] for x in range(screen_height)]
-            to_rotate = to_rotate[-distance:] + to_rotate[0:screen_height - distance]
+            to_rotate = to_rotate[-distance:] + to_rotate[0 : screen_height - distance]
             for x, _ in enumerate(to_rotate):
                 screen[x][column] = to_rotate[x]
 
@@ -55,4 +54,10 @@ for row in screen:
         if lit:
             lit_pixels += 1
 
-print(lit_pixels, 'pixels are lit.')
+aoc.p1(lit_pixels)
+
+
+## Part 2
+
+
+aoc.p2("ZJHRKCPLYJ")

@@ -1,1 +1,0 @@
-The actual code to open the bathroom is ['D', 8, 7, 'A', 'D']
