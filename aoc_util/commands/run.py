@@ -3,14 +3,14 @@ from shutil import which
 from typing import List
 import subprocess
 import time
+from aoc_util.commands.command import Command
 
-from aoc_util.commands.base_command import BaseCommand
 from aoc_util.language import Language
 from aoc_util.session import Session
 from aoc_util.util.filesystem import cd
 
 
-class Run(BaseCommand):
+class Run():
     def run(self, session: Session):
         session.validate(require_token=True)
         print(f"=====\nRunning {session.challenge}:")
@@ -47,6 +47,10 @@ class Run(BaseCommand):
                         print(f"\treceived: {output}")
             else:
                 print("solution does not exist for validation. skipping...")
+
+        # When running the submit command, return the last line of output, assuming that's the solution
+        if session.command == Command.SUBMIT:
+            return output.splitlines()[-1]
 
     def _run(self, session: Session, command: List[str], nested=False):
         if session.compilation_directory and not nested:

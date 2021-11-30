@@ -1,11 +1,10 @@
 from os import path
 import requests
 
-from aoc_util.commands.base_command import BaseCommand
 from aoc_util.session import Session
 
 
-class Fetch(BaseCommand):
+class Fetch():
     def run(self, session: Session):
         session.validate(require_token=True)
         input_file = session.challenge.input_file

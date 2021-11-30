@@ -4,12 +4,14 @@ from typing import Optional
 import json
 
 from aoc_util.challenge import Challenge
+from aoc_util.commands.command import Command
 from aoc_util.language import Language
 
 _cache_file = ".aoc_cache"
 
 
 class Session:
+    command: Command
     token: str
     language: Language
     challenge: Challenge
@@ -17,12 +19,14 @@ class Session:
 
     def __init__(
         self,
+        command: Command,
         token: Optional[str],
         language: Optional[Language],
         year: Optional[int],
         day: Optional[int],
         save: bool,
     ):
+        self.command = command
         self.token = token
         self.language = language
         self.challenge = Challenge(year, day)
@@ -42,6 +46,7 @@ class Session:
 
     def session_with_day(self, day: int):
         return Session(
+            command=self.command,
             token=self.token,
             language=self.language,
             year=self.challenge.year,

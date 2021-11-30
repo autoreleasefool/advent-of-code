@@ -1,11 +1,10 @@
 from os import path
 
-from aoc_util.commands.base_command import BaseCommand
 from aoc_util.commands.run import Run
 from aoc_util.session import Session
 
 
-class Test(BaseCommand):
+class Test():
     def run(self, session: Session):
         for day in range(1, 26):
             day_session = session.session_with_day(day)

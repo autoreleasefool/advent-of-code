@@ -4,6 +4,12 @@ from argparse import ArgumentParser
 import sys
 
 from aoc_util.commands.command import Command
+from aoc_util.commands.create import Create
+from aoc_util.commands.fetch import Fetch
+from aoc_util.commands.open import Open
+from aoc_util.commands.run import Run
+from aoc_util.commands.submit import Submit
+from aoc_util.commands.test import Test
 from aoc_util.language import Language
 from aoc_util.session import Session
 
@@ -49,9 +55,21 @@ def parse_args(args=None):
 
     parsed = parser.parse_args(args)
 
-    session = Session(parsed.session, parsed.LANG, parsed.YEAR, parsed.DAY, parsed.save)
     command = Command(parsed.COMMAND)
-    command.run(session)
+    session = Session(command, parsed.session, parsed.LANG, parsed.YEAR, parsed.DAY, parsed.PART, parsed.save, parsed.strict)
+
+    if command == Command.CREATE:
+        Create().run(session)
+    elif command == Command.FETCH:
+        Fetch().run(session)
+    elif command == Command.OPEN:
+        Open().run(session)
+    elif command == Command.RUN:
+        Run().run(session)
+    elif command == Command.SUBMIT:
+        Submit().run(session)
+    elif command == Command.TEST:
+        Test().run(session)
 
 
 if __name__ == "__main__":
