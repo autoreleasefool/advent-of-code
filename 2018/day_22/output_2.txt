@@ -1,1 +1,0 @@
-The fewest number of minutes needed to reach the target is: 982

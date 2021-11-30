@@ -1,1 +1,0 @@
-The value of the root node is: 25752

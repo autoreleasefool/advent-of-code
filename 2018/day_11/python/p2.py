@@ -8,7 +8,9 @@ fuel_cells = {}
 
 
 def power_level(cell):
-    return (((((cell[0] + 10) * cell[1] + serial_number) * (cell[0] + 10)) % 1000) // 100) - 5
+    return (
+        ((((cell[0] + 10) * cell[1] + serial_number) * (cell[0] + 10)) % 1000) // 100
+    ) - 5
 
 
 def power_of_cell(cell):
@@ -22,8 +24,10 @@ def power_of_cell(cell):
 for z in range(1, 301):
     if fuel_cells:
         max_fuel_cell = max(fuel_cells, key=fuel_cells.get)
-        print('The fuel cell with maximum power is:',
-              (max_fuel_cell[0] - (z - 1), max_fuel_cell[1] - (z - 1), max_fuel_cell[2]))
+        print(
+            "The fuel cell with maximum power is:",
+            (max_fuel_cell[0] - (z - 1), max_fuel_cell[1] - (z - 1), max_fuel_cell[2]),
+        )
     for x in range(1, grid_size + 1):
         for y in range(1, grid_size + 1):
             level = power_level((x, y))
@@ -32,4 +36,7 @@ for z in range(1, 301):
                 fuel_cells[(x, y, z)] = power_of_cell((x, y, z))
 
 max_fuel_cell = max(fuel_cells, key=fuel_cells.get)
-print('The fuel cell with maximum power is:', (max_fuel_cell[0] - 2, max_fuel_cell[1] - 2, max_fuel_cell[1]))
+print(
+    "The fuel cell with maximum power is:",
+    (max_fuel_cell[0] - 2, max_fuel_cell[1] - 2, max_fuel_cell[1]),
+)

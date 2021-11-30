@@ -1,1 +1,0 @@
-The final cart remaining has the following properties: {(116, 125): (1, 0, 16)}

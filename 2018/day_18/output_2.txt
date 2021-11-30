@@ -1,1 +1,0 @@
-The total resources after 1000000000 minutes is 219425

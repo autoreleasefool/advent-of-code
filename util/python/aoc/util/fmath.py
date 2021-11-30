@@ -1,4 +1,5 @@
 from functools import reduce
+import re
 
 # Usage:
 # n = [3, 5, 7]
@@ -29,3 +30,8 @@ def mul_inv(a, b):
     if x1 < 0:
         x1 += b0
     return x1
+
+
+def numbers_from(l):
+    regex = r"-?\d+"
+    return [int(match) for match in re.findall(regex, l)]

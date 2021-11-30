@@ -1,1 +1,0 @@
-The value in register 0 is: 2040

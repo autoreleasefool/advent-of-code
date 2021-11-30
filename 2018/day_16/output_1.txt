@@ -1,1 +1,0 @@
-The number of ambiguous samples: 588
