@@ -55,6 +55,10 @@ class Run:
                 else:
                     print("solution does not exist for validation. skipping...")
 
+        # When running the submit command, return the output
+        if session.command == Command.SUBMIT:
+            return output
+
     def _run(self, session: Session, command: List[str], nested=False):
         if session.compilation_directory and not nested:
             # Some languages require commands to be run from the source directory, so cd in
@@ -93,6 +97,7 @@ class Run:
                 str(session.challenge.day),
                 "--session",
                 session.token,
+                "--submit" if session.command == Command.SUBMIT else "",
             ]
         elif session.language == Language.SWIFT or session.language == Language.HASKELL:
             # Swift and haskell compile to an executable, the run the executable

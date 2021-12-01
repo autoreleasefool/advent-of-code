@@ -9,6 +9,7 @@ from aoc_util.commands.fetch import Fetch
 from aoc_util.commands.open import Open
 from aoc_util.commands.run import Run
 from aoc_util.commands.set import Set
+from aoc_util.commands.submit import Submit
 from aoc_util.commands.test import Test
 from aoc_util.session import Session
 
@@ -40,6 +41,8 @@ def runner_for_command(command: Command):
         return Open
     elif command == Command.RUN:
         return Run
+    elif command == Command.SUBMIT:
+        return Submit
     elif command == Command.SET:
         return Set
     elif command == Command.TEST:
