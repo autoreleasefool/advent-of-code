@@ -56,3 +56,7 @@ def flatten(l):
 
 def find_all(s, f):
     return [m.start() for m in re.finditer(s, f)]
+
+
+def sliding_window(iterable, size):
+    return [iterable[i - (size - 1) : i + 1] for i in range(size - 1, len(iterable))]
