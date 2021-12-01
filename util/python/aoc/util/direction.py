@@ -1,5 +1,5 @@
 from enum import Enum
-from .position import Position
+from util.position import Position
 
 
 class Direction(Enum):

@@ -87,18 +87,21 @@ class Run:
     def _get_command(self, session: Session):
         if session.language == Language.PYTHON:
             # Python uses a custom runner to inject helper logic
-            return [
-                which("python3"),
-                "-m",
-                "runner",
-                "--year",
-                str(session.challenge.year),
-                "--day",
-                str(session.challenge.day),
-                "--session",
-                session.token,
-                "--submit" if session.command == Command.SUBMIT else "",
-            ]
+            return filter(
+                None,
+                [
+                    which("python3"),
+                    "-m",
+                    "runner",
+                    "--year",
+                    str(session.challenge.year),
+                    "--day",
+                    str(session.challenge.day),
+                    "--session",
+                    session.token,
+                    "--submit" if session.command == Command.SUBMIT else None,
+                ],
+            )
         elif session.language == Language.SWIFT or session.language == Language.HASKELL:
             # Swift and haskell compile to an executable, the run the executable
             compile_result = self._compile(session)

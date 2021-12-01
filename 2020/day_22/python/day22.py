@@ -1,14 +1,14 @@
-from aoc import AOC
+from aoc import AOC, Drop, Numbers
 
 aoc = AOC(year=2020, day=22)
 data = aoc.load()
 
-hands = data.parse_by_chunks(
+hands = data.chunk(
     [
-        {"type": "drop", "count": 1},
-        {"type": "numbers"},
-        {"type": "drop", "count": 2},
-        {"type": "numbers"},
+        Drop(1),
+        Numbers(),
+        Drop(2),
+        Numbers(),
     ]
 )
 

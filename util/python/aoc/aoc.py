@@ -1,8 +1,19 @@
 # AOC
 
 import util.aoc as aoc
+import util.data.data as data
 
 AOC = aoc.AOC
+Data = data.Data
+
+# Data
+
+import util.data.rules as rules
+
+Drop = rules.Drop
+Numbers = rules.Numbers
+Regex = rules.Regex
+String = rules.String
 
 # fmath
 

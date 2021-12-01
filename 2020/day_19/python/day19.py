@@ -1,15 +1,16 @@
-from aoc import AOC
+from aoc import AOC, Regex, Drop, String
 import re
 from functools import lru_cache
 
 aoc = AOC(year=2020, day=19)
 data = aoc.load()
 
-chunks = data.parse_by_chunks(
+
+chunks = data.chunk(
     [
-        {"type": "regex", "value": r"^(\d.*)$"},
-        {"type": "drop", "count": 1},
-        {"type": "string"},
+        Regex(r"^(\d.*)$"),
+        Drop(1),
+        String(),
     ]
 )
 

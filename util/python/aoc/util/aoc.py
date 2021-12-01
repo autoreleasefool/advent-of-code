@@ -1,6 +1,6 @@
-from .data import Data
 from os import path
 from typing import Optional
+from util.data.data import Data
 import requests
 import sys
 

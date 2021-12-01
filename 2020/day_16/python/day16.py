@@ -1,17 +1,17 @@
-from aoc import AOC, flatten
-import math
+from aoc import AOC, flatten, Regex, Drop, Numbers
+from math import prod
 
 
 aoc = AOC(year=2020, day=16)
 data = aoc.load()
 
-chunks = data.parse_by_chunks(
+chunks = data.chunk(
     [
-        {"type": "regex", "value": r"^(.*): (\d+)-(\d+) or (\d+)-(\d+)"},
-        {"type": "drop", "count": 2},
-        {"type": "numbers", "count": 1},
-        {"type": "drop", "count": 2},
-        {"type": "numbers"},
+        Regex(r"^(.*): (\d+)-(\d+) or (\d+)-(\d+)"),
+        Drop(2),
+        Numbers(1),
+        Drop(2),
+        Numbers(),
     ]
 )
 
@@ -65,7 +65,7 @@ while True:
     confirmed_fields.add(next_field)
 
 aoc.p2(
-    math.prod(
+    prod(
         [
             your_ticket[next(iter(field_indices[x]))]
             for x in field_indices

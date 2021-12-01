@@ -1,5 +1,4 @@
 from aoc import AOC
-import math
 
 
 aoc = AOC(year=2021, day=1)
