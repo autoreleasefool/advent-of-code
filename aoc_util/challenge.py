@@ -16,6 +16,10 @@ class Challenge:
         return f"{self.url}/input"
 
     @property
+    def submit_url(self):
+        return f"{self.url}/answer"
+
+    @property
     def working_directory(self):
         return path.join(".", str(self.year), f"day_{self.day_with_padding}")
 

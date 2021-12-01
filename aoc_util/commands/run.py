@@ -1,16 +1,22 @@
+from argparse import ArgumentParser
 from os import path
 from shutil import which
 from typing import List
 import subprocess
 import time
-from aoc_util.commands.command import Command
 
+from aoc_util.commands.command import Command
 from aoc_util.language import Language
 from aoc_util.session import Session
 from aoc_util.util.filesystem import cd
 
 
-class Run():
+class Run:
+    @classmethod
+    def build_parser(cls, parser: ArgumentParser):
+        parser.description = "Run the set challenge script"
+        parser.add_argument("--save", action="store_true", help="save the output")
+
     def run(self, session: Session):
         session.validate(require_token=True)
         print(f"=====\nRunning {session.challenge}:")
@@ -28,29 +34,26 @@ class Run():
         print(f"runtime: {(end_time - start_time)}")
 
         # If saving, overwrite the current solution
-        if output and session.save:
-            print(f"saving output {output}")
-            with open(session.challenge.output_file, "w") as f:
-                f.write(output)
-        else:
-            # When not saving, compare the solution to the current solution and report
-            if path.exists(session.challenge.output_file):
-                with open(session.challenge.output_file) as f:
-                    solution = f.read()
-                    if solution == output:
-                        print("your solution appears correct!")
-                    else:
-                        print(
-                            f"solution does not match one foud in {session.challenge.output_file}"
-                        )
-                        print(f"\texpected: {solution}")
-                        print(f"\treceived: {output}")
+        if session.command == Command.RUN or session.command == Command.TEST:
+            if output and session.command_args.save:
+                print(f"saving output {output}")
+                with open(session.challenge.output_file, "w") as f:
+                    f.write(output)
             else:
-                print("solution does not exist for validation. skipping...")
-
-        # When running the submit command, return the last line of output, assuming that's the solution
-        if session.command == Command.SUBMIT:
-            return output.splitlines()[-1]
+                # When not saving, compare the solution to the current solution and report
+                if path.exists(session.challenge.output_file):
+                    with open(session.challenge.output_file) as f:
+                        solution = f.read()
+                        if solution == output:
+                            print("your solution appears correct!")
+                        else:
+                            print(
+                                f"solution does not match one foud in {session.challenge.output_file}"
+                            )
+                            print(f"\texpected: {solution}")
+                            print(f"\treceived: {output}")
+                else:
+                    print("solution does not exist for validation. skipping...")
 
     def _run(self, session: Session, command: List[str], nested=False):
         if session.compilation_directory and not nested:
@@ -59,13 +62,15 @@ class Run():
                 return self._run(session, command, nested=True)
 
         print("---")
-        p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, text=True)
+        p = subprocess.Popen(
+            command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, text=True
+        )
         output = []
 
         while True:
             stream = p.stdout.readline()
 
-            if stream == '' and p.poll() is not None:
+            if stream == "" and p.poll() is not None:
                 break
 
             if stream:
@@ -75,12 +80,11 @@ class Run():
         print("---")
         return p.returncode, "\n".join(output)
 
-
     def _get_command(self, session: Session):
         if session.language == Language.PYTHON:
             # Python uses a custom runner to inject helper logic
             return [
-                which('python3'),
+                which("python3"),
                 "-m",
                 "runner",
                 "--year",

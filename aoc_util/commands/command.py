@@ -6,5 +6,5 @@ class Command(Enum):
     FETCH = "fetch"
     OPEN = "open"
     RUN = "run"
-    SUBMIT = "submit"
+    SET = "set"
     TEST = "test"

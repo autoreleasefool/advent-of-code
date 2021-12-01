@@ -1,10 +1,15 @@
+from argparse import ArgumentParser
 from os import path
 import requests
 
 from aoc_util.session import Session
 
 
-class Fetch():
+class Fetch:
+    @classmethod
+    def build_parser(cls, parser: ArgumentParser):
+        parser.description = "Fetch the input for the set challenge"
+
     def run(self, session: Session):
         session.validate(require_token=True)
         input_file = session.challenge.input_file

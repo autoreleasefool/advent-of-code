@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 from shutil import copy
 import os
 
@@ -5,7 +6,11 @@ from aoc_util.session import Session
 from aoc_util.util.filesystem import copy_directory
 
 
-class Create():
+class Create:
+    @classmethod
+    def build_parser(cls, parser: ArgumentParser):
+        parser.description = "Create a starter file for the set challenge"
+
     def run(self, session: Session):
         if os.path.exists(session.working_directory):
             print(f"did not create {session.challenge} because it already exists.")

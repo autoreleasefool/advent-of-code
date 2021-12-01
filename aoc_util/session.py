@@ -1,58 +1,38 @@
-from genericpath import exists
 from os import path
-from typing import Optional
+from typing import Any, List, Optional
 import json
 
 from aoc_util.challenge import Challenge
 from aoc_util.commands.command import Command
 from aoc_util.language import Language
 
+
 _cache_file = ".aoc_cache"
 
 
 class Session:
     command: Command
-    token: str
-    language: Language
-    challenge: Challenge
-    save: bool
+    command_args: Any
 
-    def __init__(
-        self,
-        command: Command,
-        token: Optional[str],
-        language: Optional[Language],
-        year: Optional[int],
-        day: Optional[int],
-        save: bool,
-    ):
+    token: Optional[str]
+    language: Optional[Language]
+    challenge: Optional[Challenge]
+
+    def __init__(self, command: Command, command_args: Any):
         self.command = command
-        self.token = token
-        self.language = language
-        self.challenge = Challenge(year, day)
-        self.save = save
+        self.command_args = command_args
+        self.token = None
+        self.language = None
+        self.challenge = None
 
         if path.exists(_cache_file):
             with open(_cache_file) as f:
                 cache = json.load(f)
-                self.token = token if token else cache["token"]
-                self.language = language if language else Language(cache["language"])
-                self.challenge = Challenge(
-                    year if year else cache["year"], day if day else cache["day"]
-                )
+                self.token = cache["token"]
+                self.language = Language(cache["language"])
+                self.challenge = Challenge(cache["year"], cache["day"])
 
         self.validate(require_token=False)
-        self._cache()
-
-    def session_with_day(self, day: int):
-        return Session(
-            command=self.command,
-            token=self.token,
-            language=self.language,
-            year=self.challenge.year,
-            day=day,
-            save=self.save,
-        )
 
     @property
     def working_directory(self):
@@ -101,7 +81,7 @@ class Session:
             raise ValueError("language is not available")
         self.challenge.validate()
 
-    def _cache(self):
+    def cache(self):
         values = {
             "token": self.token,
             "language": self.language.value,

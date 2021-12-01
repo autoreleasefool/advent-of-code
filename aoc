@@ -8,14 +8,9 @@ from aoc_util.commands.create import Create
 from aoc_util.commands.fetch import Fetch
 from aoc_util.commands.open import Open
 from aoc_util.commands.run import Run
-from aoc_util.commands.submit import Submit
+from aoc_util.commands.set import Set
 from aoc_util.commands.test import Test
-from aoc_util.language import Language
 from aoc_util.session import Session
-
-
-_valid_years = range(2015, 2022)
-_valid_days = range(1, 26)
 
 
 def parse_args(args=None):
@@ -24,52 +19,31 @@ def parse_args(args=None):
 
     parser = ArgumentParser(description="Advent of Code")
 
-    parser.add_argument("-s", "--save", action="store_true", help="Save the output")
-
-    parser.add_argument("--session", help="Set your session. Cached for future runs")
-
-    parser.add_argument(
-        "COMMAND", help="Command to run", type=Command, choices=list(Command)
-    )
-    parser.add_argument(
-        "LANG",
-        nargs="?",
-        help="The language of the script to run. Cached for future runs",
-        type=Language,
-        choices=list(Language),
-    )
-    parser.add_argument(
-        "YEAR",
-        nargs="?",
-        help="The year of the script to run. Cached for future runs",
-        type=int,
-        choices=_valid_years,
-    )
-    parser.add_argument(
-        "DAY",
-        nargs="?",
-        help="The day of the script to run. Cached for future runs",
-        type=int,
-        choices=_valid_days,
-    )
+    subparsers = parser.add_subparsers(title="commands", dest="command")
+    for command in list(Command):
+        subparser = subparsers.add_parser(command.value)
+        runner_for_command(command).build_parser(subparser)
 
     parsed = parser.parse_args(args)
+    command = Command(parsed.command)
+    session = Session(command, parsed)
 
-    command = Command(parsed.COMMAND)
-    session = Session(command, parsed.session, parsed.LANG, parsed.YEAR, parsed.DAY, parsed.PART, parsed.save, parsed.strict)
+    runner_for_command(command)().run(session)
 
+
+def runner_for_command(command: Command):
     if command == Command.CREATE:
-        Create().run(session)
+        return Create
     elif command == Command.FETCH:
-        Fetch().run(session)
+        return Fetch
     elif command == Command.OPEN:
-        Open().run(session)
+        return Open
     elif command == Command.RUN:
-        Run().run(session)
-    elif command == Command.SUBMIT:
-        Submit().run(session)
+        return Run
+    elif command == Command.SET:
+        return Set
     elif command == Command.TEST:
-        Test().run(session)
+        return Test
 
 
 if __name__ == "__main__":

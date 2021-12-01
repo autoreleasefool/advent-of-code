@@ -33,6 +33,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", "aoc"))
 from aoc import AOC
 
 AOC._session = parsed.session
+AOC._is_submitting = parsed.submit
 
 # Get solution
 import importlib

@@ -10,6 +10,7 @@ _SCRIPT_PATH = path.dirname(path.realpath(__file__))
 
 class AOC:
     _session: Optional[str] = None
+    _is_submitting: bool = False
 
     def __init__(self, year: int, day: int):
         self.year = year
@@ -36,11 +37,17 @@ class AOC:
 
     def p1(self, solution):
         self.p1_solution = solution
-        self.d(solution)
+        if AOC._is_submitting:
+            self.d(f"p1={solution}")
+        else:
+            self.d(solution)
 
     def p2(self, solution):
         self.p2_solution = solution
-        self.d(solution)
+        if AOC._is_submitting:
+            self.d(f"p2={solution}")
+        else:
+            self.d(solution)
 
     def _fetch(self, input_file):
         cookies = {"session": AOC._session}
