@@ -6,26 +6,26 @@ data = aoc.load()
 # Part 1
 
 x, y = 0, 0
-for c, i in data.parse_lines(r"(\w+) (\d+)"):
-  if c == "forward":
-    x += int(i)
-  if c == "down":
-    y += int(i)
-  if c == "up":
-    y -= int(i)
+for command, value in data.parse(r"(\w) (\d+)"):
+  if command == "forward":
+    x += value
+  if command == "down":
+    y += value
+  if command == "up":
+    y -= value
 
 aoc.p1(x * y)
 
 # Part 2
 
 x, y, aim = 0, 0, 0
-for c, i in data.parse_lines(r"(\w+) (\d+)"):
-  if c == "forward":
-    x += int(i)
-    y += aim * int(i)
-  if c == "down":
-    aim += int(i)
-  if c == "up":
-    aim -= int(i)
+for command, value in data.parse(r"(\w+) (\d+)"):
+  if command == "forward":
+    x += value
+    y += aim * value
+  if command == "down":
+    aim += value
+  if command == "up":
+    aim -= value
 
 aoc.p2(x * y)

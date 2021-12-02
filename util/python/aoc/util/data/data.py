@@ -48,8 +48,11 @@ class Data:
     # The groups from the regex match are passed to `container`, which returns a list by default
     # But could be an initializer or namedtuple, etc.
     # SEE 2020/day_02
-    def parse_lines(self, regex, container=list):
-        return [parse_regex(regex, line, container) for line in self.lines()]
+    def parse_lines(self, regex, container=list, intify=True):
+        return [parse_regex(regex, line, container, intify) for line in self.lines()]
+
+    def parse(self, regex, container=list, intify=True):
+        return self.parse_lines(regex, container, intify)
 
     # Define with Rules how multiple chunks of the content will be parsed. A Rule will be used until a line
     # fails to parse, or the max count is reached
