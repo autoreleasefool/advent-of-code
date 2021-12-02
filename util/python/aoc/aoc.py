@@ -29,6 +29,10 @@ import util.comp as comp
 
 Computer = comp.Computer
 
+import util.intcode.computer as intcode
+
+IntcodeComputer = intcode.IntcodeComputer
+
 # Position
 
 import util.position as position
@@ -60,3 +64,11 @@ def find_all(s, f):
 
 def sliding_window(iterable, size):
     return [iterable[i - (size - 1) : i + 1] for i in range(size - 1, len(iterable))]
+
+
+def mins(iterable, count):
+    return sorted(iterable)[:count]
+
+
+def maxes(iterable, count):
+    return sorted(iterable)[-count:]

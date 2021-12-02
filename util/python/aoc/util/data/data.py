@@ -21,6 +21,9 @@ class Data:
     def numbers(self) -> List[int]:
         return [int(re.search(r"-?\d+", line).group(0)) for line in self.lines()]
 
+    def nums(self) -> List[int]:
+        return [int(x) for x in re.findall(r"-?\d+", self.contents())]
+
     # List of numbers in the file, with multiple numbers per line
     def numbers_by_line(self) -> List[List[int]]:
         return [parse_number_line(line) for line in self.lines()]

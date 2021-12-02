@@ -1,1 +1,0 @@
-100 * noun + verb is 8298
