@@ -6,5 +6,5 @@ edition = "2018"
 
 [dependencies]
 itertools = "0.8.2"
-aoc_util = { path = "../../../util/rust/util" }
-opcode_computer = { path = "../../../util/rust/opcode_computer" }
+aoc_util = { path = "../../../helpers/rust/util" }
+opcode_computer = { path = "../../../helpers/rust/opcode_computer" }

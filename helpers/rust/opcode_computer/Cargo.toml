@@ -5,4 +5,4 @@ authors = ["Joseph Roque <contact@josephroque.ca>"]
 edition = "2018"
 
 [dependencies]
-aoc_util = { path = "../util" }
+aoc_util = { path = "../helpers" }

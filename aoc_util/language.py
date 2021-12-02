@@ -63,8 +63,8 @@ class Language(Enum):
 
     @property
     def starter_file(self):
-        return path.join(".", "util", self.value, f"starter{self.file_extension}")
+        return path.join(".", "helpers", self.value, f"starter{self.file_extension}")
 
     @property
     def supporting_files_directory(self):
-        return path.join(".", "util", self.value, "supporting_files")
+        return path.join(".", "helpers", self.value, "supporting_files")

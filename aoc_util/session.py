@@ -41,7 +41,7 @@ class Session:
     @property
     def compilation_directory(self):
         if self.language == Language.PYTHON:
-            return path.join(".", "util", "python")
+            return path.join(".", "helpers", "python")
         elif self.language == Language.RUST:
             return self.working_directory
         elif self.language == Language.SWIFT:
