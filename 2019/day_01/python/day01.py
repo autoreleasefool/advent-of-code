@@ -1,10 +1,10 @@
 from aoc import AOC
 
-
 aoc = AOC(year=2019, day=1)
 data = aoc.load()
 
-aoc.p1(sum([mass // 3 - 2 for mass in data.numbers()]))
+fuel = sum([mass // 3 - 2 for mass in data.numbers()])
+aoc.p1(fuel)
 
 
 def fuel_for_module(mass):
