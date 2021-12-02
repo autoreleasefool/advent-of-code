@@ -1,3 +1,4 @@
+from datetime import datetime
 from os import path
 from typing import Optional
 from util.data.data import Data
@@ -35,12 +36,17 @@ class AOC:
         print(s)
         sys.stdout.flush()
 
+    def log(self, s):
+        with open(self._log_file, 'a') as f:
+            f.write(f"{datetime.now()}: {s}\n")
+
     def p1(self, solution):
         self.p1_solution = solution
         if AOC._is_submitting:
             self.d(f"p1={solution}")
         else:
             self.d(solution)
+        self.log(solution)
 
     def p2(self, solution):
         self.p2_solution = solution
@@ -48,6 +54,7 @@ class AOC:
             self.d(f"p2={solution}")
         else:
             self.d(solution)
+        self.log(solution)
 
     def _fetch(self, input_file):
         cookies = {"session": AOC._session}
@@ -70,4 +77,17 @@ class AOC:
             str(self.year),
             f"day_{self.day}" if self.day >= 10 else f"day_0{self.day}",
             "input.txt",
+        )
+
+    @property
+    def _log_file(self):
+        return path.join(
+            _SCRIPT_PATH,
+            "..",
+            "..",
+            "..",
+            "..",
+            str(self.year),
+            f"day_{self.day}" if self.day >= 10 else f"day_0{self.day}",
+            ".log"
         )
