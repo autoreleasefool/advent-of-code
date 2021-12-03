@@ -2,43 +2,11 @@
 
 My solutions to the Advent of Code challenges
 
-## How to run
-
-You can use the incredibly convenient `aoc` script! It's used as follows:
-
-```
-usage: aoc [-h] [-s] [--session SESSION] [--strict]
-           {Command.CREATE,Command.FETCH,Command.OPEN,Command.RUN,Command.TEST}
-           [{Language.HASKELL,Language.PYTHON,Language.RUBY,Language.RUST,Language.SWIFT}]
-           [{2015,2016,2017,2018,2019,2020}]
-           [{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25}]
-
-Advent of Code
-
-positional arguments:
-  {Command.CREATE,Command.FETCH,Command.OPEN,Command.RUN,Command.TEST}
-                        Command to run
-  {Language.HASKELL,Language.PYTHON,Language.RUBY,Language.RUST,Language.SWIFT}
-                        The language of the script to run. Cached for future runs
-  {2015,2016,2017,2018,2019,2020}
-                        The year of the script to run. Cached for future runs
-  {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25}
-                        The day of the script to run. Cached for future runs
-
-options:
-  -h, --help            show this help message and exit
-  -s, --save            Save the output
-  --session SESSION     Set your session. Cached for future runs
-  --strict              End runs after 15 seconds
-```
-
-If a problem hasn't been solved with your language of choice, then the script will let you know.
-
-## 2021 -> 2/50 :star:
+## 2021 -> 4/50 :star:
 
 | Sunday              | Monday              | Tuesday             | Wednesday           | Thursday            | Friday              | Saturday            |
 | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- |
-|                     |                     |                     | **1** :star::star:  | **2**               | **3**               | **4**               |
+|                     |                     |                     | **1** :star::star:  | **2** :star::star:  | **3**               | **4**               |
 | **5**               | **6**               | **7**               | **8**               | **9**               | **10**              | **11**              |
 | **12**              | **13**              | **14**              | **15**              | **16**              | **17**              | **18**              |
 | **19**              | **20**              | **21**              | **22**              | **23**              | **24**              | **25**              |
@@ -102,26 +70,86 @@ If a problem hasn't been solved with your language of choice, then the script wi
 
 ## Requirements
 
-### Haskell
-
-* Stack
-
 ### Python
 
 * Python 3.10.0+
 * pylint
 
-### Ruby
+## How to run
 
-* Ruby 2.7.0+
-* RuboCop
+You can use the incredibly convenient `aoc` script! It's used as follows:
 
-### Rust
+```
+usage: aoc [-h] {create,fetch,open,run,submit,set,test} ...
 
-* Rust
-* Cargo
+Advent of Code
 
-### Swift
+options:
+  -h, --help            show this help message and exit
 
-* Swift 5.3+
-* SwiftLint
+commands:
+  {create,fetch,open,run,submit,set,test}
+
+---
+
+usage: aoc create [-h]
+Create a starter file for the set challenge
+options:
+  -h, --help  show this help message and exit
+
+---
+
+usage: aoc fetch [-h]
+Fetch the input for the set challenge
+options:
+  -h, --help  show this help message and exit
+
+---
+
+usage: aoc open [-h]
+Open the description for the set challenge
+options:
+  -h, --help  show this help message and exit
+
+---
+
+usage: aoc run [-h] [--save]
+Run the set challenge script
+options:
+  -h, --help  show this help message and exit
+  --save      save the output
+
+---
+
+usage: aoc submit [-h] {1,2}
+Submit the set challenge
+positional arguments:
+  {1,2}       which part of the day's challenge to submit
+options:
+  -h, --help  show this help message and exit
+
+---
+
+usage: aoc set [-h] [--token TOKEN] [-l {Language.PYTHON}] [-y {2015,2016,2017,2018,2019,2020,2021}] [-d {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25}] [-t] [-n]
+
+Set properties for future runs
+
+options:
+  -h, --help            show this help message and exit
+  --token TOKEN         Set the session token
+  -l {Language.PYTHON}  The language of the script to run
+  -y {2015,2016,2017,2018,2019,2020,2021}
+                        The year of the challenge to run
+  -d {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25}
+                        The day of the challenge to run
+  -t, --today           Set the challenge to today
+  -n, --next            Set the challenge to tomorrow
+
+---
+
+usage: aoc test [-h] [--strict]
+Test all challenges in the set year for correctness
+options:
+  -h, --help  show this help message and exit
+  --strict    Limit all runs to 15 seconds
+```

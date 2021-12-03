@@ -1,1 +1,0 @@
-The max thruster signal produced is 46248

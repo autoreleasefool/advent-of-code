@@ -6,7 +6,7 @@ data = aoc.load()
 # Part 1
 
 x, y = 0, 0
-for command, value in data.parse(r"(\w) (\d+)"):
+for command, value in data.parse(r"(\w+) (\d+)"):
   if command == "forward":
     x += value
   if command == "down":

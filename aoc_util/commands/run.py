@@ -102,19 +102,6 @@ class Run:
                     "--submit" if session.command == Command.SUBMIT else None,
                 ],
             )
-        elif session.language == Language.SWIFT or session.language == Language.HASKELL:
-            # Swift and haskell compile to an executable, the run the executable
-            compile_result = self._compile(session)
-            if compile_result.returncode != 0:
-                print("compilation failed")
-                return None
-            return [session.compiled_file]
-        elif session.language == Language.RUBY:
-            # Ruby runs a given source file
-            return [session.language.value, session.root_file]
-        elif session.language == Language.RUST:
-            # Rust compiles and executes within a directory
-            return ["cargo", "run"]
 
     def _compile(self, session: Session):
         return subprocess.run(
