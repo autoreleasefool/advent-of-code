@@ -17,6 +17,11 @@ class Data:
     def lines(self) -> List[str]:
         return self._contents.splitlines()
 
+    # Length of the first line
+    @property
+    def line_length(self):
+        return len(self.lines()[0])
+
     # List of numbers in the file, when they are separated 1 number per line
     def numbers(self) -> List[int]:
         return [int(re.search(r"-?\d+", line).group(0)) for line in self.lines()]
