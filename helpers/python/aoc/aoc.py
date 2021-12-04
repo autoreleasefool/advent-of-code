@@ -54,6 +54,14 @@ Deck = deck.Deck
 import re
 
 
+def transpose(l):
+    return list(map(list, zip(*l)))
+
+
+def chunk(count, l):
+    return [l[i : i + count] for i in range(0, len(l), count)]
+
+
 def flatten(l):
     return [item for sublist in l for item in sublist]
 

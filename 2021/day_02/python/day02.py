@@ -7,12 +7,12 @@ data = aoc.load()
 
 x, y = 0, 0
 for command, value in data.parse(r"(\w+) (\d+)"):
-  if command == "forward":
-    x += value
-  if command == "down":
-    y += value
-  if command == "up":
-    y -= value
+    if command == "forward":
+        x += value
+    if command == "down":
+        y += value
+    if command == "up":
+        y -= value
 
 aoc.p1(x * y)
 
@@ -20,12 +20,12 @@ aoc.p1(x * y)
 
 x, y, aim = 0, 0, 0
 for command, value in data.parse(r"(\w+) (\d+)"):
-  if command == "forward":
-    x += value
-    y += aim * value
-  if command == "down":
-    aim += value
-  if command == "up":
-    aim -= value
+    if command == "forward":
+        x += value
+        y += aim * value
+    if command == "down":
+        aim += value
+    if command == "up":
+        aim -= value
 
 aoc.p2(x * y)

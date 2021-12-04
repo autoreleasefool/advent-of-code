@@ -37,7 +37,7 @@ class AOC:
         sys.stdout.flush()
 
     def log(self, s):
-        with open(self._log_file, 'a') as f:
+        with open(self._log_file, "a") as f:
             f.write(f"{datetime.now()}: {s}\n")
 
     def p1(self, solution):
@@ -89,5 +89,5 @@ class AOC:
             "..",
             str(self.year),
             f"day_{self.day}" if self.day >= 10 else f"day_0{self.day}",
-            ".log"
+            ".log",
         )

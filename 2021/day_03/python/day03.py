@@ -5,12 +5,14 @@ data = aoc.load()
 
 # Part 1
 
+
 def most_common_bit(bitstrings, position):
     bits = {0: 0, 1: 0}
     for b in bitstrings:
         bits[int(b[position])] += 1
 
     return 0 if bits[0] > bits[1] else 1
+
 
 gamma = ""
 for position in range(data.line_length):
@@ -24,6 +26,7 @@ epsilon = int(epsilon, 2)
 aoc.p1(gamma * epsilon)
 
 # Part 2
+
 
 def least_common_bit(bitstrings, position):
     bits = {0: 0, 1: 0}
