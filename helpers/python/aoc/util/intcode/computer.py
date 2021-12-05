@@ -1,51 +1,41 @@
 from collections import defaultdict
-from enum import Enum
 from aoc import AOC
-
-
-class Ops(Enum):
-    ADD = 1
-    MULTIPLY = 2
-    HALT = 99
+from util.intcode.state import State
+from util.intcode.operations import Add, Halt, Multiply, Op
 
 
 class IntcodeComputer:
     def __init__(self, aoc: AOC):
-        self.aoc = aoc
-        self.pointer = 0
-        self.program = defaultdict(int)
+        self.state = State(program=defaultdict(int))
         for i, n in enumerate(aoc.load().nums()):
-            self.program[i] = n
+            self.state.program[i] = n
 
     def run(self):
         while not self.is_halted:
-            self.run_operation()
+            self.run_next()
 
-    def run_operation(self):
-        ins = self.program[self.pointer]
-        if ins == Ops.ADD.value:
-            self._add()
-        elif ins == Ops.MULTIPLY.value:
-            self._mult()
-
-    def _add(self):
-        first_param = self.program[self.pointer + 1]
-        second_param = self.program[self.pointer + 2]
-        store = self.program[self.pointer + 3]
-        self.program[store] = self.program[first_param] + self.program[second_param]
-        self.pointer += 4
-
-    def _mult(self):
-        first_param = self.program[self.pointer + 1]
-        second_param = self.program[self.pointer + 2]
-        store = self.program[self.pointer + 3]
-        self.program[store] = self.program[first_param] * self.program[second_param]
-        self.pointer += 4
+    def run_next(self):
+        self.op.apply(self.state)
 
     @property
     def is_halted(self) -> bool:
-        return self.program[self.pointer] == Ops.HALT.value
+        return self.op.opcode == Halt.OPCODE
 
     @property
     def output(self) -> int:
-        return self.program[0]
+        return self.state.output
+
+    @property
+    def op(self) -> Op:
+        if self.instruction == Add.OPCODE:
+            return Add()
+        elif self.instruction == Multiply.OPCODE:
+            return Multiply()
+        elif self.instruction == Halt.OPCODE:
+            return Halt()
+
+        raise LookupError(f"{self.instruction} is not a valid instruction")
+
+    @property
+    def instruction(self) -> int:
+        return self.state.instruction
