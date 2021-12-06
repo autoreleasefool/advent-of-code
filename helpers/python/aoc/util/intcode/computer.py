@@ -1,14 +1,44 @@
 from collections import defaultdict
-from aoc import AOC
+from util.functions import digits
+from util.data.data import Data
 from util.intcode.state import State
-from util.intcode.operations import Add, Halt, Multiply, Op
+from util.intcode.operations import (
+    Add,
+    Halt,
+    Multiply,
+    Op,
+    Read,
+    Write,
+    JumpIfTrue,
+    JumpIfFalse,
+    LessThan,
+    Equals,
+)
+
+
+POSSIBLE_OPS = [
+    Add,
+    Halt,
+    Multiply,
+    Read,
+    Write,
+    JumpIfTrue,
+    JumpIfFalse,
+    LessThan,
+    Equals,
+]
 
 
 class IntcodeComputer:
-    def __init__(self, aoc: AOC):
+    def __init__(self, data: Data, debug=False):
         self.state = State(program=defaultdict(int))
-        for i, n in enumerate(aoc.load().nums()):
+        self.debug = debug
+        for i, n in enumerate(data.nums()):
             self.state.program[i] = n
+
+        for op in POSSIBLE_OPS:
+            op.DEBUG = debug
+        Op.DEBUG = debug
 
     def run(self):
         while not self.is_halted:
@@ -16,10 +46,12 @@ class IntcodeComputer:
 
     def run_next(self):
         self.op.apply(self.state)
+        if self.debug:
+            print(self.state.program)
 
     @property
     def is_halted(self) -> bool:
-        return self.op.opcode == Halt.OPCODE
+        return self.state.instruction[0] == Halt.OPCODE
 
     @property
     def output(self) -> int:
@@ -27,15 +59,9 @@ class IntcodeComputer:
 
     @property
     def op(self) -> Op:
-        if self.instruction == Add.OPCODE:
-            return Add()
-        elif self.instruction == Multiply.OPCODE:
-            return Multiply()
-        elif self.instruction == Halt.OPCODE:
-            return Halt()
+        opcode, mode = self.state.instruction
+        for op in POSSIBLE_OPS:
+            if opcode == op.OPCODE:
+                return op(mode)
 
-        raise LookupError(f"{self.instruction} is not a valid instruction")
-
-    @property
-    def instruction(self) -> int:
-        return self.state.instruction
+        raise LookupError(f"{opcode} is not a valid instruction")

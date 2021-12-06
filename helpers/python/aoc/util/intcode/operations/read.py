@@ -3,16 +3,15 @@ from util.intcode.operations.op import Op
 from util.intcode.state import State
 
 
-class Multiply(Op):
-    OPCODE = 2
-    DEBUG = False
+class Read(Op):
+    OPCODE = 3
 
     def __init__(self, mode: List[int]):
         super().__init__(
-            opcode=Multiply.OPCODE, mode=mode, params_count=3, write_params=[2]
+            opcode=Read.OPCODE, mode=mode, params_count=1, write_params=[0]
         )
 
     def apply(self, state: State):
-        [op1, op2, dest] = self.params(state)
-        state.program[dest] = op1 * op2
+        [dest] = self.params(state)
+        state.program[dest] = state.next_input
         super().apply(state)

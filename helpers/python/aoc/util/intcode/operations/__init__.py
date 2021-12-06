@@ -2,3 +2,9 @@ from util.intcode.operations.add import Add
 from util.intcode.operations.halt import Halt
 from util.intcode.operations.multiply import Multiply
 from util.intcode.operations.op import Op
+from util.intcode.operations.read import Read
+from util.intcode.operations.write import Write
+from util.intcode.operations.jump_if_true import JumpIfTrue
+from util.intcode.operations.jump_if_false import JumpIfFalse
+from util.intcode.operations.less_than import LessThan
+from util.intcode.operations.equals import Equals

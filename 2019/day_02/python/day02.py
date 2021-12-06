@@ -1,19 +1,24 @@
 from aoc import AOC, IntcodeComputer
 
 aoc = AOC(year=2019, day=2)
+data = aoc.load()
 
-computer = IntcodeComputer(aoc)
+# Part 1
+
+computer = IntcodeComputer(data)
 computer.state.program[1] = 12
 computer.state.program[2] = 2
 computer.run()
 
 aoc.p1(computer.output)
 
+# Part 2
+
 
 def find_noun_and_verb():
     for noun in range(100):
         for verb in range(100):
-            computer = IntcodeComputer(aoc)
+            computer = IntcodeComputer(data)
             computer.state.program[1] = noun
             computer.state.program[2] = verb
             computer.run()
