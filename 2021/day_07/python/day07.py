@@ -2,7 +2,6 @@ from aoc import AOC
 
 aoc = AOC(year=2021, day=7)
 data = aoc.load()
-
 crabs = data.nums()
 
 # Part 1
