@@ -3,21 +3,9 @@ from aoc import AOC
 aoc = AOC(year=2021, day=8)
 data = aoc.load()
 
+# Part 1
+
 displays = [l[0].strip().split(" ") for l in data.parse(r".*\|(.*)")]
-
-segments_needed = {
-    0: 6,
-    1: 2,
-    2: 5,
-    3: 5,
-    4: 4,
-    5: 5,
-    6: 6,
-    7: 3,
-    8: 7,
-    9: 6
-}
-
 unique = [2, 3, 4, 7]
 aoc.p1(sum(sum(1 for d in display if len(d) in unique) for display in displays))
 
