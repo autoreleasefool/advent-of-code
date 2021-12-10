@@ -2,13 +2,13 @@ from copy import copy
 
 
 class Position:
-    _xlim = None
-    _ylim = None
-    _zlim = None
-    _wlim = None
+    _xlim: range = None
+    _ylim: range = None
+    _zlim: range = None
+    _wlim: range = None
     hexagonal = False
 
-    def __init__(self, x, y, z=None, w=None):
+    def __init__(self, x: int, y: int, z: int = None, w: int = None):
         self.x = x
         self.y = y
         self.z = z
@@ -55,30 +55,34 @@ class Position:
             and (Position._wlim is None or pos.w in Position._wlim)
         )
 
-    def adjacent(self):
+    def adjacent(self, diagonal=True):
         if Position.hexagonal:
             return self.hexagonal_adjacent()
         adj = []
-        for xd in range(-1, 2):
-            for yd in range(-1, 2):
+        for dx in range(-1, 2):
+            for dy in range(-1, 2):
                 if self.z is None:
-                    if xd == yd == 0:
+                    if dx == dy == 0:
                         continue
-                    adj.append(Position(self.x + xd, self.y + yd))
+                    if not diagonal and not (dx == 0 or dy == 0):
+                        continue
+                    adj.append(Position(self.x + dx, self.y + dy))
                     continue
-                for zd in range(-1, 2):
+                for dz in range(-1, 2):
                     if self.w is None:
-                        if xd == yd == zd == 0:
+                        if dx == dy == dz == 0:
                             continue
-                        adj.append(Position(self.x + xd, self.y + yd, self.z + zd))
+                        print("here2")
+                        adj.append(Position(self.x + dx, self.y + dy, self.z + dz))
                         continue
-                    for wd in range(-1, 2):
-                        if xd == yd == zd == wd == 0:
+                    for dw in range(-1, 2):
+                        if dx == dy == dz == dw == 0:
                             continue
+                        print("here3")
                         adj.append(
-                            Position(self.x + xd, self.y + yd, self.z + zd, self.w + wd)
+                            Position(self.x + dx, self.y + dy, self.z + dz, self.w + dw)
                         )
-        return [a for a in adj if Position.is_within_limits(adj)]
+        return [a for a in adj if Position.is_within_limits(a)]
 
     def hexagonal_adjacent(self):
         return [

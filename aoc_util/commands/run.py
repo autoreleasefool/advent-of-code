@@ -48,7 +48,7 @@ class Run:
                             print("your solution appears correct!")
                         else:
                             print(
-                                f"solution does not match one foud in {session.challenge.output_file}"
+                                f"solution does not match one found in {session.challenge.output_file}"
                             )
                             print(f"\texpected: {solution}")
                             print(f"\treceived: {output}")
