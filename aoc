@@ -1,17 +1,9 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
+from lib.commands import Command, Create, Fetch, Open, Run, Set, Submit, Test
+from lib.session import Session
 import sys
-
-from aoc_util.commands.command import Command
-from aoc_util.commands.create import Create
-from aoc_util.commands.fetch import Fetch
-from aoc_util.commands.open import Open
-from aoc_util.commands.run import Run
-from aoc_util.commands.set import Set
-from aoc_util.commands.submit import Submit
-from aoc_util.commands.test import Test
-from aoc_util.session import Session
 
 
 def parse_args(args=None):

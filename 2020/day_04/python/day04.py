@@ -1,4 +1,5 @@
 from aoc import AOC
+import re
 
 aoc = AOC(year=2020, day=4)
 data = aoc.load()
@@ -18,8 +19,6 @@ def passes_basic_validation(passport):
 aoc.p1(len([p for p in passports if passes_basic_validation(p)]))
 
 # Part 2
-
-import re
 
 validations = [
     lambda p: passes_basic_validation(p),

@@ -1,7 +1,6 @@
 from argparse import ArgumentParser
+from lib.session import Session
 import webbrowser
-
-from aoc_util.session import Session
 
 
 class Open:

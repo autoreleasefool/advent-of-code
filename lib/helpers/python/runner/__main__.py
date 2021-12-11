@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import importlib
 import os
 import sys
 
@@ -21,6 +22,7 @@ sys.path.append(
         "..",
         "..",
         "..",
+        "..",
         parsed.year,
         "day_{day}".format(day=day_str),
         "python",
@@ -36,6 +38,5 @@ AOC._session = parsed.session
 AOC._is_submitting = parsed.submit
 
 # Get solution
-import importlib
 
 importlib.import_module(f"day{day_str}")

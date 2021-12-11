@@ -1,4 +1,5 @@
-from aoc import AOC
+from aoc import AOC, chinese_remainder
+import itertools
 import re
 
 aoc = AOC(year=2020, day=13)
@@ -6,7 +7,6 @@ contents = aoc.load().lines()
 
 # Part 1
 
-import itertools
 
 start_time = int(contents[0])
 buses = [int(v) for v in re.findall(r"\d+", contents[1])]
@@ -18,8 +18,6 @@ for i in itertools.count(start_time):
         break
 
 # Part 2
-
-from aoc import chinese_remainder
 
 buses = [int(b) if b != "x" else b for b in contents[1].split(",")]
 

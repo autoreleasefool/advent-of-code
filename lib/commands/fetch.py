@@ -1,8 +1,7 @@
 from argparse import ArgumentParser
+from lib.session import Session
 from os import path
 import requests
-
-from aoc_util.session import Session
 
 
 class Fetch:

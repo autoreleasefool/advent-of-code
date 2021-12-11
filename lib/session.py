@@ -1,10 +1,9 @@
+from lib.challenge import Challenge
+from lib.commands.command import Command
+from lib.language import Language
 from os import path
-from typing import Any, List, Optional
+from typing import Any, Optional
 import json
-
-from aoc_util.challenge import Challenge
-from aoc_util.commands.command import Command
-from aoc_util.language import Language
 
 
 _cache_file = ".aoc_cache"
@@ -41,7 +40,7 @@ class Session:
     @property
     def compilation_directory(self):
         if self.language == Language.PYTHON:
-            return path.join(".", "helpers", "python")
+            return path.join(".", "lib", "helpers", "python")
 
     @property
     def root_file(self):

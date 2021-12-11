@@ -1,14 +1,13 @@
 from argparse import ArgumentParser
+from lib.commands import Command
+from lib.language import Language
+from lib.session import Session
+from lib.util.filesystem import cd
 from os import path
 from shutil import which
 from typing import List
 import subprocess
 import time
-
-from aoc_util.commands.command import Command
-from aoc_util.language import Language
-from aoc_util.session import Session
-from aoc_util.util.filesystem import cd
 
 
 class Run:

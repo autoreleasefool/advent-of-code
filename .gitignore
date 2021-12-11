@@ -2,7 +2,6 @@ test.txt
 .aoc_cache
 
 # C#
-bin
 obj
 *.csproj
 
@@ -40,7 +39,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/

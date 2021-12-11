@@ -74,6 +74,7 @@ class AOC:
             "..",
             "..",
             "..",
+            "..",
             str(self.year),
             f"day_{self.day}" if self.day >= 10 else f"day_0{self.day}",
             "input.txt",
@@ -83,6 +84,7 @@ class AOC:
     def _log_file(self):
         return path.join(
             _SCRIPT_PATH,
+            "..",
             "..",
             "..",
             "..",

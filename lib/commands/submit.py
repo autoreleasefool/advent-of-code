@@ -1,8 +1,9 @@
 from argparse import ArgumentParser
-import requests
 
-from aoc_util.commands.run import Run
-from aoc_util.session import Session
+# from lib.commands.run import Run
+from lib.session import Session
+
+# import requests
 
 
 class Submit:

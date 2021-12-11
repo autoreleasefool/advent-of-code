@@ -1,9 +1,8 @@
 from argparse import ArgumentParser
 from datetime import datetime, timezone, timedelta
-
-from aoc_util.challenge import Challenge
-from aoc_util.language import Language
-from aoc_util.session import Session
+from lib.challenge import Challenge
+from lib.language import Language
+from lib.session import Session
 
 
 _valid_years = range(2015, 2022)
