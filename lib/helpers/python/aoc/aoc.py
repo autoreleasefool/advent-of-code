@@ -1,9 +1,9 @@
 # AOC
 
-import util.aoc as aoc
+import util.aoc_wrapper as aoc_wrapper
 import util.data.data as data
 
-AOC = aoc.AOC
+AOC = aoc_wrapper.AOC
 Data = data.Data
 
 # Data
