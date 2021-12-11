@@ -34,9 +34,14 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", "aoc"))
 
 from aoc import AOC
 
-AOC._session = parsed.session
-AOC._is_submitting = parsed.submit
+AOC.session = parsed.session
+AOC.is_submitting = parsed.submit
 
-# Get solution
+# Import the day's solution as a module, allowing top level code to run, outputting the solution
+challenge_module = importlib.import_module(f"day{day_str}")
 
-importlib.import_module(f"day{day_str}")
+# If test data is set running the challenge above, run it again forcing the test data to be skipped
+if AOC.contains_test_input:
+    AOC.force_skip_test = True
+    print("--running again, with real input--")
+    importlib.reload(challenge_module)

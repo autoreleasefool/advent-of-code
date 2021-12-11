@@ -1,13 +1,19 @@
 import json
 import re
+from types import FunctionType
 from typing import Any, List
 from util.data.regex import parse_number_line, parse_regex
 from util.data.rules import Rule
 
 
 class Data:
-    def __init__(self, contents):
+    def __init__(
+        self, contents: str, force_skip_test: bool, on_test_input_set: FunctionType
+    ):
         self._contents = contents
+        self._original_contents = contents
+        self.force_skip_test = force_skip_test
+        self.on_test_input_set = on_test_input_set
 
     # Raw string contents
     def contents(self) -> str:
@@ -21,6 +27,17 @@ class Data:
     @property
     def line_length(self):
         return len(self.lines()[0])
+
+    @property
+    def test(self):
+        return self._contents if self._contents != self._original_contents else None
+
+    @test.setter
+    def test(self, value):
+        self.on_test_input_set()
+        if self.force_skip_test:
+            return
+        self._contents = value
 
     # List of numbers in the file, when they are separated 1 number per line
     def numbers(self) -> List[int]:

@@ -2,8 +2,8 @@ from aoc import AOC, sliding_window
 
 
 aoc = AOC(year=2021, day=1)
-series = aoc.load().numbers()
-
+data = aoc.load()
+series = data.numbers()
 
 # Part 1
 
