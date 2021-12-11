@@ -44,15 +44,15 @@ class Run:
                     with open(session.challenge.output_file) as f:
                         solution = f.read()
                         if solution == output:
-                            print("your solution appears correct!")
+                            print("✅ your solution appears correct!")
                         else:
                             print(
-                                f"solution does not match one found in {session.challenge.output_file}"
+                                f"❌ solution does not match one found in {session.challenge.output_file}"
                             )
                             print(f"\texpected: {solution}")
                             print(f"\treceived: {output}")
                 else:
-                    print("solution does not exist for validation. skipping...")
+                    print("⚠️ solution does not exist for validation. skipping...")
 
         # When running the submit command, return the output
         if session.command == Command.SUBMIT:
