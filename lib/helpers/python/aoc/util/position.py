@@ -55,6 +55,10 @@ class Position:
             and (Position._wlim is None or pos.w in Position._wlim)
         )
 
+    @property
+    def tuple(self):
+        return self.__attrs()
+
     def adjacent(self, diagonal=True):
         if Position.hexagonal:
             return self.hexagonal_adjacent()
