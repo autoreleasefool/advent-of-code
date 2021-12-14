@@ -97,7 +97,7 @@ class Data:
             if chunk:
                 current_chunk.append(chunk)
 
-            elif rule.count == 0 or not applied:
+            if rule.count == 0 or not applied:
                 if rule.returns_chunks:
                     chunks.append(current_chunk)
 
