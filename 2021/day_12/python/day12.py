@@ -19,20 +19,25 @@ for a, b in data.parse(r"(.*)-(.*)"):
 
 
 def search(cave: str, path: Set[str], can_visit_small_cave_twice: bool):
-    if cave == 'end':
+    if cave == "end":
         return 1
 
     paths = 0
     for connection in connections[cave]:
-        if connection == 'start':
+        if connection == "start":
             continue
         elif connection not in small_caves:
-            paths += search(connection, set(list(path) + [connection]), can_visit_small_cave_twice)
+            paths += search(
+                connection, set(list(path) + [connection]), can_visit_small_cave_twice
+            )
         elif connection not in path:
-            paths += search(connection, set(list(path) + [connection]), can_visit_small_cave_twice)
+            paths += search(
+                connection, set(list(path) + [connection]), can_visit_small_cave_twice
+            )
         elif can_visit_small_cave_twice:
             paths += search(connection, set(list(path) + [connection]), False)
     return paths
 
-aoc.p1(search('start', set(['start']), False))
-aoc.p2(search('start', set(['start']), True))
+
+aoc.p1(search("start", set(["start"]), False))
+aoc.p2(search("start", set(["start"]), True))

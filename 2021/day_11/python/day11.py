@@ -6,11 +6,13 @@ Position.set_limits(x=range(10), y=range(10))
 
 octos = data.digits_by_line()
 
+
 def clear_flashed(octos):
     # Reset octos that have flashed to 0
     for x, y in griditer(octos):
         if octos[y][x] > 9:
             octos[y][x] = 0
+
 
 def step(octos):
     # Start with incremeneting every octo

@@ -5,11 +5,7 @@ from aoc import AOC, Drop, Regex, String
 aoc = AOC(year=2021, day=14)
 data = aoc.load()
 
-chunks = data.chunk([
-    String(1),
-    Drop(1),
-    Regex(r"(\w+) -> (\w+)")
-])
+chunks = data.chunk([String(1), Drop(1), Regex(r"(\w+) -> (\w+)")])
 
 polymer = chunks[0][0]
 rules = {k: v for k, v in chunks[1]}
