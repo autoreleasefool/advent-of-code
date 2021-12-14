@@ -1,6 +1,6 @@
 import re
 from itertools import product
-from typing import List, Tuple
+from typing import Any, List, Tuple
 
 
 def transpose(l):
@@ -37,3 +37,11 @@ def digits(number: int) -> List[int]:
 
 def griditer(l: List[List[int]]) -> List[Tuple[int, int]]:
     return product(range(len(l[0])), range(len(l)))
+
+
+def stringifygrid(l: List[List[Any]]):
+    return "\n".join(["".join(item for item in row) for row in l])
+
+
+def print_grid(l: List[List[Any]]):
+    print(stringifygrid(l))
