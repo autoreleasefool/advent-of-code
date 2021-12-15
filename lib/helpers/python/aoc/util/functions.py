@@ -40,7 +40,7 @@ def griditer(l: List[List[int]]) -> List[Tuple[int, int]]:
 
 
 def stringifygrid(l: List[List[Any]]):
-    return "\n".join(["".join(item for item in row) for row in l])
+    return "\n".join(["".join(str(item) for item in row) for row in l])
 
 
 def print_grid(l: List[List[Any]]):
