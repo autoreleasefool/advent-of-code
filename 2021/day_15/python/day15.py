@@ -1,8 +1,6 @@
 from aoc import AOC, Position
 from heapq import heappush, heappop
 
-from util.functions import stringifygrid
-
 aoc = AOC(year=2021, day=15)
 data = aoc.load()
 
