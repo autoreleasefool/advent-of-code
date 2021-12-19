@@ -19,6 +19,10 @@ def find_all(s, f):
     return [m.start() for m in re.finditer(s, f)]
 
 
+def filter_none(l):
+    return [x for x in l if x is not None]
+
+
 def sliding_window(iterable, size):
     return [iterable[i - (size - 1) : i + 1] for i in range(size - 1, len(iterable))]
 
