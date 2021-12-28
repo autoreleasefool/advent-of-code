@@ -59,14 +59,14 @@ class Position:
     def tuple(self):
         return self.__attrs()
 
-    def adjacent(self, diagonal=True):
+    def adjacent(self, diagonal=True, include_self=False):
         if Position.hexagonal:
             return self.hexagonal_adjacent()
         adj = []
-        for dx in range(-1, 2):
-            for dy in range(-1, 2):
+        for dy in range(-1, 2):
+            for dx in range(-1, 2):
                 if self.z is None:
-                    if dx == dy == 0:
+                    if not include_self and dx == dy == 0:
                         continue
                     if not diagonal and not (dx == 0 or dy == 0):
                         continue
@@ -74,15 +74,13 @@ class Position:
                     continue
                 for dz in range(-1, 2):
                     if self.w is None:
-                        if dx == dy == dz == 0:
+                        if not include_self and dx == dy == dz == 0:
                             continue
-                        print("here2")
                         adj.append(Position(self.x + dx, self.y + dy, self.z + dz))
                         continue
                     for dw in range(-1, 2):
-                        if dx == dy == dz == dw == 0:
+                        if not include_self and dx == dy == dz == dw == 0:
                             continue
-                        print("here3")
                         adj.append(
                             Position(self.x + dx, self.y + dy, self.z + dz, self.w + dw)
                         )
