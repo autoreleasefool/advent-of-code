@@ -1,6 +1,6 @@
 import re
 from itertools import product
-from typing import Any, List, Tuple
+from typing import Any, Iterable, List, Tuple
 
 
 def transpose(l):
@@ -37,6 +37,10 @@ def maxes(iterable, count):
 
 def digits(number: int) -> List[int]:
     return [int(c) for c in str(number)]
+
+
+def manhattan(a: Iterable[int], b: Iterable[int]) -> int:
+    return sum(map(lambda i, j: abs(i - j), a, b))
 
 
 def griditer(l: List[List[int]]) -> List[Tuple[int, int]]:

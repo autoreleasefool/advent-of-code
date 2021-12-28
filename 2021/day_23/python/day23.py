@@ -1,14 +1,10 @@
-from aoc import AOC
+from aoc import AOC, manhattan
 from heapq import heappop, heappush
 from itertools import count, product
 from typing import Dict, List, Optional, Tuple
 
 aoc = AOC(year=2021, day=23)
 data = aoc.load()
-
-
-def manhattan(a: Tuple[int, int], b: Tuple[int, int]) -> int:
-    return sum(map(lambda i, j: abs(i - j), a, b))
 
 
 def rooms_for_value(v: str) -> List[Tuple[int, int]]:

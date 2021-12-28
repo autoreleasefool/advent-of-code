@@ -1,4 +1,4 @@
-from aoc import AOC
+from aoc import AOC, manhattan
 
 
 aoc = AOC(year=2018, day=6)
@@ -6,10 +6,6 @@ data = aoc.load()
 
 
 ## Part 1
-
-
-def manhattan(coord, coord2):
-    return abs(coord[0] - coord2[0]) + abs(coord[1] - coord2[1])
 
 
 coords = [tuple(t) for t in data.numbers_by_line()]
