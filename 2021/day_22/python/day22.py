@@ -1,6 +1,5 @@
 from __future__ import annotations
 from aoc import AOC
-from itertools import product
 from typing import List, Optional, Tuple
 
 aoc = AOC(year=2021, day=22)
@@ -8,7 +7,7 @@ data = aoc.load()
 
 
 class Cuboid:
-    def __init__(self, xr: range, yr: range, zr: range):
+    def __init__(self, xr: Tuple[int, int], yr: Tuple[int, int], zr: Tuple[int, int]):
         self.xr = xr
         self.yr = yr
         self.zr = zr
@@ -16,7 +15,7 @@ class Cuboid:
     @classmethod
     @property
     def P1(cls) -> Cuboid:
-        return Cuboid(range(-50, 51), range(-50, 51), range(-50, 51))
+        return Cuboid((-50, 50), (-50, 50), (-50, 50))
 
     def intersects(self, other: Cuboid) -> bool:
         return (
@@ -41,55 +40,41 @@ class Cuboid:
     def split(self, other: Cuboid) -> List[Cuboid]:
         bits: List[Cuboid] = []
         if min(self.xr) < min(other.xr):
-            xr = range(min(self.xr), min(other.xr))
-            yr = range(
-                max(min(self.yr), min(other.yr)), min(max(self.yr), max(other.yr)) + 1
-            )
+            xr = (min(self.xr), min(other.xr) - 1)
+            yr = (max(min(self.yr), min(other.yr)), min(max(self.yr), max(other.yr)))
             bits.append(Cuboid(xr, yr, self.zr))
         if max(self.xr) > max(other.xr):
-            xr = range(max(other.xr) + 1, max(self.xr) + 1)
-            yr = range(
-                max(min(self.yr), min(other.yr)), min(max(self.yr), max(other.yr)) + 1
-            )
+            xr = (max(other.xr) + 1, max(self.xr))
+            yr = (max(min(self.yr), min(other.yr)), min(max(self.yr), max(other.yr)))
             bits.append(Cuboid(xr, yr, self.zr))
         if min(self.yr) < min(other.yr):
-            yr = range(min(self.yr), min(other.yr))
+            yr = (min(self.yr), min(other.yr) - 1)
             bits.append(Cuboid(self.xr, yr, self.zr))
         if max(self.yr) > max(other.yr):
-            yr = range(max(other.yr) + 1, max(self.yr) + 1)
+            yr = (max(other.yr) + 1, max(self.yr))
             bits.append(Cuboid(self.xr, yr, self.zr))
         if min(self.zr) < min(other.zr):
-            xr = range(
-                max(min(self.xr), min(other.xr)), min(max(self.xr), max(other.xr)) + 1
-            )
-            yr = range(
-                max(min(self.yr), min(other.yr)), min(max(self.yr), max(other.yr)) + 1
-            )
-            zr = range(min(self.zr), min(other.zr))
+            xr = (max(min(self.xr), min(other.xr)), min(max(self.xr), max(other.xr)))
+            yr = (max(min(self.yr), min(other.yr)), min(max(self.yr), max(other.yr)))
+            zr = (min(self.zr), min(other.zr) - 1)
             bits.append(Cuboid(xr, yr, zr))
         if max(self.zr) > max(other.zr):
-            xr = range(
-                max(min(self.xr), min(other.xr)), min(max(self.xr), max(other.xr)) + 1
-            )
-            ymin, ymax = (
+            xr = (max(min(self.xr), min(other.xr)), min(max(self.xr), max(other.xr)))
+            yr = (
                 max(min(self.yr), min(other.yr)),
-                min(max(self.yr), max(other.yr)) + 1,
+                min(max(self.yr), max(other.yr)),
             )
-            yr = range(ymin, ymax)
-            zr = range(max(other.zr) + 1, max(self.zr) + 1)
+            zr = (max(other.zr) + 1, max(self.zr))
             bits.append(Cuboid(xr, yr, zr))
         return [b for b in bits if b.area > 0]
 
     @property
     def area(self) -> int:
-        return len(self.xr) * len(self.yr) * len(self.zr)
-
-    @property
-    def bits(self) -> List[Tuple[int, int, int]]:
-        return sorted(product(self.xr, self.yr, self.zr))
-
-    def __repr__(self) -> str:
-        return f"[({self.xr}, {self.yr}, {self.zr}), {self.source}, {self.area}]"
+        return (
+            abs(self.xr[1] - self.xr[0] + 1)
+            * abs(self.yr[1] - self.yr[0] + 1)
+            * abs(self.zr[1] - self.zr[0] + 1)
+        )
 
 
 def count_on(within: Optional[Cuboid]) -> int:
@@ -97,8 +82,9 @@ def count_on(within: Optional[Cuboid]) -> int:
     steps = data.parse(
         r"(on|off) x=(-?\d+)\.\.(-?\d+),y=(-?\d+)\.\.(-?\d+),z=(-?\d+)\.\.(-?\d+)"
     )
+
     for toggle, x1, x2, y1, y2, z1, z2 in steps:
-        new_cuboid = Cuboid(range(x1, x2 + 1), range(y1, y2 + 1), range(z1, z2 + 1))
+        new_cuboid = Cuboid((x1, x2), (y1, y2), (z1, z2))
 
         if within is not None and not within.contains(new_cuboid):
             continue
