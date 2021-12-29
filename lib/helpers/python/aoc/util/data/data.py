@@ -32,6 +32,14 @@ class Data:
     def test(self):
         return self._contents if self._contents != self._original_contents else None
 
+    @property
+    def is_test_input(self):
+        return self.test is not None
+
+    @property
+    def is_real_input(self):
+        return self.test is None
+
     @test.setter
     def test(self, value):
         self.on_test_input_set()
