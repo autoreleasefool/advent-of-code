@@ -6,9 +6,11 @@ data = aoc.load()
 algorithm = data.lines()[0]
 input_image = data.lines()[2:]
 
+
 def pixel(bits):
     bits = ["0" if b == "." else "1" for b in bits]
     return algorithm[int("".join(bits), 2)]
+
 
 def enhance(image, iteration):
     xrange = range(len(image[0]))
@@ -27,6 +29,7 @@ def enhance(image, iteration):
                     pixels.append("." if iteration % 2 == 0 else "#")
             output[-1].append(pixel(pixels))
     return output
+
 
 # Part 1
 
