@@ -1,17 +1,15 @@
 from datetime import datetime
-from os import path
 from typing import Optional
 from util.data.data import Data
-import requests
 import sys
 
 
-_SCRIPT_PATH = path.dirname(path.realpath(__file__))
-
-
 class AOC:
-    session: Optional[str] = None
+    token: Optional[str] = None
     is_submitting: bool = False
+
+    input_file: Optional[str] = None
+    log_file: Optional[str] = None
 
     contains_test_input: bool = False
     force_skip_test: bool = False
@@ -27,15 +25,13 @@ class AOC:
         self.p2_solution = None
 
     def load(self):
-        if not path.exists(self._input_file):
-            self._fetch(self._input_file)
-
         contents = None
-        with open(self._input_file) as f:
-            contents = f.read()
+        if AOC.input_file:
+            with open(AOC.input_file) as f:
+                contents = f.read()
 
         if not contents:
-            raise Exception(f"Failed to load input data ({self._input_file})")
+            raise Exception(f"Failed to load input data ({AOC.input_file})")
 
         return Data(
             contents,
@@ -48,8 +44,9 @@ class AOC:
         sys.stdout.flush()
 
     def log(self, s):
-        with open(self._log_file, "a") as f:
-            f.write(f"{datetime.now()}: {s}\n")
+        if AOC.log_file:
+            with open(AOC.log_file, "a") as f:
+                f.write(f"{datetime.now()}: {s}\n")
 
     def p1(self, solution):
         self.p1_solution = solution
@@ -66,41 +63,3 @@ class AOC:
         else:
             self.d(solution)
         self.log(solution)
-
-    def _fetch(self, input_file):
-        cookies = {"session": AOC.session}
-        r = requests.get(
-            f"https://adventofcode.com/{self.year}/day/{self.day}/input",
-            cookies=cookies,
-        )
-
-        with open(input_file, "w") as f:
-            f.write(r.text)
-
-    @property
-    def _input_file(self):
-        return path.join(
-            _SCRIPT_PATH,
-            "..",
-            "..",
-            "..",
-            "..",
-            "..",
-            str(self.year),
-            f"day_{self.day}" if self.day >= 10 else f"day_0{self.day}",
-            "input.txt",
-        )
-
-    @property
-    def _log_file(self):
-        return path.join(
-            _SCRIPT_PATH,
-            "..",
-            "..",
-            "..",
-            "..",
-            "..",
-            str(self.year),
-            f"day_{self.day}" if self.day >= 10 else f"day_0{self.day}",
-            ".log",
-        )

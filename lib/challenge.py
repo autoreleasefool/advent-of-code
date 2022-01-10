@@ -8,31 +8,31 @@ class Challenge:
     day: int
 
     @property
-    def url(self):
+    def url(self) -> str:
         return f"https://adventofcode.com/{self.year}/day/{self.day}"
 
     @property
-    def input_url(self):
+    def input_url(self) -> str:
         return f"{self.url}/input"
 
     @property
-    def submit_url(self):
+    def submit_url(self) -> str:
         return f"{self.url}/answer"
 
-    @property
-    def working_directory(self):
-        return path.join(".", str(self.year), f"day_{self.day_with_padding}")
+    def working_directory(self, base_directory: str) -> str:
+        return path.join(base_directory, str(self.year), f"day_{self.day_with_padding}")
+
+    def input_file(self, base_directory: str) -> str:
+        return path.join(self.working_directory(base_directory), "input.txt")
+
+    def output_file(self, base_directory: str) -> str:
+        return path.join(self.working_directory(base_directory), "output.txt")
+
+    def log_file(self, base_directory: str) -> str:
+        return path.join(self.working_directory(base_directory), ".log")
 
     @property
-    def input_file(self):
-        return path.join(self.working_directory, "input.txt")
-
-    @property
-    def output_file(self):
-        return path.join(self.working_directory, "output.txt")
-
-    @property
-    def day_with_padding(self):
+    def day_with_padding(self) -> str:
         return str(self.day) if self.day >= 10 else f"0{self.day}"
 
     def validate(self):

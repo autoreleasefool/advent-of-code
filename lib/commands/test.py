@@ -27,7 +27,7 @@ class Test:
         #     session.challenge = Challenge(current_challenge.year, day)
         #     session.save = False
 
-        #     if not path.exists(session.challenge.output_file):
+        #     if not path.exists(session.output_file):
         #         print(f"no solution exists for {session.challenge}, skipping.")
         #         continue
 

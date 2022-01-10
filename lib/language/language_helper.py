@@ -16,7 +16,7 @@ class LanguageHelper(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def solve_challenge(self, session: Session) -> subprocess.Popen[str]:
+    def solve_challenge(self, session: Session) -> Optional[subprocess.Popen[str]]:
         raise NotImplementedError()
 
     def run(self, session: Session) -> Tuple[int, str]:
@@ -31,6 +31,9 @@ class LanguageHelper(ABC):
 
         print("---")
         p = self.solve_challenge(session)
+
+        if p is None:
+            return 1, "failed to run"
 
         output = []
         while True:

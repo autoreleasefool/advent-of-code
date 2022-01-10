@@ -16,6 +16,7 @@ class Session:
     token: Optional[str]
     language: Optional[LanguageID]
     challenge: Optional[Challenge]
+    base_directory: str
 
     def __init__(self, command: Command, command_args: Any):
         self.command = command
@@ -23,6 +24,7 @@ class Session:
         self.token = None
         self.language = None
         self.challenge = None
+        self.base_directory = path.realpath(".")
 
         if path.exists(_cache_file):
             with open(_cache_file) as f:
@@ -35,7 +37,21 @@ class Session:
 
     @property
     def working_directory(self) -> str:
-        return path.join(self.challenge.working_directory, self.language.value)
+        return path.join(
+            self.challenge.working_directory(self.base_directory), self.language.value
+        )
+
+    @property
+    def input_file(self) -> str:
+        return self.challenge.input_file(self.base_directory)
+
+    @property
+    def output_file(self) -> str:
+        return self.challenge.output_file(self.base_directory)
+
+    @property
+    def log_file(self) -> str:
+        return self.challenge.log_file(self.base_directory)
 
     def validate(self, require_token: bool = False):
         if require_token and not self.token:

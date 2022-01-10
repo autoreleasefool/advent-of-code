@@ -31,18 +31,18 @@ class Run:
         if session.command == Command.RUN or session.command == Command.TEST:
             if output and session.command_args.save:
                 print(f"saving output {output}")
-                with open(session.challenge.output_file, "w") as f:
+                with open(session.output_file, "w") as f:
                     f.write(output)
             else:
                 # When not saving, compare the solution to the current solution and report
-                if path.exists(session.challenge.output_file):
-                    with open(session.challenge.output_file) as f:
+                if path.exists(session.output_file):
+                    with open(session.output_file) as f:
                         solution = f.read()
                         if solution == output:
                             print("✅ your solution appears correct!")
                         else:
                             print(
-                                f"❌ solution does not match one found in {session.challenge.output_file}"
+                                f"❌ solution does not match one found in {session.output_file}"
                             )
                             print(f"\texpected: {solution}")
                             print(f"\treceived: {output}")

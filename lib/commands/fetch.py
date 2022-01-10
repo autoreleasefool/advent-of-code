@@ -11,10 +11,9 @@ class Fetch:
 
     def run(self, session: Session):
         session.validate(require_token=True)
-        input_file = session.challenge.input_file
 
         # Already cached input
-        if path.exists(input_file):
+        if path.exists(session.input_file):
             print(f"input already exists for {session.challenge}, not fetching")
             return
 
@@ -23,6 +22,6 @@ class Fetch:
         r = requests.get(session.challenge.input_url, cookies=cookies)
 
         # Cache to the file
-        with open(input_file, "w") as f:
+        with open(session.input_file, "w") as f:
             f.write(r.text)
             print(f"Fetched and cached input for ${session.challenge}")
