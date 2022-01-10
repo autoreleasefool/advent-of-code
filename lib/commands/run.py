@@ -17,8 +17,8 @@ class Run:
         print(f"=====\nRunning {session.challenge}:")
 
         start_time = time.perf_counter()
-        helper = language_helper(session.language)
-        return_code, output = helper.run(session)
+        helper = language_helper(session)
+        return_code, output = helper.run()
         end_time = time.perf_counter()
 
         if return_code != 0:

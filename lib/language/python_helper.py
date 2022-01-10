@@ -8,8 +8,8 @@ import subprocess
 
 
 class PythonHelper(LanguageHelper):
-    def __init__(self):
-        super().__init__(LanguageID.PYTHON)
+    def __init__(self, session: Session):
+        super().__init__(LanguageID.PYTHON, session)
 
     @property
     def file_extension(self) -> str:
@@ -17,9 +17,9 @@ class PythonHelper(LanguageHelper):
 
     @property
     def execution_directory(self) -> str:
-        return path.join(".", "lib", "helpers", "python")
+        return path.join(self.session.base_directory, "lib", "helpers", "python")
 
-    def solve_challenge(self, session: Session) -> subprocess.Popen[str]:
+    def solve_challenge(self) -> subprocess.Popen[str]:
         # Python uses a custom runner to inject helper logic
         command = filter(
             None,
@@ -27,18 +27,18 @@ class PythonHelper(LanguageHelper):
                 which("python3"),
                 "-m",
                 "runner",
-                session.base_directory,
+                self.session.base_directory,
                 "--year",
-                str(session.challenge.year),
+                str(self.session.challenge.year),
                 "--day",
-                str(session.challenge.day),
+                str(self.session.challenge.day),
                 "--token",
-                session.token,
+                self.session.token,
                 "--input",
-                session.input_file,
+                self.session.input_file,
                 "--log",
-                session.log_file,
-                "--submit" if session.command == Command.SUBMIT else None,
+                self.session.log_file,
+                "--submit" if self.session.command == Command.SUBMIT else None,
             ],
         )
 
