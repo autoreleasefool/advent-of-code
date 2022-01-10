@@ -1,12 +1,8 @@
 from argparse import ArgumentParser
 from lib.commands import Command
-from lib.language import Language
+from lib.language import language_helper
 from lib.session import Session
-from lib.util.filesystem import cd
 from os import path
-from shutil import which
-from typing import List
-import subprocess
 import time
 
 
@@ -20,10 +16,9 @@ class Run:
         session.validate(require_token=True)
         print(f"=====\nRunning {session.challenge}:")
 
-        command = self._get_command(session)
-
         start_time = time.perf_counter()
-        return_code, output = self._run(session, command)
+        helper = language_helper(session.language)
+        return_code, output = helper.run(session)
         end_time = time.perf_counter()
 
         if return_code != 0:
@@ -57,57 +52,3 @@ class Run:
         # When running the submit command, return the output
         if session.command == Command.SUBMIT:
             return output
-
-    def _run(self, session: Session, command: List[str], nested=False):
-        if session.compilation_directory and not nested:
-            # Some languages require commands to be run from the source directory, so cd in
-            with cd(session.compilation_directory):
-                return self._run(session, command, nested=True)
-
-        print("---")
-        p = subprocess.Popen(
-            command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, text=True
-        )
-        output = []
-
-        while True:
-            stream = p.stdout.readline()
-
-            if stream == "" and p.poll() is not None:
-                break
-
-            if stream:
-                output.append(stream.strip())
-                print(stream.strip())
-
-        print("---")
-        return p.returncode, "\n".join(output)
-
-    def _get_command(self, session: Session):
-        if session.language == Language.PYTHON:
-            # Python uses a custom runner to inject helper logic
-            return filter(
-                None,
-                [
-                    which("python3"),
-                    "-m",
-                    "runner",
-                    "--year",
-                    str(session.challenge.year),
-                    "--day",
-                    str(session.challenge.day),
-                    "--session",
-                    session.token,
-                    "--submit" if session.command == Command.SUBMIT else None,
-                ],
-            )
-
-    def _compile(self, session: Session):
-        return subprocess.run(
-            session.language.compilation_command
-            + [
-                session.root_file,
-                "-o",
-                session.compiled_file,
-            ]
-        )

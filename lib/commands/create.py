@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+from lib.language import language_helper
 from lib.util.filesystem import copy_directory
 from lib.session import Session
 from shutil import copy
@@ -15,28 +16,25 @@ class Create:
             print(f"did not create {session.challenge} because it already exists.")
             return
 
-        supporting_directory = session.language.supporting_files_directory
-        starter_file = session.language.starter_file
+        helper = language_helper(session.language)
+        supporting_directory = helper.supporting_files_directory
+        starter_file = helper.starter_file
+        root_file = helper.root_file(session)
 
         # Create the directory for files to placed into
-        os.makedirs(
-            os.path.join(
-                session.working_directory,
-                session.language.src_prefix if session.language.src_prefix else "",
-            )
-        )
+        os.makedirs(session.working_directory)
 
         if os.path.exists(starter_file):
             # Copy the base starter file and replace macros
-            copy(starter_file, session.root_file)
+            copy(starter_file, root_file)
 
-            with open(session.root_file) as r:
+            with open(root_file) as r:
                 text = (
                     r.read()
                     .replace("__year__", str(session.challenge.year))
                     .replace("__day__", str(session.challenge.day))
                 )
-            with open(session.root_file, "w") as w:
+            with open(root_file, "w") as w:
                 w.write(text)
 
             print(

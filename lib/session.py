@@ -1,6 +1,6 @@
 from lib.challenge import Challenge
 from lib.commands.command import Command
-from lib.language import Language
+from lib.language.language_id import LanguageID
 from os import path
 from typing import Any, Optional
 import json
@@ -14,7 +14,7 @@ class Session:
     command_args: Any
 
     token: Optional[str]
-    language: Optional[Language]
+    language: Optional[LanguageID]
     challenge: Optional[Challenge]
 
     def __init__(self, command: Command, command_args: Any):
@@ -28,42 +28,14 @@ class Session:
             with open(_cache_file) as f:
                 cache = json.load(f)
                 self.token = cache["token"]
-                self.language = Language(cache["language"])
+                self.language = LanguageID(cache["language"])
                 self.challenge = Challenge(cache["year"], cache["day"])
 
         self.validate(require_token=False)
 
     @property
-    def working_directory(self):
+    def working_directory(self) -> str:
         return path.join(self.challenge.working_directory, self.language.value)
-
-    @property
-    def compilation_directory(self):
-        if self.language == Language.PYTHON:
-            return path.join(".", "lib", "helpers", "python")
-
-    @property
-    def root_file(self):
-        return path.join(
-            self.working_directory,
-            self.language.src_prefix if self.language.src_prefix else "",
-            f"day{self.challenge.day_with_padding}{self.language.file_extension}",
-        )
-
-    @property
-    def compiled_file(self):
-        extension = self.language.compiled_extension
-        if not extension:
-            return None
-
-        return path.join(
-            path.dirname(path.realpath(__file__)),
-            "..",
-            str(self.challenge.year),
-            f"day_{self.challenge.day_with_padding}",
-            self.language.value,
-            f"day{self.challenge.day_with_padding}{self.language.compiled_extension}",
-        )
 
     def validate(self, require_token: bool = False):
         if require_token and not self.token:
@@ -71,6 +43,9 @@ class Session:
         if not self.language:
             raise ValueError("language is not available")
         self.challenge.validate()
+
+    def __repr__(self):
+        return f"AOC {self.challenge}, {self.language.value}"
 
     def cache(self):
         values = {

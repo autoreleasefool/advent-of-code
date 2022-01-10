@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 from datetime import datetime, timezone, timedelta
 from lib.challenge import Challenge
-from lib.language import Language
+from lib.language import LanguageID
 from lib.session import Session
 
 
@@ -17,8 +17,8 @@ class Set:
         parser.add_argument(
             "-l",
             help="The language of the script to run",
-            type=Language,
-            choices=list(Language),
+            type=LanguageID,
+            choices=list(LanguageID),
         )
         parser.add_argument(
             "-y",
@@ -76,3 +76,4 @@ class Set:
 
         session.validate()
         session.cache()
+        print(session)

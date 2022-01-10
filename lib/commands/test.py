@@ -14,23 +14,24 @@ class Test:
         )
 
     def run(self, session: Session):
-        current_challenge = session.challenge
-        current_args = session.command_args
-        strict_mode = session.command_args.strict
+        print("testing is currently a WIP")
+        # current_challenge = session.challenge
+        # current_args = session.command_args
+        # strict_mode = session.command_args.strict
 
-        parser = ArgumentParser()
-        Run.build_parser(parser)
-        session.command_args = parser.parse_args([])
+        # parser = ArgumentParser()
+        # Run.build_parser(parser)
+        # session.command_args = parser.parse_args([])
 
-        for day in range(1, 26):
-            session.challenge = Challenge(current_challenge.year, day)
-            session.save = False
+        # for day in range(1, 26):
+        #     session.challenge = Challenge(current_challenge.year, day)
+        #     session.save = False
 
-            if not path.exists(session.challenge.output_file):
-                print(f"no solution exists for {session.challenge}, skipping.")
-                continue
+        #     if not path.exists(session.challenge.output_file):
+        #         print(f"no solution exists for {session.challenge}, skipping.")
+        #         continue
 
-            Run().run(session)
+        #     Run().run(session)
 
-        session.challenge = current_challenge
-        session.command_args = current_args
+        # session.challenge = current_challenge
+        # session.command_args = current_args
