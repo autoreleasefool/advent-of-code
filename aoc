@@ -17,9 +17,15 @@ def parse_args(args=None):
         subparser = subparsers.add_parser(command.value)
         runner_for_command(command).build_parser(subparser)
 
+    if not args:
+        session = Session(None, None)
+        print(session)
+        return
+
     parsed = parser.parse_args(args)
     command = Command(parsed.command)
     session = Session(command, parsed)
+    print(session)
 
     runner_for_command(command)().run(session)
 
