@@ -2,6 +2,16 @@
 
 My solutions to the Advent of Code challenges
 
+## 2022 -> 2/50 :star:
+
+| Sunday              | Monday              | Tuesday             | Wednesday           | Thursday            | Friday              | Saturday            |
+| ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- |
+|                     |                     |                     |                     | **1** :star::star:  | **2**               | **3**               |
+| **4**               | **5**               | **6**               | **7**               | **8**               | **9**               | **10**              |
+| **11**              | **12**              | **13**              | **14**              | **15**              | **16**              | **17**              |
+| **18**              | **19**              | **20**              | **21**              | **22**              | **23**              | **24**              |
+| **25**              |
+
 ## 2021 -> 46/50 :star:
 
 | Sunday              | Monday              | Tuesday             | Wednesday           | Thursday            | Friday              | Saturday            |
@@ -138,7 +148,7 @@ options:
   -h, --help            show this help message and exit
   --token TOKEN         Set the session token
   -l {Language.PYTHON}  The language of the script to run
-  -y {2015,2016,2017,2018,2019,2020,2021}
+  -y {2015,2016,2017,2018,2019,2020,2021,2022}
                         The year of the challenge to run
   -d {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25}
                         The day of the challenge to run
