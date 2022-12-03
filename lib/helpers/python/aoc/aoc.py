@@ -51,3 +51,6 @@ Deck = deck.Deck
 
 # Util functions
 from util.functions import *
+
+# Strings function
+from util.strings import *
