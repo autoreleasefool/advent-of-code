@@ -24,6 +24,9 @@ class Position:
             return (self.x, self.y, self.z)
         return (self.x, self.y, self.z, self.w)
 
+    def __iter__(self):
+        return iter(self.__attrs())
+
     def __repr__(self):
         return str(self.__attrs())
 
