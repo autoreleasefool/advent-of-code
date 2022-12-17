@@ -147,9 +147,10 @@ class Position:
         return northwest
 
     def move_northwest(self):
-        if not Position.hexagonal:
-            return
-        self.x, self.z = self.x + 1, self.z - 1
+        if Position.hexagonal:
+            self.x, self.z = self.x + 1, self.z - 1
+        else:
+            self.x, self.y = self.x - 1, self.y - 1
 
     def northeast(self):
         northeast = copy(self)
@@ -157,9 +158,10 @@ class Position:
         return northeast
 
     def move_northeast(self):
-        if not Position.hexagonal:
-            return
-        self.y, self.z = self.y + 1, self.z - 1
+        if Position.hexagonal:
+            self.y, self.z = self.y + 1, self.z - 1
+        else:
+            self.x, self.y = self.x + 1, self.y - 1
 
     def southwest(self):
         southwest = copy(self)
@@ -167,9 +169,10 @@ class Position:
         return southwest
 
     def move_southwest(self):
-        if not Position.hexagonal:
-            return
-        self.y, self.z = self.y - 1, self.z + 1
+        if Position.hexagonal:
+            self.y, self.z = self.y - 1, self.z + 1
+        else:
+            self.x, self.y = self.x - 1, self.y + 1
 
     def southeast(self):
         southeast = copy(self)
@@ -177,6 +180,7 @@ class Position:
         return southeast
 
     def move_southeast(self):
-        if not Position.hexagonal:
-            return
-        self.x, self.z = self.x - 1, self.z + 1
+        if Position.hexagonal:
+            self.x, self.z = self.x - 1, self.z + 1
+        else:
+            self.x, self.y = self.x + 1, self.y + 1
