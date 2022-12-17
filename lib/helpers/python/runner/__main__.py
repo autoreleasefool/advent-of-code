@@ -42,7 +42,7 @@ AOC.log_file = parsed.log
 challenge_module = import_module(f"day{day_str}")
 
 # If test data is set running the challenge above, run it again forcing the test data to be skipped
-if AOC.contains_test_input:
+if AOC.contains_test_input and not AOC.skip_real_input:
     AOC.force_skip_test = True
     print("--running again, with real input--")
     reload(challenge_module)

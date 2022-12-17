@@ -11,6 +11,7 @@ class AOC:
     input_file: Optional[str] = None
     log_file: Optional[str] = None
 
+    skip_real_input: bool = False
     contains_test_input: bool = False
     force_skip_test: bool = False
 

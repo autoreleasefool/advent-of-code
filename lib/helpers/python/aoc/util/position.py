@@ -108,7 +108,7 @@ class Position:
         if Position.hexagonal:
             self.x, self.y = self.x - 1, self.y + 1
         else:
-            self.x -= 1
+            self.x += 1
 
     def west(self):
         west = copy(self)
@@ -119,7 +119,7 @@ class Position:
         if Position.hexagonal:
             self.x, self.y = self.x + 1, self.y - 1
         else:
-            self.x += 1
+            self.x -= 1
 
     def north(self):
         north = copy(self)
