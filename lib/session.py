@@ -32,6 +32,9 @@ class Session:
                 self.token = cache["token"]
                 self.language = LanguageID(cache["language"])
                 self.challenge = Challenge(cache["year"], cache["day"])
+        else:
+            self.language = LanguageID.PYTHON # default to Python
+            self.challenge = Challenge(year=2015, day=1) # default to 2015, day 1
 
         self.validate(require_token=False)
 
