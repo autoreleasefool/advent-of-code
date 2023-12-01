@@ -25,7 +25,11 @@ class Fetch:
         cookies = {"session": session.token}
         r = requests.get(session.challenge.input_url, cookies=cookies, headers=headers)
 
+        if r.text.startswith('Please don\'t repeatedly request this endpoint before it unlocks!'):
+            print(f"{session.challenge} does not appear to be live. input not cached")
+            return
+
         # Cache to the file
         with open(session.input_file, "w") as f:
             f.write(r.text)
-            print(f"Fetched and cached input for ${session.challenge}")
+            print(f"Fetched and cached input for {session.challenge}")
