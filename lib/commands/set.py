@@ -5,7 +5,7 @@ from lib.language import LanguageID
 from lib.session import Session
 
 
-_valid_years = range(2015, 2023)
+_valid_years = range(2015, 2024)
 _valid_days = range(1, 26)
 
 
