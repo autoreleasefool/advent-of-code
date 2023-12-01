@@ -20,3 +20,6 @@ def parse_regex(regex, line, container=list, intify=True):
 
 def parse_number_line(line):
     return [int(match) for match in re.findall(r"-?\d+", line)]
+
+def parse_digit_line(line):
+    return [int(match) for match in re.findall(r"\d", line)]

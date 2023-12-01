@@ -2,7 +2,7 @@ import json
 import re
 from types import FunctionType
 from typing import Any, List
-from util.data.regex import parse_number_line, parse_regex
+from util.data.regex import parse_number_line, parse_regex, parse_digit_line
 from util.data.rules import Rule
 
 
@@ -60,6 +60,9 @@ class Data:
     # List of numbers in the file, with multiple numbers per line
     def numbers_by_line(self) -> List[List[int]]:
         return [parse_number_line(line) for line in self.lines()]
+
+    def digits_by_line(self) -> List[List[int]]:
+        return [parse_digit_line(line) for line in self.lines()]
 
     # JSON contents
     def json(self) -> Any:
