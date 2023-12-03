@@ -22,6 +22,7 @@ import util.fmath as fmath
 chinese_remainder = fmath.chinese_remainder
 mul_inv = fmath.mul_inv
 numbers_from = fmath.numbers_from
+prod = fmath.prod
 
 # Computer
 

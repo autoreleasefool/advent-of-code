@@ -1,4 +1,5 @@
 from functools import reduce
+import operator
 import re
 
 # Usage:
@@ -35,3 +36,6 @@ def mul_inv(a, b):
 def numbers_from(l):
     regex = r"-?\d+"
     return [int(match) for match in re.findall(regex, l)]
+
+def prod(l) -> int:
+    return reduce(operator.mul, l)
