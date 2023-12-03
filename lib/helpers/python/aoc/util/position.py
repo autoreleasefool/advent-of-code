@@ -1,4 +1,9 @@
 from copy import copy
+from typing import List, Tuple
+
+
+def positions_around(x: int, y: int) -> List[Tuple[int, int]]:
+    return ((x + dx, y + dy) for dx in range(-1, 2) for dy in range(-1, 2) if not (dx == 0 and dy == 0))
 
 
 class Position:

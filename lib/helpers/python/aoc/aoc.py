@@ -39,6 +39,7 @@ IntcodeComputer = intcode.IntcodeComputer
 import util.position as position
 
 Position = position.Position
+positions_around = position.positions_around
 
 # Direction
 import util.direction as direction
@@ -65,3 +66,7 @@ from util.data.regex import parse_number_line
 # Ranges
 
 from util.ranges import *
+
+# Strings
+
+from util.strings import *
