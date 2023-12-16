@@ -1,8 +1,10 @@
+from .direction import Direction
+from .functions import griditer
 from copy import copy
-from typing import List, Tuple
+from typing import Self
 
 
-def positions_around(x: int, y: int) -> List[Tuple[int, int]]:
+def positions_around(x: int, y: int) -> list[tuple[int, int]]:
     return ((x + dx, y + dy) for dx in range(-1, 2) for dy in range(-1, 2) if not (dx == 0 and dy == 0))
 
 
@@ -104,6 +106,14 @@ class Position:
             self.southwest(),
         ]
 
+    def move(self, direction: Direction) -> Self:
+        match direction:
+            case Direction.N: return self.north()
+            case Direction.S: return self.south()
+            case Direction.E: return self.east()
+            case Direction.W: return self.west()
+
+
     def east(self):
         east = copy(self)
         east.move_east()
@@ -189,3 +199,10 @@ class Position:
             self.x, self.z = self.x - 1, self.z + 1
         else:
             self.x, self.y = self.x + 1, self.y + 1
+
+
+def map_grid_to_postions[T](grid: list[list[T]]) -> dict[Position, T]:
+    grid_by_position = {}
+    for x, y in griditer(grid):
+        grid_by_position[Position(x, y)] = grid[y][x]
+    return grid_by_position

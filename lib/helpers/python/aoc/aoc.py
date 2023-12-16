@@ -36,10 +36,7 @@ IntcodeComputer = intcode.IntcodeComputer
 
 # Position
 
-import util.position as position
-
-Position = position.Position
-positions_around = position.positions_around
+from util.position import *
 
 # Direction
 import util.direction as direction

@@ -43,7 +43,7 @@ def manhattan(a: Iterable[int], b: Iterable[int]) -> int:
     return sum(map(lambda i, j: abs(i - j), a, b))
 
 
-def griditer(l: List[List[int]]) -> List[Tuple[int, int]]:
+def griditer(l: List[List[Any]]) -> List[Tuple[int, int]]:
     return product(range(len(l[0])), range(len(l)))
 
 
