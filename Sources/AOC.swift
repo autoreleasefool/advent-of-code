@@ -7,6 +7,7 @@ struct AOC: AsyncParsableCommand {
 		subcommands: [
 			Commands.Calendar.self,
 			Commands.Login.self,
+			Commands.Open.self,
 		]
 	)
 }

@@ -6,13 +6,13 @@ extension Commands {
 			help: "Event year",
 			completion: .list(Year.allCases.map(\.rawValue))
 		)
-		var year: Year
+		var year: Year?
 
 		@Argument(
 			help: "Challenge day",
 			completion: .list([1...25].map(\.description))
 		)
-		var day: Int
+		var day: Int?
 
 		@SessionStorage("year")
 		var sessionYear: Year = .y24
@@ -21,13 +21,15 @@ extension Commands {
 		var sessionDay: Int = 1
 
 		mutating func run() async throws {
-			print("year originally \(sessionYear), day originally \(sessionDay)")
+			if let year {
+				sessionYear = year
+			}
 
+			if let day {
+				sessionDay = day
+			}
 
-			sessionYear = year
-			sessionDay = day
-
-			print("Updated challenge to (\(sessionYear), \(sessionDay))")
+			print("Calendar is set to (\(sessionYear), \(sessionDay))")
 		}
 	}
 }
