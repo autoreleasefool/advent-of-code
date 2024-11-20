@@ -1,6 +1,6 @@
 import ArgumentParser
 
-enum Year: String, CaseIterable, Codable, LosslessStringConvertible, ExpressibleByArgument {
+public enum Year: String, CaseIterable, Codable, LosslessStringConvertible, ExpressibleByArgument {
 	case y15 = "2015"
 	case y16 = "2016"
 	case y17 = "2017"
@@ -12,13 +12,14 @@ enum Year: String, CaseIterable, Codable, LosslessStringConvertible, Expressible
 	case y23 = "2023"
 	case y24 = "2024"
 
-	var description: String { rawValue }
+	public var description: String { rawValue }
+	public var intValue: Int { Int(rawValue)! }
 
-	init?(_ description: String) {
+	public init?(_ description: String) {
 		self.init(rawValue: description)
 	}
 
-	init?(argument: String) {
+	public init?(argument: String) {
 		self.init(rawValue: argument)
 	}
 }

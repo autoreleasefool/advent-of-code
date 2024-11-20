@@ -1,5 +1,6 @@
-import ArgumentParser
+import AdventSupport
 import AppKit
+import ArgumentParser
 
 extension Commands {
 	struct Open: AsyncParsableCommand {
