@@ -14,7 +14,7 @@ public class Year2015Day01: Solver {
 	// MARK: Part 1
 
 	private func solvePart1(_ input: Input) async throws -> String {
-		try input.read()
+		input.contents
 			.reduce(0) { floor, c in floor + (c == "(" ? 1 : -1) }
 			.description
 	}
@@ -23,7 +23,7 @@ public class Year2015Day01: Solver {
 
 	private func solvePart2(_ input: Input) async throws -> String {
 		var floor = 0
-		for (index, c) in try input.read().enumerated() {
+		for (index, c) in input.contents.enumerated() {
 			floor += c == "(" ? 1 : -1
 			if floor == -1 {
 				return (index + 1).description

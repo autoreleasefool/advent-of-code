@@ -34,11 +34,12 @@ extension Challenge {
 	}
 
 	func fetchInput() async throws {
-		let input = Input(challenge: self)
-		print("Fetching input, storing to \(input.url)")
+		let inputFile = workingDirectory.appending(path: "input.txt")
 
-		guard !FileManager.default.fileExists(atPath: input.url.path()) else {
-			print("Input exists at \(input.url), not fetching")
+		print("Fetching input, storing to \(inputFile)")
+
+		guard !FileManager.default.fileExists(atPath: inputFile.path()) else {
+			print("Input exists at \(inputFile), not fetching")
 			return
 		}
 
@@ -61,6 +62,6 @@ extension Challenge {
 			return
 		}
 
-		try data.write(to: input.url)
+		try data.write(to: inputFile)
 	}
 }

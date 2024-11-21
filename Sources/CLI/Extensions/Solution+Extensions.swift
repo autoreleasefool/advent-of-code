@@ -36,12 +36,20 @@ extension Solution {
 
 		let parts = output.components(separatedBy: .newlines)
 
-		if let expectedPart1 = parts.first, expectedPart1 != part1 {
-			throw ValidationError.part1FailedValidation(expected: expectedPart1, received: part1)
+		if let expectedPart1 = parts.first {
+			if expectedPart1 == part1, let part1 {
+				print("Part 1 '\(part1)' is correct!")
+			} else {
+				throw ValidationError.part1FailedValidation(expected: expectedPart1, received: part1)
+			}
 		}
 
-		if parts.count == 2, let expectedPart2 = parts.last, expectedPart2 != part2 {
-			throw ValidationError.part2FailedValidation(expected: expectedPart2, received: part2)
+		if parts.count == 2, let expectedPart2 = parts.last {
+			if expectedPart2 == part2, let part2 {
+				print("Part 2 '\(part2)' is correct!")
+			} else {
+				throw ValidationError.part2FailedValidation(expected: expectedPart2, received: part2)
+			}
 		}
 	}
 }

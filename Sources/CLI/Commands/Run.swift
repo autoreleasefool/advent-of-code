@@ -18,7 +18,7 @@ extension Commands {
 			let challenge = Challenge(year: sessionYear, day: sessionDay)
 			try await challenge.fetchInput()
 
-			let input = Input(challenge: challenge)
+			let input = try Input(challenge: challenge)
 
 			let solver = try challenge.retrieveSolver()
 
