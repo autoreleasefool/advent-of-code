@@ -1,4 +1,5 @@
 import AdventSupport
+import AppKit
 import ArgumentParser
 import Foundation
 import Stencil
@@ -15,6 +16,16 @@ extension Commands {
 			let challenge = Challenge(year: sessionYear, day: sessionDay)
 
 			try challenge.createTemplate()
+
+			await withThrowingTaskGroup(of: Void.self) { group in
+				group.addTask {
+					try await challenge.waitToOpenWebsite()
+				}
+
+				group.addTask {
+					try await challenge.waitToFetchInput()
+				}
+			}
 		}
 	}
 }

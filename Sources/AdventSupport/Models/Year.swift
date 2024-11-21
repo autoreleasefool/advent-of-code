@@ -1,6 +1,6 @@
 import ArgumentParser
 
-public enum Year: String, CaseIterable, Codable, LosslessStringConvertible, ExpressibleByArgument {
+public enum Year: String, CaseIterable, Sendable, Codable, LosslessStringConvertible, ExpressibleByArgument {
 	case y15 = "2015"
 	case y16 = "2016"
 	case y17 = "2017"

@@ -16,6 +16,7 @@ extension Commands {
 
 		mutating func run() async throws {
 			let challenge = Challenge(year: sessionYear, day: sessionDay)
+			try await challenge.fetchInput()
 
 			let input = Input(challenge: challenge)
 
