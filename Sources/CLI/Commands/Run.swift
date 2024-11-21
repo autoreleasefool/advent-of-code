@@ -19,7 +19,7 @@ extension Commands {
 
 			let input = Input(challenge: challenge)
 
-			let solver = try retrieveSolver(challenge: challenge)
+			let solver = try challenge.retrieveSolver()
 
 			let solution = try await solver.solve(input)
 
@@ -30,18 +30,23 @@ extension Commands {
 				print("Solution appears correct!")
 			}
 		}
-
-		private func retrieveSolver(challenge: Challenge) throws -> Solver {
-			let solverClassName = challenge.solverClassName
-			guard let solverClass = Bundle.main.classNamed(solverClassName),
-						let solverType = solverClass as? Solver.Type else {
-				throw CommandError.solutionClassNotFound(solverClassName)
-			}
-
-			return solverType.init()
-		}
 	}
 }
+
+// MARK: Challenge Extension
+
+fileprivate extension Challenge {
+	func retrieveSolver() throws -> Solver {
+		guard let solverClass = Bundle.main.classNamed(solverClassName),
+					let solverType = solverClass as? Solver.Type else {
+			throw Commands.Run.CommandError.solutionClassNotFound(solverClassName)
+		}
+		
+		return solverType.init()
+	}
+}
+
+// MARK: Error
 
 extension Commands.Run {
 	enum CommandError: LocalizedError {
