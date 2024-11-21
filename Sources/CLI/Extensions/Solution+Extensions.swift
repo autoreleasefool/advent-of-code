@@ -19,7 +19,9 @@ extension Solution {
 			return
 		}
 
-		try data.write(to: challenge.workingDirectory.appending(path: "output.txt"))
+		let outputFile = challenge.workingDirectory.appending(path: "output.txt")
+		print("Writing output to '\(outputFile.path())'")
+		try data.write(to: outputFile)
 	}
 
 	func validate(against challenge: Challenge) throws {
@@ -35,6 +37,8 @@ extension Solution {
 		guard !output.isEmpty else { return }
 
 		let parts = output.components(separatedBy: .newlines)
+
+		print("==== Validation ====")
 
 		if let expectedPart1 = parts.first {
 			if expectedPart1 == part1, let part1 {

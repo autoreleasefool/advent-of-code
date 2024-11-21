@@ -8,6 +8,9 @@ extension Commands {
 		@Flag(help: "Save the output")
 		var save = false
 
+		@Flag(name: .shortAndLong, help: "Copy the latest solution to the clipboard")
+		var copyToClipboard = false
+
 		@SessionStorage("year")
 		var sessionYear: Year = .y24
 
@@ -24,11 +27,16 @@ extension Commands {
 
 			let solution = try await solver.solve(input)
 
+			solution.log()
+
+			if copyToClipboard {
+				solution.copyToClipboard()
+			}
+
 			if save {
 				try solution.write(to: challenge)
 			} else {
 				try solution.validate(against: challenge)
-				print("Solution appears correct!")
 			}
 		}
 	}
