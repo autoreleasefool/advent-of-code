@@ -50,7 +50,7 @@ fileprivate extension Challenge {
 					let solverType = solverClass as? Solver.Type else {
 			throw Commands.Run.CommandError.solutionClassNotFound(solverClassName)
 		}
-		
+
 		return solverType.init()
 	}
 }
