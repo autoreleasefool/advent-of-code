@@ -26,6 +26,10 @@ public struct Challenge: Sendable {
 		return calendar.date(from: components)!
 	}
 
+	public var hasStarted: Bool {
+		Date() >= startTime
+	}
+
 	public var website: URL {
 		URL(string: "https://adventofcode.com/\(year)/day/\(day)")!
 	}

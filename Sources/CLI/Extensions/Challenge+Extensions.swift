@@ -4,6 +4,22 @@ import Foundation
 
 extension Challenge {
 
+	// MARK: Meta
+
+	func retrieveSolver() throws -> Solver {
+		guard let solverClass = Bundle.main.classNamed(solverClassName),
+					let solverType = solverClass as? Solver.Type else {
+			struct SolutionClassNotFound: LocalizedError {
+				let className: String
+				var errorDescription: String? { "Could not find solution class \(className)" }
+			}
+
+			throw SolutionClassNotFound(className: solverClassName)
+		}
+
+		return solverType.init()
+	}
+
 	// MARK: Website
 
 	func waitToOpenWebsite() async throws {
@@ -30,23 +46,27 @@ extension Challenge {
 			try await Task.sleep(until: .now + .seconds(secondsToWait))
 		}
 
-		try await fetchInput()
+		try await fetchInput(verbose: true)
 	}
 
-	func fetchInput() async throws {
+	func fetchInput(verbose: Bool = false) async throws {
+		func verbosePrint(_ string: String) {
+			if verbose { print(string) }
+		}
+
 		let inputFile = workingDirectory.appending(path: "input.txt")
 
-		print("Fetching input, storing to \(inputFile)")
+		verbosePrint("Fetching input, storing to \(inputFile)")
 
 		guard !FileManager.default.fileExists(atPath: inputFile.path()) else {
-			print("Input exists at \(inputFile), not fetching")
+			verbosePrint("Input exists at \(inputFile), not fetching")
 			return
 		}
 
 		@SessionStorage("token") var token = ""
 
 		guard !token.isEmpty else {
-			print("No token available, exiting.")
+			verbosePrint("No token available, exiting.")
 			return
 		}
 
@@ -58,7 +78,7 @@ extension Challenge {
 
 		guard let inputString = String(bytes: data, encoding: .utf8),
 					!inputString.contains("Puzzle input") else {
-			print("Invalid token, exiting.")
+			verbosePrint("Invalid token, exiting.")
 			return
 		}
 

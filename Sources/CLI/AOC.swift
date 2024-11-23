@@ -10,6 +10,7 @@ struct AOC: AsyncParsableCommand {
 			Commands.Open.self,
 			Commands.Run.self,
 			Commands.Start.self,
+			Commands.Test.self,
 		]
 	)
 }

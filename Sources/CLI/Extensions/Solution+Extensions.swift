@@ -2,7 +2,11 @@ import AdventSupport
 import Foundation
 
 extension Solution {
-	func write(to challenge: Challenge) throws {
+	func write(to challenge: Challenge, verbose: Bool = false) throws {
+		func verbosePrint(_ string: String) {
+			if verbose { print(string )}
+		}
+
 		guard part1 != nil || part2 != nil else { return }
 
 		var output = ""
@@ -20,11 +24,15 @@ extension Solution {
 		}
 
 		let outputFile = challenge.workingDirectory.appending(path: "output.txt")
-		print("Writing output to '\(outputFile.path())'")
+		verbosePrint("Writing output to '\(outputFile.path())'")
 		try data.write(to: outputFile)
 	}
 
-	func validate(against challenge: Challenge) throws {
+	func validate(against challenge: Challenge, verbose: Bool = false) throws {
+		func verbosePrint(_ string: String) {
+			if verbose { print(string )}
+		}
+
 		let outputFile = challenge.workingDirectory.appending(path: "output.txt")
 
 		guard FileManager.default.fileExists(atPath: outputFile.path()) else {
@@ -38,11 +46,11 @@ extension Solution {
 
 		let parts = output.components(separatedBy: .newlines)
 
-		print("==== Validation ====")
+		verbosePrint("==== Validation ====")
 
 		if let expectedPart1 = parts.first {
 			if expectedPart1 == part1, let part1 {
-				print("Part 1 '\(part1)' is correct!")
+				verbosePrint("Part 1 '\(part1)' is correct!")
 			} else {
 				throw ValidationError.part1FailedValidation(expected: expectedPart1, received: part1)
 			}
@@ -50,7 +58,7 @@ extension Solution {
 
 		if parts.count == 2, let expectedPart2 = parts.last {
 			if expectedPart2 == part2, let part2 {
-				print("Part 2 '\(part2)' is correct!")
+				verbosePrint("Part 2 '\(part2)' is correct!")
 			} else {
 				throw ValidationError.part2FailedValidation(expected: expectedPart2, received: part2)
 			}
