@@ -45,4 +45,12 @@ public struct Input {
 	public func digitsByLine() -> [[Int]] {
 		lines().map { $0.compactMap { $0.wholeNumberValue } }
 	}
+
+	public func digitGrid() -> [[Int]] {
+		digitsByLine()
+	}
+
+	public func characterGrid() -> [[Character]] {
+		lines().map { Array($0) }
+	}
 }
