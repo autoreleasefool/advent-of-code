@@ -43,6 +43,12 @@ let package = Package(
 				.product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
 			]
 		),
+		.testTarget(
+			name: "AdventSupportTests",
+			dependencies: [
+				"AdventSupport",
+			]
+		),
 		.target(
 			name: "Year2015",
 			dependencies: ["AdventSupport"],
