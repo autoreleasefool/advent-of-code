@@ -35,7 +35,7 @@ struct SessionStorage<Value: LosslessStringConvertible> {
 
 extension SessionStorage: Decodable where Value: Decodable {}
 
-fileprivate final class SessionStorageSource: Sendable {
+private final class SessionStorageSource: Sendable {
 	static let shared = SessionStorageSource()
 
 	private let queue = DispatchQueue(label: "SessionStorageSource")

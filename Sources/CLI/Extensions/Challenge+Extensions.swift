@@ -63,7 +63,8 @@ extension Challenge {
 			return
 		}
 
-		@SessionStorage("token") var token = ""
+		@SessionStorage("token")
+		var token = ""
 
 		guard !token.isEmpty else {
 			verbosePrint("No token available, exiting.")

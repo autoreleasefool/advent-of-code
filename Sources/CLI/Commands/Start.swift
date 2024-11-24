@@ -40,7 +40,7 @@ extension Challenge {
 			name: "Template/Day.swift.stencil",
 			context: [
 				"year": "\(year)",
-				"day": dayZeroPadded
+				"day": dayZeroPadded,
 			]
 		)
 
