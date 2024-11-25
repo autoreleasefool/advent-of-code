@@ -99,6 +99,14 @@ extension Point2 {
 	}
 }
 
+// MARK: Comparable
+
+extension Point2: Comparable {
+	public static func < (lhs: Point2, rhs: Point2) -> Bool {
+		lhs.y == rhs.y ? lhs.x < rhs.x : lhs.y < rhs.y
+	}
+}
+
 // MARK: Operations
 
 extension Point2 {
@@ -121,8 +129,24 @@ extension Point2 {
 
 // MARK: Map
 
-func mapGridToPoints<T>(_ grid: [[T]]) -> [Point2: T] {
+public func mapGridToPoints<T>(_ grid: [[T]]) -> [Point2: T] {
 	grid.enumerated().reduce(into: [:]) { grid, row in
 		row.element.enumerated().forEach { grid[Point2(x: $0.0, y: row.offset)] = $0.element }
+	}
+}
+
+extension Array {
+	public subscript<T>(_ point: Point2) -> T? where Element == Array<T> {
+		guard point.y >= 0, point.y < count else { return nil }
+		guard point.x >= 0, point.x < self[point.y].count else { return nil }
+		return self[point.y][point.x]
+	}
+}
+
+// MARK: Debug
+
+extension Point2: CustomDebugStringConvertible {
+	public var debugDescription: String {
+		"(\(x), \(y))"
 	}
 }
