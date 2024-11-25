@@ -6,10 +6,17 @@ import Foundation
 extension Commands {
 	struct Test: AsyncParsableCommand {
 		mutating func run() async throws {
-			let allYears = Year.allCases
-			let allDays = 1...25
+			for year in Year.allCases {
+				try await testYear(year)
+			}
+		}
 
-			for (year, day) in product(allYears, allDays) {
+		private func testYear(_ year: Year) async throws {
+			print("===== \(year) =====")
+
+			var totalDuration: Duration = .zero
+
+			for day in 1...25 {
 				let challenge = Challenge(year: year, day: day)
 				guard challenge.hasStarted else { continue }
 
@@ -23,22 +30,27 @@ extension Commands {
 
 				try await challenge.fetchInput()
 
-				let input = (try? Input(challenge: challenge)) ?? Input(contents: "")
+				var input = (try? Input(challenge: challenge)) ?? Input(contents: "")
 
-				let solution = try await solver.solve(input)
+				let solution = try await solver.solve(&input)
 
 				guard solution.part1 != nil && solution.part2 != nil else {
 					print("❌ (\(year), \(day)): Missing solution")
 					continue
 				}
 
+				let challengeDuration = (solution.part1Duration ?? .zero) + (solution.part2Duration ?? .zero)
+				totalDuration += challengeDuration
+
 				do {
 					try solution.validate(against: challenge)
-					print("✅ (\(year), \(day)): \(solution.part1 ?? "-") | \(solution.part2 ?? "-")")
+					print("✅ (\(year), \(day)): \(solution.part1 ?? "-") | \(solution.part2 ?? "-") | \(challengeDuration)")
 				} catch {
 					print("❌ (\(year), \(day)): \(error.localizedDescription)")
 				}
 			}
+
+			print("Total duration for \(year): \(totalDuration)")
 		}
 	}
 }

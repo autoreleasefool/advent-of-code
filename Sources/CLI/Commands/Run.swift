@@ -21,11 +21,11 @@ extension Commands {
 			let challenge = Challenge(year: sessionYear, day: sessionDay)
 			try await challenge.fetchInput(verbose: true)
 
-			let input = try Input(challenge: challenge)
+			var input = try Input(challenge: challenge)
 
 			let solver = try challenge.retrieveSolver()
 
-			let solution = try await solver.solve(input)
+			let solution = try await solver.solve(&input)
 
 			solution.log()
 

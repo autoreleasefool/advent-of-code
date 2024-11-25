@@ -4,16 +4,9 @@ import Foundation
 public class Year2015Day02: Solver {
 	public required init() {}
 
-	public func solve(_ input: Input) async throws -> Solution {
-		let part1Solution = try await solvePart1(input)
-		let part2Solution = try await solvePart2(input)
-
-		return Solution(part1: part1Solution, part2: part2Solution)
-	}
-
 	// MARK: Part 1
 
-	private func solvePart1(_ input: Input) async throws -> String? {
+	public func solvePart1(_ input: Input) async throws -> String? {
 		input.integersByLine()
 			.reduce(0) { total, dimensions in
 				let l = dimensions[0]
@@ -28,7 +21,7 @@ public class Year2015Day02: Solver {
 
 	// MARK: Part 2
 
-	private func solvePart2(_ input: Input) async throws -> String? {
+	public func solvePart2(_ input: Input) async throws -> String? {
 		input.integersByLine()
 			.reduce(0) { total, dimensions in
 				let l = dimensions[0]
