@@ -33,17 +33,15 @@ public struct Input {
 
 	/// List of integers on each line of the puzzle input.
 	public func integersByLine() -> [[Int]] {
-		let integerRegex = /-?\d+/
-		return lines()
-			.map {
-				$0.matches(of: integerRegex)
-					.map(\.output)
-					.compactMap { Int($0) }
-			}
+		lines()
+			.map { $0.integers() }
 	}
 
 	public func digitsByLine() -> [[Int]] {
-		lines().map { $0.compactMap { $0.wholeNumberValue } }
+		lines()
+			.map {
+				$0.compactMap { $0.wholeNumberValue }
+			}
 	}
 
 	public func digitGrid() -> [[Int]] {
