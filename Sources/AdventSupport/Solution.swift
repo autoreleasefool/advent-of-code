@@ -9,7 +9,7 @@ public protocol Solver {
 }
 
 extension Solver {
-	public func setUp(_ input: inout Input) async throws {}
+	public func setUp(_: inout Input) async throws {}
 }
 
 extension Solver {

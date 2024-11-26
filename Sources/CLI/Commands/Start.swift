@@ -52,6 +52,11 @@ extension Challenge {
 		let outputFile = outputDirectory
 			.appending(path: "Day\(dayZeroPadded).swift")
 
+		guard !FileManager.default.fileExists(atPath: outputFile.path()) else {
+			print("Solution already exists at \(outputFile.path())")
+			return
+		}
+
 		try rendered.data(using: .utf8)?.write(to: outputFile)
 	}
 }

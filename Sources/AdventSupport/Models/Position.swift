@@ -136,7 +136,7 @@ public func mapGridToPoints<T>(_ grid: [[T]]) -> [Point2: T] {
 }
 
 extension Array {
-	public subscript<T>(_ point: Point2) -> T? where Element == Array<T> {
+	public subscript<T>(_ point: Point2) -> T? where Element == [T] {
 		guard point.y >= 0, point.y < count else { return nil }
 		guard point.x >= 0, point.x < self[point.y].count else { return nil }
 		return self[point.y][point.x]
