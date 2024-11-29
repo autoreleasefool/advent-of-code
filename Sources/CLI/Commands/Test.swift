@@ -32,7 +32,7 @@ extension Commands {
 
 				var input = (try? Input(challenge: challenge)) ?? Input(contents: "")
 
-				let solution = try await solver.solve(&input)
+				let solution = try await solver.solve(&input, verbose: false)
 
 				guard solution.part1 != nil && solution.part2 != nil else {
 					print("❌ (\(year), \(day)): Missing solution")

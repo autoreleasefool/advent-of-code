@@ -12,6 +12,7 @@ let package = Package(
 		.package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.2.2"),
 		.package(url: "https://github.com/apple/swift-collections", from: "1.1.4"),
 		.package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
+		.package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.8.3"),
 		.package(url: "https://github.com/pointfreeco/swift-concurrency-extras.git", from: "1.3.0"),
 		.package(url: "https://github.com/stencilproject/Stencil.git", from: "0.15.1"),
 	],
@@ -30,7 +31,6 @@ let package = Package(
 				"Year2023",
 				"Year2024",
 				.product(name: "ArgumentParser", package: "swift-argument-parser"),
-				.product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
 				.product(name: "Stencil", package: "stencil"),
 			],
 			path: "Sources/CLI",
@@ -44,6 +44,7 @@ let package = Package(
 				.product(name: "Algorithms", package: "swift-algorithms"),
 				.product(name: "Collections", package: "swift-collections"),
 				.product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
+				.product(name: "CryptoSwift", package: "cryptoswift"),
 				.product(name: "Numerics", package: "swift-numerics"),
 			]
 		),

@@ -25,9 +25,7 @@ extension Commands {
 
 			let solver = try challenge.retrieveSolver()
 
-			let solution = try await solver.solve(&input)
-
-			solution.log()
+			let solution = try await solver.solve(&input, verbose: true)
 
 			if copyToClipboard {
 				solution.copyToClipboard()

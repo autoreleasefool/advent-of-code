@@ -13,20 +13,30 @@ extension Solver {
 }
 
 extension Solver {
-	public func solve(_ input: inout Input) async throws -> Solution {
+	public func solve(_ input: inout Input, verbose: Bool) async throws -> Solution {
+		func verbosePrint(_ string: String) {
+			if verbose {
+				print(string)
+			}
+		}
+
 		let clock = ContinuousClock()
 
 		try await setUp(&input)
 
+		verbosePrint("Solving Part 1")
 		var part1Solution: String?
 		let part1Duration = try await clock.measure {
 			part1Solution = try await solvePart1(input)
 		}
+		verbosePrint("Part 1: \(part1Solution ?? "N/A") in \(part1Duration.description)")
 
+		verbosePrint("Solving Part 2")
 		var part2Solution: String?
 		let part2Duration = try await clock.measure {
 			part2Solution = try await solvePart2(input)
 		}
+		verbosePrint("Part 2: \(part2Solution ?? "N/A") in \(part2Duration.description)")
 
 		return Solution(
 			part1: part1Solution,
@@ -53,16 +63,6 @@ public struct Solution {
 		self.part1Duration = part1Duration
 		self.part2 = part2
 		self.part2Duration = part2Duration
-	}
-
-	public func log() {
-		print("==== Solution ====")
-		if let part1 {
-			print("Part 1: \(part1) in \(part1Duration?.description ?? "unknown")")
-		}
-		if let part2 {
-			print("Part 2: \(part2) in \(part2Duration?.description ?? "unknown")")
-		}
 	}
 
 	public func copyToClipboard() {
