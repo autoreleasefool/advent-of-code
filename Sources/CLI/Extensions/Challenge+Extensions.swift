@@ -78,7 +78,7 @@ extension Challenge {
 		let (data, _) = try await URLSession.shared.data(for: request)
 
 		guard let inputString = String(bytes: data, encoding: .utf8),
-					!inputString.contains("Puzzle input") else {
+					!inputString.contains("Puzzle input") && !inputString.contains("Please don't repeatedly") else {
 			verbosePrint("Invalid token, exiting.")
 			return
 		}
