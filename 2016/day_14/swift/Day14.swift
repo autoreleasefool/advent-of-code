@@ -43,7 +43,7 @@ public class Year2016Day14: Solver {
 				.forEach { quintuple in
 					let repeatedChar = quintuple.first!
 					var removeCandidates = false
-					for (candidateIndex, candidateKey) in candidateKeys[repeatedChar] ?? [] where candidateIndex + 1000 >= index {
+					for (candidateIndex, _) in candidateKeys[repeatedChar] ?? [] where candidateIndex + 1000 >= index {
 						removeCandidates = true
 						keys.insert(candidateIndex)
 					}
