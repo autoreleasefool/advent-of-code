@@ -9,6 +9,10 @@ extension Collection where Element: Hashable {
 	public func toOrderedSet() -> OrderedSet<Element> {
 		OrderedSet(self)
 	}
+
+	public func countOccurrences() -> [Element: Int] {
+		self.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+	}
 }
 
 extension Array {
