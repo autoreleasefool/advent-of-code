@@ -20,3 +20,9 @@ extension Array {
 		isEmpty ? nil : removeFirst()
 	}
 }
+
+extension Collection where Element: Comparable {
+	public func isSorted(incrementing: Bool = true) -> Bool {
+		incrementing ? self.sorted() == Array(self) : self.sorted().reversed() == Array(self)
+	}
+}
