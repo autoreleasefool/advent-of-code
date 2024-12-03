@@ -11,48 +11,37 @@ public class Year2024Day03: Solver {
 	// MARK: Part 1
 
 	public func solvePart1(_ input: Input) async throws -> String? {
-		var sum = 0
-		for line in input.lines() {
-//			print(line)
-//			print(line.matches(of: /mul\((\d){1,3},(\d){1,3}\)/))
-			for match in line.matches(of: /mul\((\d{1,3}),(\d{1,3})\)/) {
-				let m1 = Int(match.output.1)!
-				let m2 = Int(match.output.2)!
-				print(m1, m2)
-				sum += m1 * m2
+		input.lines()
+			.reduce(into: 0) { sum, line in
+				sum += line.matches(of: /mul\((\d{1,3}),(\d{1,3})\)/)
+					.map { Int($0.output.1)! * Int($0.output.2)! }
+					.reduce(0, +)
 			}
-		}
-		return sum.description
+			.description
 	}
 
 	// MARK: Part 2
 
 	public func solvePart2(_ input: Input) async throws -> String? {
-		var sum = 0
-		var enabled = true
-		for line in input.lines() {
-//			print(line)
-//			print(line.matches(of: /mul\((\d){1,3},(\d){1,3}\)/))
-			for match in line.matches(of: /do\(\)|don't\(\)|mul\((\d{1,3}),(\d{1,3})\)/) {
-				if String(match.output.0) == "do()" {
-					enabled = true
-				} else if String(match.output.0) == "don't()" {
-					enabled = false
-				} else if enabled {
-					let m1 = Int(match.output.1!)!
-					let m2 = Int(match.output.2!)!
-					print(m1, m2)
-					sum += m1 * m2
-				}
-			}
+		var isEnabled = true
 
-//			for match in line.matches(of: /mul\((\d{1,3}),(\d{1,3})\)/) {
-//				let m1 = Int(match.output.1)!
-//				let m2 = Int(match.output.2)!
-//				print(m1, m2)
-//				sum += m1 * m2
-//			}
-		}
-		return sum.description
+		return input.lines()
+			.reduce(into: 0) { sum, line in
+				sum += line.matches(of: /do\(\)|don't\(\)|mul\((\d{1,3}),(\d{1,3})\)/)
+					.filter {
+						if $0.output.0 == "do()" {
+							isEnabled = true
+							return false
+						} else if $0.output.0 == "don't()" {
+							isEnabled = false
+							return false
+						}
+
+						return isEnabled
+					}
+					.map { Int($0.output.1!)! * Int($0.output.2!)! }
+					.reduce(0, +)
+			}
+			.description
 	}
 }
