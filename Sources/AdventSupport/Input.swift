@@ -5,12 +5,18 @@ public struct Input {
 	public let contents: String
 
 	public init(challenge: Challenge) throws {
-		self.contents = try String(
-			contentsOf: challenge.workingDirectory
-				.appending(path: "input.txt"),
-			encoding: .utf8
-		)
-		.trimmingCharacters(in: .whitespacesAndNewlines)
+		let inputFile = challenge.workingDirectory.appending(path: "input.txt")
+		if FileManager.default.fileExists(atPath: inputFile.path()) {
+			self.contents = try String(
+				contentsOf: challenge.workingDirectory
+					.appending(path: "input.txt"),
+				encoding: .utf8
+			)
+			.trimmingCharacters(in: .newlines)
+		} else {
+			print("No input found at \(inputFile.path())")
+			self.contents = ""
+		}
 	}
 
 	public init(contents: String) {
