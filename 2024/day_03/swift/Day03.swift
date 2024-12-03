@@ -4,10 +4,6 @@ import Foundation
 public class Year2024Day03: Solver {
 	public required init() {}
 
-	public func setUp(_ input: inout Input) async throws {
-//		input = Input(contents: "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))")
-	}
-
 	// MARK: Part 1
 
 	public func solvePart1(_ input: Input) async throws -> String? {
