@@ -4,10 +4,6 @@ import Foundation
 public class Year2016Day16: Solver {
 	public required init() {}
 
-	public func setUp(_ input: inout Input) async throws {
-		input = Input(contents: "01111001100111011")
-	}
-
 	// MARK: Part 1
 
 	public func solvePart1(_ input: Input) async throws -> String? {
