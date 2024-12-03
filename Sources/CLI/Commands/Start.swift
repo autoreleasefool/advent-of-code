@@ -6,6 +6,12 @@ import Stencil
 
 extension Commands {
 	struct Start: AsyncParsableCommand {
+		@Flag(help: "Open the Advent of Code website")
+		var launchWebsite = false
+
+		@Flag(help: "Fetch the input for the challenge")
+		var fetchInput = false
+
 		@SessionStorage("year")
 		var sessionYear: Year = .y24
 
@@ -18,12 +24,16 @@ extension Commands {
 			try challenge.createTemplate()
 
 			await withThrowingTaskGroup(of: Void.self) { group in
-				group.addTask {
-					try await challenge.waitToOpenWebsite()
+				if launchWebsite {
+					group.addTask {
+						try await challenge.waitToOpenWebsite()
+					}
 				}
 
-				group.addTask {
-					try await challenge.waitToFetchInput()
+				if fetchInput {
+					group.addTask {
+						try await challenge.waitToFetchInput()
+					}
 				}
 			}
 		}
