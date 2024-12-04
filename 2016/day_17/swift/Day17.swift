@@ -84,14 +84,3 @@ extension Direction {
 		}
 	}
 }
-
-extension Direction {
-	var point: Point2 {
-		switch self {
-		case .north: Point2(0, -1)
-		case .south: Point2(0, 1)
-		case .west: Point2(-1, 0)
-		case .east: Point2(1, 0)
-		}
-	}
-}

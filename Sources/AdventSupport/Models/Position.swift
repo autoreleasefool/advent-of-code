@@ -125,6 +125,14 @@ extension Point2 {
 	public static func -= (lhs: inout Point2, rhs: Point2) {
 		lhs = lhs - rhs
 	}
+
+	public static func * (lhs: Point2, rhs: Int) -> Point2 {
+		Point2(x: lhs.x * rhs, y: lhs.y * rhs)
+	}
+
+	public static func *= (lhs: inout Point2, rhs: Int) {
+		lhs = lhs * rhs
+	}
 }
 
 // MARK: Map

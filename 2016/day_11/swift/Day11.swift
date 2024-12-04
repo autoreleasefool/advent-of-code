@@ -100,7 +100,7 @@ struct Facility {
 			elevator < floors.count - 1 ? elevator + 1 : nil,
 			elevator > 0 ? elevator - 1 : nil
 		]
-			.compactMap { $0 }
+			.compacted()
 
 		let moveableItemCombinations = product(
 			[Int?](floors[elevator].items) + [nil],
@@ -118,7 +118,7 @@ struct Facility {
 							if index == elevator {
 								Floor(items: floor.items.filter { $0 != itemsToMove.0 && $0 != itemsToMove.1 })
 							} else if index == newElevatorFloor {
-								Floor(items: floor.items + [itemsToMove.0, itemsToMove.1].compactMap { $0 })
+								Floor(items: floor.items + [itemsToMove.0, itemsToMove.1].compacted())
 							} else {
 								floor
 							}
