@@ -19,6 +19,10 @@ extension Array {
 	public mutating func popFirst() -> Element? {
 		isEmpty ? nil : removeFirst()
 	}
+
+	public subscript(safely index: Int) -> Element? {
+		indices.contains(index) ? self[index] : nil
+	}
 }
 
 extension Collection where Element: Comparable {
