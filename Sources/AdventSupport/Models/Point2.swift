@@ -103,7 +103,7 @@ extension Point2 {
 
 extension Point2: Comparable {
 	public static func < (lhs: Point2, rhs: Point2) -> Bool {
-		lhs.y == rhs.y ? lhs.x < rhs.x : lhs.y < rhs.y
+		lhs.x == rhs.x ? lhs.y < rhs.y : lhs.x < rhs.x
 	}
 }
 
