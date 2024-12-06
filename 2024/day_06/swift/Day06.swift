@@ -6,21 +6,10 @@ public class Year2024Day06: Solver {
 
 	public func setUp(_ input: inout Input) async throws {
 		self.grid = mapGridToPoints(input.characterGrid())
-//		input = Input(contents: """
-//....#.....
-//.........#
-//..........
-//..#.......
-//.......#..
-//..........
-//.#..^.....
-//........#.
-//#.........
-//......#...
-//""")
 	}
 
 	private var grid: [Point2: Character]!
+	private var stateBeforePosition: [Point2: GuardState] = [:]
 
 	// MARK: Part 1
 
@@ -31,7 +20,15 @@ public class Year2024Day06: Solver {
 
 		while grid[guardPosition] != nil {
 			visitedPositions.insert(guardPosition)
+			let previousState = GuardState(position: guardPosition, direction: guardFacing)
+
 			moveGuard(from: &guardPosition, towards: &guardFacing)
+
+			// Optimization for P2, track what state was before each position
+			// so we can skip simulating up until that point
+			if stateBeforePosition[guardPosition] == nil {
+				stateBeforePosition[guardPosition] = previousState
+			}
 		}
 
 		return visitedPositions.count.description
@@ -44,12 +41,12 @@ public class Year2024Day06: Solver {
 		var positionsForObstructions = 0
 		let startingGuardPosition = grid.first { $0.value == "^" }!.key
 
-		for (newObstruction, existingValue) in startingGrid where newObstruction != startingGuardPosition && existingValue != "#" {
+		for newObstruction in stateBeforePosition.keys where newObstruction != startingGuardPosition && startingGrid[newObstruction] != "#" && startingGrid[newObstruction] != nil {
 			grid = startingGrid
 			grid[newObstruction] = "#"
 
-			var guardFacing: Direction = .north
-			var guardPosition = startingGuardPosition
+			var guardFacing: Direction = stateBeforePosition[newObstruction]!.direction
+			var guardPosition = stateBeforePosition[newObstruction]!.position
 			var visitedStates: Set<GuardState> = []
 
 			while grid[guardPosition] != nil {
