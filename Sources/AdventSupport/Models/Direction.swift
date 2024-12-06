@@ -9,6 +9,28 @@ public enum Direction: Hashable, Sendable, CaseIterable, Comparable {
 	case west
 }
 
+// MARK: Adjacencies
+
+extension Direction {
+	public var turnRight: Direction {
+		switch self {
+		case .north: .east
+		case .east: .south
+		case .south: .west
+		case .west: .north
+		}
+	}
+
+	public var turnLeft: Direction {
+		switch self {
+		case .north: .west
+		case .west: .south
+		case .south: .east
+		case .east: .north
+		}
+	}
+}
+
 // MARK: Point
 
 extension Direction {

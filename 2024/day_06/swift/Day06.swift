@@ -5,6 +5,7 @@ public class Year2024Day06: Solver {
 	public required init() {}
 
 	public func setUp(_ input: inout Input) async throws {
+		self.grid = mapGridToPoints(input.characterGrid())
 //		input = Input(contents: """
 //....#.....
 //.........#
@@ -19,77 +20,66 @@ public class Year2024Day06: Solver {
 //""")
 	}
 
+	private var grid: [Point2: Character]!
+
 	// MARK: Part 1
 
 	public func solvePart1(_ input: Input) async throws -> String? {
-		let grid = mapGridToPoints(input.characterGrid())
+		var guardFacing: Direction = .north
+		var guardPosition = grid.first { $0.value == "^" }!.key
+		var visitedPositions: Set<Point2> = []
 
-		var facing = Direction.north
-		var position = grid.first { $0.value.isGuard }!.key
-		var visited: Set<Point2> = [position]
-
-		while grid[position] != nil {
-			visited.insert(position)
-			moveGuard(&position, dir: &facing, in: grid)
+		while grid[guardPosition] != nil {
+			visitedPositions.insert(guardPosition)
+			moveGuard(from: &guardPosition, towards: &guardFacing)
 		}
 
-		return visited.count.description
-	}
-
-	func moveGuard(_ point: inout Point2, dir: inout Direction, in grid: [Point2: Character]) {
-		var nextPosition = point.move(dir)
-		while grid[nextPosition]?.isObstruction == true {
-			dir = switch dir {
-			case .north: .east
-			case .east: .south
-			case .south: .west
-			case .west: .north
-			}
-
-			nextPosition = point.move(dir)
-		}
-
-		point = nextPosition
+		return visitedPositions.count.description
 	}
 
 	// MARK: Part 2
 
 	public func solvePart2(_ input: Input) async throws -> String? {
-		let oGrid = mapGridToPoints(input.characterGrid())
-//		print(oGrid.count)
+		let startingGrid = grid!
+		var positionsForObstructions = 0
+		let startingGuardPosition = grid.first { $0.value == "^" }!.key
 
-		let startPosition = oGrid.first { $0.value.isGuard }!.key
-		var count = 0
-
-		for (newObstruction, existing) in oGrid where newObstruction != startPosition && !existing.isObstruction {
-			var grid = oGrid
+		for (newObstruction, existingValue) in startingGrid where newObstruction != startingGuardPosition && existingValue != "#" {
+			grid = startingGrid
 			grid[newObstruction] = "#"
 
-			var facing = Direction.north
-			var position = startPosition
-			var visited: Set<State> = []
+			var guardFacing: Direction = .north
+			var guardPosition = startingGuardPosition
+			var visitedStates: Set<GuardState> = []
 
-			while grid[position] != nil {
-				guard visited.insert(State(position: position, direction: facing)).inserted else {
-//					print(newObstruction, position, facing)
-					count += 1
+			while grid[guardPosition] != nil {
+				let newState = GuardState(position: guardPosition, direction: guardFacing)
+				guard visitedStates.insert(newState).inserted else {
+					// We have entered a loop
+					positionsForObstructions += 1
 					break
 				}
 
-				moveGuard(&position, dir: &facing, in: grid)
+				moveGuard(from: &guardPosition, towards: &guardFacing)
 			}
 		}
 
-		return count.description
+		return positionsForObstructions.description
 	}
 
-	struct State: Hashable {
+	// MARK: Helpers
+
+	private func moveGuard(from guardPosition: inout Point2, towards: inout Direction) {
+		var nextPosition = guardPosition.move(towards)
+		while grid[nextPosition] == "#" {
+			towards = towards.turnRight
+			nextPosition = guardPosition.move(towards)
+		}
+		guardPosition = nextPosition
+	}
+
+	struct GuardState: Hashable {
 		let position: Point2
 		let direction: Direction
 	}
-}
-
-extension Character {
-	var isGuard: Bool { self == "^" }
-	var isObstruction: Bool { self == "#" }
 }
