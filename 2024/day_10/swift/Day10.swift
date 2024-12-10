@@ -7,112 +7,53 @@ public class Year2024Day10: Solver {
 	public required init() {}
 
 	public func setUp(_ input: inout Input) async throws {
-//		input = Input(contents: """
-//89010123
-//78121874
-//87430965
-//96549874
-//45678903
-//32019012
-//01329801
-//10456732
-//""")
+		self.grid = mapGridToPoints(input.characterGrid())
 	}
 
-	private var grid: [Point2: Character] = [:]
-	private var countedFromTrailhead: [Point2: Set<Point2>] = [:]
+	private var grid: [Point2: Character]!
 
 	// MARK: Part 1
 
 	public func solvePart1(_ input: Input) async throws -> String? {
-		grid = mapGridToPoints(input.characterGrid())
-
-		var total = 0
-		for (point, value) in grid where value == "0" {
-//			print("Trailhead: ", point)
-			total += score(point, point)
-		}
-		return total.description
+		grid
+			.filter { $0.value == "0" }
+			.map { $0.key }
+			.reduce(0) { totalScore, trailhead in
+				var summitsReached: Set<Point2> = []
+				return totalScore + trailheadScore(from: trailhead, summitsReached: &summitsReached)
+			}
+			.description
 	}
 
-	private func score(_ point: Point2, _ trailhead: Point2) -> Int {
-		guard grid[point] != nil else { return 0 }
-
-
-		if grid[point] == "9" {
-			if countedFromTrailhead[trailhead, default: []].insert(point).inserted {
-				return 1
-			} else {
-				return 0
-			}
-//		guard counted.insert(point).inserted else {
-//				return 0
-//			}
-//
-////			print("Terminus, point: \(point)")
-//			return 1
+	private func trailheadScore(from: Point2, summitsReached: inout Set<Point2>, uniqueSummits: Bool = true) -> Int {
+		guard grid[from] != "9" else {
+			return !uniqueSummits || summitsReached.insert(from).inserted ? 1 : 0
 		}
 
-		guard grid[point]!.isNumber, let value = Int(String(grid[point]!)) else { return 0 }
+		guard let gridDigit = grid[from], let value = Int(String(gridDigit)) else { return 0 }
 
-		var s = 0
-		for d in Direction.allCases {
-			let newPoint = point.move(d)
-			guard grid[newPoint] != nil, let newValue = Int(String(grid[newPoint]!)) else { continue }
-
-			if newValue == value + 1 {
-//				print("Moving from \(point) to \(newPoint)")
-				s += score(newPoint, trailhead)
+		return Direction.allCases
+			.map { from.move($0) }
+			.filter { grid[$0] != nil && Int(String(grid[$0]!)) == value + 1 }
+			.reduce(0) { totalScore, point in
+				totalScore + trailheadScore(from: point, summitsReached: &summitsReached, uniqueSummits: uniqueSummits)
 			}
-		}
-		return s
+	}
+
+	private func trailheadRating(from: Point2) -> Int {
+		var summitsReached: Set<Point2> = []
+		return trailheadScore(from: from, summitsReached: &summitsReached, uniqueSummits: false)
 	}
 
 	// MARK: Part 2
 
 	public func solvePart2(_ input: Input) async throws -> String? {
-		grid = mapGridToPoints(input.characterGrid())
-
-		var total = 0
-		for (point, value) in grid where value == "0" {
-//			print("Trailhead: ", point)
-			total += rating(point, point)
-		}
-
-		return total.description
-	}
-
-	func rating(_ point: Point2, _ trailhead: Point2) -> Int {
-		guard grid[point] != nil else { return 0 }
-
-		if grid[point] == "9" {
-			print("Terminus, point: \(point)")
-			return 1
-//			if countedFromTrailhead[trailhead, default: []].insert(point).inserted {
-//				return 1
-//			} else {
-//				return 0
-//			}
-//		guard counted.insert(point).inserted else {
-//				return 0
-//			}
-//
-////			print("Terminus, point: \(point)")
-//			return 1
-		}
-
-		guard grid[point]!.isNumber, let value = Int(String(grid[point]!)) else { return 0 }
-
-		var s = 0
-		for d in Direction.allCases {
-			let newPoint = point.move(d)
-			guard grid[newPoint] != nil, let newValue = Int(String(grid[newPoint]!)) else { continue }
-
-			if newValue == value + 1 {
-//				print("Moving from \(point) to \(newPoint)")
-				s += rating(newPoint, trailhead)
+		grid
+			.filter { $0.value == "0" }
+			.map { $0.key }
+			.reduce(0) { totalScore, trailhead in
+				totalScore + trailheadRating(from: trailhead)
 			}
-		}
-		return s
+			.description
 	}
 }
