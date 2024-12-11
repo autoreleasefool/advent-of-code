@@ -27,14 +27,9 @@ public struct Input {
 		contents.components(separatedBy: .newlines)
 	}
 
-	/// List of numbers from the input, when they are separated by newlines.
-	public func numbers() -> [Double] {
-		lines().compactMap(Double.init)
-	}
-
 	/// List of integers from the input, when they are separated by newlines.
 	public func integers() -> [Int] {
-		lines().compactMap(Int.init)
+		contents.integers()
 	}
 
 	/// List of integers on each line of the puzzle input.

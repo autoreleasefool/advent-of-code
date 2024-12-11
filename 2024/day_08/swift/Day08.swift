@@ -16,7 +16,7 @@ public class Year2024Day08: Solver {
 			nodes[value, default: []].insert(point)
 		}
 
-		for (antenna, points) in nodes {
+		for (_, points) in nodes {
 			for pointA in points {
 				for pointB in points where pointA != pointB {
 					let dx = pointA.x - pointB.x
@@ -61,7 +61,7 @@ public class Year2024Day08: Solver {
 			nodes[value, default: []].insert(point)
 		}
 
-		for (antenna, points) in nodes {
+		for (_, points) in nodes {
 			for pointA in points {
 				for pointB in points where pointA != pointB {
 					let dx = pointA.x - pointB.x
