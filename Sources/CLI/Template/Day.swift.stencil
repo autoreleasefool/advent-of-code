@@ -1,8 +1,13 @@
 import AdventSupport
+import Algorithms
+import Collections
 import Foundation
 
 public class Year{{ year }}Day{{ day }}: Solver {
-	public required init() {}
+	public required init() {
+	input = Input(contents: """
+""")
+}
 
 	public func setUp(_ input: inout Input) async throws {}
 
