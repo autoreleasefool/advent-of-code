@@ -143,6 +143,16 @@ public func mapGridToPoints<T>(_ grid: [[T]]) -> [Point2: T] {
 	}
 }
 
+public func printGrid<T>(_ grid: [Point2: T]) {
+	for y in 0...grid.keys.max(by: { $0.y < $1.y })!.y {
+		for x in 0...grid.keys.max(by: { $0.x < $1.x })!.x {
+			print(grid[Point2(x, y)] ?? " ", terminator: "")
+		}
+
+		print()
+	}
+}
+
 extension Array {
 	public subscript<T>(_ point: Point2) -> T? where Element == [T] {
 		guard point.y >= 0, point.y < count else { return nil }
