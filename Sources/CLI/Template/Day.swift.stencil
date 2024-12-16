@@ -4,12 +4,12 @@ import Collections
 import Foundation
 
 public class Year{{ year }}Day{{ day }}: Solver {
-	public required init() {
-	input = Input(contents: """
+	public required init() {}
+
+	public func setUp(_ input: inout Input) async throws {
+		input = Input(contents: """
 """)
 }
-
-	public func setUp(_ input: inout Input) async throws {}
 
 	// MARK: Part 1
 
