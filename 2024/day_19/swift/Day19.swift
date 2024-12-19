@@ -6,79 +6,47 @@ import Foundation
 public class Year2024Day19: Solver {
 	public required init() {}
 
-	public func setUp(_ input: inout Input) async throws {
-//		input = Input(contents: """
-//r, wr, b, g, bwu, rb, gb, br
-//
-//brwrr
-//bggr
-//gbbr
-//rrbgbr
-//ubwu
-//bwurrg
-//brgr
-//bbrgwb
-//""")
-}
-
 	// MARK: Part 1
 
 	public func solvePart1(_ input: Input) async throws -> String? {
-		let patterns = input.lines().first!.components(separatedBy: ", ")
-		let desiredDesigns = Array(input.lines().dropFirst(2))
+		let towels = input.lines().first!.components(separatedBy: ", ")
+		let designs = Array(input.lines().dropFirst(2))
+		let towelRegex = try! Regex("(\(towels.joined(separator: "|")))+")
 
-		print(patterns)
-		print(desiredDesigns)
-		print("(\(patterns.joined(separator: "|")))+")
-
-		var count = 0
-		for design in desiredDesigns {
-			if design.wholeMatch(of: try! Regex("(\(patterns.joined(separator: "|")))+")) != nil {
-				count += 1
-			}
-		}
-
-		return count.description
+		return designs
+			.filter { $0.wholeMatch(of: towelRegex) != nil }
+			.count.description
 	}
 
 	// MARK: Part 2
 
 	public func solvePart2(_ input: Input) async throws -> String? {
-		let patterns = input.lines().first!.components(separatedBy: ", ").map { "(?<\($0)>\($0))"}
-		let desiredDesigns = Array(input.lines().dropFirst(2))
-		print("here")
+		let towels = input.lines().first!.components(separatedBy: ", ")
+		let designs = Array(input.lines().dropFirst(2))
 
-//		print(patterns)
-//		print(desiredDesigns)
-//		print("(\(patterns.joined(separator: "|")))+")
+		var cache: [String: Int] = [:]
 
-		var count = 0
-		var matches: Set<String> = []
-		let permutations = patterns.uniquePermutations()
-		print(Array(permutations).count * desiredDesigns.count)
-		for (index, pattern) in permutations.enumerated() {
-			let regex = try! Regex("(\(pattern.joined(separator: "|")))+")
-//			print("(\(pattern.joined(separator: "|")))+")
-			print(index)
-			for design in desiredDesigns {
-				if let match = design.wholeMatch(of: regex) {
-					matches.insert(
-						match.output
-							.dropFirst()
-							.filter { $0.substring != nil }
-							.sorted(by: { $0.range!.lowerBound < $1.range!.lowerBound })
-							.map { String($0.value.debugDescription) }
-							.joined(separator: ",") + "---" + design
-					)
-//					print(design)
-//					match.output
-//					print(match.output.first(where: { $0.substring != nil && $0.name != nil })?.name)
-//					count += 1
-//					return nil
-				}
+		func traverse(string: String) -> Int {
+			if string.isEmpty {
+				return 1
 			}
+
+			if let cache = cache[String(string)] {
+				return cache
+			}
+
+			let count = towels
+				.filter { string.starts(with: $0) }
+				.reduce(0) {
+					$0 + traverse(string: String(string.dropFirst($1.count)))
+				}
+
+			cache[string] = count
+			return count
 		}
 
-		return matches.count.description
+		return designs
+			.reduce(0) { $0 + traverse(string: $1) }
+			.description
 	}
 }
