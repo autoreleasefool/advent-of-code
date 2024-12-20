@@ -15,6 +15,9 @@ extension Commands {
 		)
 		var day: Int?
 
+		@Flag(help: "Create challenge template")
+		var createTemplate: Bool = false
+
 		@SessionStorage("year")
 		var sessionYear: Year = .y24
 
@@ -31,6 +34,12 @@ extension Commands {
 			}
 
 			print("Calendar is set to (\(sessionYear), \(sessionDay))")
+
+			if createTemplate {
+				let challenge = Challenge(year: sessionYear, day: sessionDay)
+
+				try challenge.createTemplate()
+			}
 		}
 	}
 }
