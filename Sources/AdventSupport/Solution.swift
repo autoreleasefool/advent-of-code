@@ -31,6 +31,8 @@ extension Solver {
 		}
 		verbosePrint("Part 1: \(part1Solution ?? "N/A") in \(part1Duration.description)")
 
+		try await setUp(&input)
+
 		verbosePrint("Solving Part 2")
 		var part2Solution: String?
 		let part2Duration = try await clock.measure {
